@@ -1,1 +1,1 @@
-## Project: Paper Sceleton
+# Paper Sceleton
