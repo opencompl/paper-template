@@ -30,3 +30,14 @@ f = open("README.md.bak",'w')
 f.write(newdata)
 f.close()
 os.rename("README.md.bak", "README.md")
+
+f = open(".gitlab-ci.yml",'r')
+filedata = f.read()
+f.close()
+
+newdata = filedata.replace("paper-skeleton", projectname)
+
+f = open(".gitlab-ci.yml.bak",'w')
+f.write(newdata)
+f.close()
+os.rename(".gitlab-ci.yml.bak", ".gitlab-ci.yml")

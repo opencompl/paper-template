@@ -4,13 +4,13 @@ compile_pdf:
     - make
   artifacts:
     paths:
-      - skeleton.pdf
+      - paper-skeleton.pdf
 
 pages:
   stage: deploy
   script:
     - mkdir public
-    - cp skeleton.pdf public
+    - cp paper-skeleton.pdf public
   dependencies:
     - compile_pdf
   artifacts:
