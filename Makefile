@@ -9,3 +9,6 @@ IMAGES := $(wildcard images/*.jpg images/*.pdf images/*.png)
 
 ${PDF}: ${TEX_MAIN} ${IMAGES}
 	pdflatex ${TEX_MAIN}
+
+clean:
+	rm -rf *.pdf *.log *.aux *.bib
