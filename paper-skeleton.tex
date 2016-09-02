@@ -211,6 +211,8 @@ be explained.\grosser{Is this correct?}.
 
 \includegraphics{example.jpg}
 
+Also cite something \cite{grosser2015polyast}.
+
 \appendix
 \section{Appendix Title}
 
@@ -225,14 +227,15 @@ Acknowledgments, if needed.
 \bibliographystyle{abbrvnat}
 
 % The bibliography should be embedded for final submission.
+%\begin{thebibliography}{}
+%\softraggedright
+%
+%\bibitem[Smith et~al.(2009)Smith, Jones]{smith02}
+%P. Q. Smith, and X. Y. Jones. ...reference text...
+%
+%\end{thebibliography}
 
-\begin{thebibliography}{}
-\softraggedright
-
-\bibitem[Smith et~al.(2009)Smith, Jones]{smith02}
-P. Q. Smith, and X. Y. Jones. ...reference text...
-
-\end{thebibliography}
-
+\bibliography{references}
+\include{paper-skeleton.bbl}
 
 \end{document}
