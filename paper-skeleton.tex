@@ -29,6 +29,121 @@
 \usepackage{graphicx}
 \graphicspath{{images/}}
 
+% Add support for todo notes
+% The following code contains a variation of the great code by Antal S-Z
+% in his answer to http://tex.stackexchange.com/a/6029/3954
+%in TeX.SX
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.pathmorphing}
+\usepackage{soul}
+\usepackage{xcolor}
+\newcommand*\numcircled[1]{\raisebox{1pt}{\tikz[baseline=(char.base)]{
+                \node[shape=circle,draw,inner sep=1.0pt] (char) {\footnotesize #1};}}}
+
+\newlength\LineWidth
+\newlength\Amplitude
+\newlength\SegLength
+
+\setlength\LineWidth{0.4pt}
+\setlength\Amplitude{1pt}
+\setlength\SegLength{5pt}
+
+\definecolor{HLcolor}{RGB}{240,0,0}
+
+\makeatletter
+\newcommand{\removelatexerror}{\let\@latex@error\@gobble}
+\makeatother
+
+\usepackage{xparse}
+
+\newcommand\tikzmark[1]{%
+  \tikz[overlay,remember picture] \node (#1) {};}
+
+\makeatletter
+\newcommand{\highlight@DoHighlight}{
+  \draw[HLcolor,line width=\LineWidth,decorate,decoration={zigzag,amplitude=\Amplitude,segment length=\SegLength}]  ($(begin highlight)+(0,-2pt)$) -- ($(end highlight)+(0,-2pt)$) ;
+}
+
+\newcommand{\highlight@BeginHighlight}{
+  \coordinate (begin highlight) at (0,0) ;
+}
+
+\newcommand{\highlight@EndHighlight}{
+  \coordinate (end highlight) at (0,0) ;
+}
+
+\newdimen\highlight@previous
+\newdimen\highlight@current
+
+\DeclareRobustCommand*\highlight[1][]{%
+  \SOUL@setup
+  %
+  \def\SOUL@preamble{%
+    \begin{tikzpicture}[overlay, remember picture]
+      \highlight@BeginHighlight
+      \highlight@EndHighlight
+    \end{tikzpicture}%
+  }%
+  %
+  \def\SOUL@postamble{%
+    \begin{tikzpicture}[overlay, remember picture]
+      \highlight@EndHighlight
+      \highlight@DoHighlight
+    \end{tikzpicture}%
+  }%
+  %
+  \def\SOUL@everyhyphen{%
+    \discretionary{%
+      \SOUL@setkern\SOUL@hyphkern
+      \SOUL@sethyphenchar
+      \tikz[overlay, remember picture] \highlight@EndHighlight ;%
+    }{%
+    }{%
+      \SOUL@setkern\SOUL@charkern
+    }%
+  }%
+  %
+  \def\SOUL@everyexhyphen##1{%
+    \SOUL@setkern\SOUL@hyphkern
+    \hbox{##1}%
+    \discretionary{%
+      \tikz[overlay, remember picture] \highlight@EndHighlight ;%
+    }{%
+    }{%
+      \SOUL@setkern\SOUL@charkern
+    }%
+  }%
+  %
+  \def\SOUL@everysyllable{%
+    \begin{tikzpicture}[overlay, remember picture]
+      \path let \p0 = (begin highlight), \p1 = (0,0) in \pgfextra
+        \global\highlight@previous=\y0
+        \global\highlight@current =\y1
+      \endpgfextra (0,0) ;
+      \ifdim\highlight@current < \highlight@previous
+        \highlight@DoHighlight
+        \highlight@BeginHighlight
+      \fi
+    \end{tikzpicture}%
+    \the\SOUL@syllable
+    \tikz[overlay, remember picture] \highlight@EndHighlight ;%
+  }%
+  \SOUL@
+}
+\makeatother
+
+\DeclareDocumentCommand\MarkText{O{red}O{1pt}O{5pt}m}{%
+  \colorlet{HLcolor}{#1}
+  \setlength\Amplitude{#2}%
+  \setlength\SegLength{#3}%
+  \tikzmark{endquote}\tikzmark{beginquote}\highlight{#4}%
+}
+\usepackage{xargs}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\newcommandx{\grosser}[2][1=]{#1 \todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{\textbf{Tobias:} #2}}
+\newcommandx{\grossermark}[2][1=]{\MarkText[red]{#2}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % The following \documentclass options may be useful:
@@ -90,6 +205,9 @@ keyword1, keyword2
 \section{Introduction}
 
 The text of the paper begins here.
+
+Some \grossermark{problematic} text which certainly also requires a comment to
+be explained.\grosser{Is this correct?}.
 
 \includegraphics{example.jpg}
 
