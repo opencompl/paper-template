@@ -1,0 +1,18 @@
+compile_pdf:
+  image: grosser/docker-latex
+  script:
+    - make
+  artifacts:
+    paths:
+      - skeleton.pdf
+
+pages:
+  stage: deploy
+  script:
+    - mkdir public
+    - cp skeleton.pdf public
+  dependencies:
+    - compile_pdf
+  artifacts:
+    paths:
+      - public
