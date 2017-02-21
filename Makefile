@@ -12,4 +12,4 @@ ${PDF}: ${TEX_MAIN} ${IMAGES}
         pdflatex ${TEX_MAIN} && pdflatex ${TEX_MAIN} 
 
 clean:
-	rm -rf *.pdf *.log *.aux
+	rm -rf *.pdf *.log *.aux *.bbl *.blg
