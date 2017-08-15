@@ -1,3 +1,7 @@
 *.aux
 *.pdf
 *.log
+*.fdb_latexmk
+*.out
+*.fls
+tags
