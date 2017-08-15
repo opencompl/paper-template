@@ -8,7 +8,7 @@ all: ${PDF}
 IMAGES := $(wildcard images/*.jpg images/*.pdf images/*.png)
 
 ${PDF}: ${TEX_MAIN} ${IMAGES}
-	latexmk
+	latexmk -pdf
 
 clean:
-	rm -rf *.pdf *.log *.aux *.bbl *.blg
+	latexmk -C
