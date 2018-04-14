@@ -7,13 +7,13 @@ directory = os.path.basename(directory)
 
 projectname = directory
 
-os.rename("paper-skeleton.tex", projectname + ".tex")
+os.rename("paper-template.tex", projectname + ".tex")
 
 f = open("Makefile",'r')
 filedata = f.read()
 f.close()
 
-newdata = filedata.replace("paper-skeleton", projectname)
+newdata = filedata.replace("paper-template", projectname)
 
 f = open("Makefile.bak",'w')
 f.write(newdata)
@@ -24,7 +24,7 @@ f = open("README.md",'r')
 filedata = f.read()
 f.close()
 
-newdata = filedata.replace("paper-skeleton", projectname)
+newdata = filedata.replace("paper-template", projectname)
 
 f = open("README.md.bak",'w')
 f.write(newdata)
@@ -35,7 +35,7 @@ f = open(".gitlab-ci.yml",'r')
 filedata = f.read()
 f.close()
 
-newdata = filedata.replace("paper-skeleton", projectname)
+newdata = filedata.replace("paper-template", projectname)
 
 f = open(".gitlab-ci.yml.bak",'w')
 f.write(newdata)
