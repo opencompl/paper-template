@@ -8,14 +8,3 @@ compile_pdf:
   artifacts:
     paths:
       - paper-skeleton.pdf
-
-pages:
-  stage: deploy
-  script:
-    - mkdir public
-    - cp paper-skeleton.pdf public
-  dependencies:
-    - compile_pdf
-  artifacts:
-    paths:
-      - public
