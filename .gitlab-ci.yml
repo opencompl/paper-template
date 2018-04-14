@@ -4,4 +4,4 @@ compile_pdf:
     - make
   artifacts:
     paths:
-      - paper-skeleton.pdf
+      - paper-template.pdf

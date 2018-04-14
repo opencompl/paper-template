@@ -1,4 +1,4 @@
-PROJECTNAME = paper-skeleton
+PROJECTNAME = paper-template
 
 PDF = ${PROJECTNAME}.pdf
 TEX_MAIN = ${PROJECTNAME}.tex
