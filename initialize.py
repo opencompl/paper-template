@@ -33,15 +33,6 @@ os.rename("paper-template-draft.tex", projectname + "-draft.tex")
 os.rename("paper-template-blind.tex", projectname + "-blind.tex")
 os.rename("paper-template-camera.tex", projectname + "-camera.tex")
 
-os.remove("paper-template-draft.pdf")
-os.remove("paper-template-blind.pdf")
-os.remove("paper-template-camera.pdf")
-
-os.symlink("output/" + projectname + "-draft.pdf", projectname + "-draft.pdf")
-os.symlink("output/" + projectname +"-blind.pdf", projectname + "-blind.pdf")
-os.symlink("output/" + projectname + "-camera.pdf", projectname + "-camera.pdf")
-
-
 from subprocess import call
 
 call(['git', 'add', '*.tex'])
