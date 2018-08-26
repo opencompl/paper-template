@@ -1,9 +1,13 @@
 compile_pdf:
   image: grosser/docker-latex
   script:
-    - make paper-template.pdf
+    - make paper-template-draft.pdf
+    - make paper-template-blind.pdf
+    - make paper-template-camera.pdf
     - make paper-template-diff-prev-commit.pdf
   artifacts:
     paths:
-      - paper-template.pdf
+      - paper-template-draft.pdf
+      - paper-template-blind.pdf
+      - paper-template-camera.pdf
       - paper-template-diff-prev-commit.pdf

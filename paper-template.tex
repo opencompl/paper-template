@@ -1,9 +1,31 @@
-%% For double-blind review submission
-\documentclass[sigplan,10pt,review,anonymous]{acmart}\settopmatter{printfolios=true}
-%% For single-blind review submission
-%\documentclass[sigplan,10pt,review]{acmart}\settopmatter{printfolios=true}
-%% For final camera-ready submission
-%\documentclass[sigplan,10pt]{acmart}\settopmatter{}
+\def\paperversiondraft{draft}
+\def\paperversionblind{blind}
+\def\paperversioncamera{camera}
+\ifx\paperversion\paperversiondraft
+\else
+  \ifx\paperversion\paperversionblind
+  \else
+    \ifx\paperversion\paperversioncamera
+    \else
+       \errmessage{paperversion must be set to 'draft', 'blind', or 'camera'}
+    \fi
+  \fi
+\fi
+
+
+\ifx\paperversion\paperversiondraft
+  %\documentclass[sigplan,10pt,review]{acmart}\settopmatter{printfolios=true}
+  \documentclass[sigplan,10pt,review,anonymous]{acmart}
+\fi
+
+\ifx\paperversion\paperversionblind
+  %\documentclass[sigplan,10pt,review]{acmart}\settopmatter{printfolios=true}
+  \documentclass[sigplan,10pt,review,anonymous]{acmart}
+\fi
+
+\ifx\paperversion\paperversioncamera
+  \documentclass[sigplan,10pt]{acmart}\settopmatter{}
+\fi
 
 %% Note: Authors migrating a paper from traditional SIGPLAN
 %% proceedings format to PACMPL format should change 'sigplan' to
