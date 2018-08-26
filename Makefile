@@ -28,7 +28,7 @@ ${PDF_CAMERA}: ${TEX_MAIN_CAMERA} ${TEX_MAIN} ${IMAGES}
 	latexmk -pdf ${TEX_MAIN_CAMERA}
 
 ${DIFF_PREV_PDF}: ${TEX_MAIN_DRAFT} ${TEX_MAIN} ${IMAGES}
-	git latexdiff HEAD^ HEAD --main ${TEX_MAIN_DRAFT} --no-flatten -o ${DIFF_PREV_PDF}
+	git latexdiff HEAD^ HEAD --main ${TEX_MAIN_DRAFT} -o ${DIFF_PREV_PDF}
 
 clean:
 	latexmk -C
