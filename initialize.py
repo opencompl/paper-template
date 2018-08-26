@@ -9,39 +9,28 @@ projectname = directory
 
 os.rename("paper-template.tex", projectname + ".tex")
 
+
+def replaceFile(filename):
+    f = open(filename,'r')
+    filedata = f.read()
+    f.close()
+
+    newdata = filedata.replace("paper-template", projectname)
+
+    f = open(filename + ".bak",'w')
+    f.write(newdata)
+    f.close()
+    os.rename(filename + ".bak", filename)
+
+replaceFile("Makefile")
+replaceFile("README.md")
+replaceFile(".gitlab-ci.yml")
+replaceFile("paper-template-draft.tex")
+replaceFile("paper-template-blind.tex")
+replaceFile("paper-template-camera.tex")
+
 os.rename("paper-template-draft.tex", projectname + "-draft.tex")
 os.rename("paper-template-blind.tex", projectname + "-blind.tex")
 os.rename("paper-template-camera.tex", projectname + "-camera.tex")
 
-f = open("Makefile",'r')
-filedata = f.read()
-f.close()
-
-newdata = filedata.replace("paper-template", projectname)
-
-f = open("Makefile.bak",'w')
-f.write(newdata)
-f.close()
-os.rename("Makefile.bak", "Makefile")
-
-f = open("README.md",'r')
-filedata = f.read()
-f.close()
-
-newdata = filedata.replace("paper-template", projectname)
-
-f = open("README.md.bak",'w')
-f.write(newdata)
-f.close()
-os.rename("README.md.bak", "README.md")
-
-f = open(".gitlab-ci.yml",'r')
-filedata = f.read()
-f.close()
-
-newdata = filedata.replace("paper-template", projectname)
-
-f = open(".gitlab-ci.yml.bak",'w')
-f.write(newdata)
-f.close()
-os.rename(".gitlab-ci.yml.bak", ".gitlab-ci.yml")
+os.remove("initialize.py")
