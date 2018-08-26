@@ -9,6 +9,10 @@ projectname = directory
 
 os.rename("paper-template.tex", projectname + ".tex")
 
+os.rename("paper-template-draft.tex", projectname + "-draft.tex")
+os.rename("paper-template-blind.tex", projectname + "-blind.tex")
+os.rename("paper-template-camera.tex", projectname + "-camera.tex")
+
 f = open("Makefile",'r')
 filedata = f.read()
 f.close()
