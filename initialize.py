@@ -44,10 +44,8 @@ os.symlink("output/" + projectname + "-camera.pdf", projectname + "-camera.pdf")
 
 from subprocess import call
 
-os.call(['git', 'add', '*.tex'])
-os.call(['git', 'add', '*.pdf'])
-os.call(['git', 'commit', '-am', 'Initialize project'])
+call(['git', 'add', '*.tex'])
+call(['git', 'add', '*.pdf'])
+call(['git', 'commit', '-am', 'Initialize project'])
 
 os.remove("initialize.py")
-
-
