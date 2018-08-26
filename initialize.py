@@ -46,6 +46,6 @@ from subprocess import call
 
 call(['git', 'add', '*.tex'])
 call(['git', 'add', '*.pdf'])
-call(['git', 'commit', '-am', 'Initialize project'])
-
-os.remove("initialize.py")
+call(['git', 'rm', 'initialize.py'])
+call(['git', 'add', 'initialize.py'])
+call(['git', 'commit', '-m', 'Initialize project'])
