@@ -33,4 +33,8 @@ os.rename("paper-template-draft.tex", projectname + "-draft.tex")
 os.rename("paper-template-blind.tex", projectname + "-blind.tex")
 os.rename("paper-template-camera.tex", projectname + "-camera.tex")
 
+os.rename("paper-template-draft.pdf", projectname + "-draft.pdf")
+os.rename("paper-template-blind.pdf", projectname + "-blind.pdf")
+os.rename("paper-template-camera.pdf", projectname + "-camera.pdf")
+
 os.remove("initialize.py")
