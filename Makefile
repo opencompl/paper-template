@@ -19,16 +19,16 @@ IMAGES := $(wildcard images/*.jpg images/*.pdf images/*.png)
 all: ${PDF_DRAFT} ${PDF_BLIND} ${PDF_CAMERA}
 
 ${PDF_DRAFT}: ${TEX_MAIN_DRAFT} ${TEX_MAIN} ${IMAGES}
-	latexmk -pdf ${TEX_MAIN_DRAFT} -outdir=output
+	latexmk -pdf ${TEX_MAIN_DRAFT}
 
 ${PDF_BLIND}: ${TEX_MAIN_BLINE} ${TEX_MAIN} ${IMAGES}
-	latexmk -pdf ${TEX_MAIN_BLIND} -outdir=output
+	latexmk -pdf ${TEX_MAIN_BLIND}
 
 ${PDF_CAMERA}: ${TEX_MAIN_CAMERA} ${TEX_MAIN} ${IMAGES}
-	latexmk -pdf ${TEX_MAIN_CAMERA} -outdir=output
+	latexmk -pdf ${TEX_MAIN_CAMERA}
 
 ${DIFF_PREV_PDF}: ${TEX_MAIN_DRAFT} ${TEX_MAIN} ${IMAGES}
 	git latexdiff HEAD^ HEAD --main ${TEX_MAIN_DRAFT} -o ${DIFF_PREV_PDF}
 
 clean:
-	rm -rf ${DIFF_PREV_PDF} output
+	rm -rf ${DIFF_PREV_PDF} ; latexmk -C

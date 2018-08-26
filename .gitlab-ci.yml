@@ -7,7 +7,7 @@ compile_pdf:
     - make paper-template-diff-prev-commit.pdf
   artifacts:
     paths:
-      - output/paper-template-draft.pdf
-      - output/paper-template-blind.pdf
-      - output/paper-template-camera.pdf
+      - paper-template-draft.pdf
+      - paper-template-blind.pdf
+      - paper-template-camera.pdf
       - paper-template-diff-prev-commit.pdf
