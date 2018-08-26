@@ -31,4 +31,4 @@ ${DIFF_PREV_PDF}: ${TEX_MAIN_DRAFT} ${TEX_MAIN} ${IMAGES}
 	git latexdiff HEAD^ HEAD --main ${TEX_MAIN_DRAFT} -o ${DIFF_PREV_PDF}
 
 clean:
-	latexmk -C
+	latexmk -C; rm -rf ${DIFF_PREV_PDF} 
