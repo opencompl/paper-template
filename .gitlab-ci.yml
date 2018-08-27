@@ -4,7 +4,8 @@ compile_pdf:
     - make paper-template-draft.pdf
     - make paper-template-blind.pdf
     - make paper-template-camera.pdf
-    - make paper-template-diff-prev-commit.pdf
+# Ignore failures making the diff.
+    - make paper-template-diff-prev-commit.pdf ; true
   artifacts:
     paths:
       - paper-template-draft.pdf
