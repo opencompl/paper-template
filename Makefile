@@ -27,6 +27,15 @@ ${PDF_BLIND}: ${TEX_MAIN_BLINE} ${TEX_MAIN} ${IMAGES}
 ${PDF_CAMERA}: ${TEX_MAIN_CAMERA} ${TEX_MAIN} ${IMAGES}
 	latexmk ${TEX_MAIN_CAMERA}
 
+view-draft: ${TEX_MAIN_DRAFT} ${TEX_MAIN} ${IMAGES}
+	latexmk -pvc ${TEX_MAIN_DRAFT}
+
+view-blind: ${TEX_MAIN_BLIND} ${TEX_MAIN} ${IMAGES}
+	latexmk -pvc ${TEX_MAIN_BLIND}
+
+view-camera: ${TEX_MAIN_CAMERA} ${TEX_MAIN} ${IMAGES}
+	latexmk -pvc ${TEX_MAIN_CAMERA}
+
 ${DIFF_PREV_PDF}: ${TEX_MAIN_DRAFT} ${TEX_MAIN} ${IMAGES}
 	git latexdiff HEAD^ HEAD --main ${TEX_MAIN_DRAFT} -o ${DIFF_PREV_PDF}
 
