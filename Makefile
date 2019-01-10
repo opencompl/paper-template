@@ -27,6 +27,12 @@ ${PDF_BLIND}: ${TEX_MAIN_BLINE} ${TEX_MAIN} ${IMAGES}
 ${PDF_CAMERA}: ${TEX_MAIN_CAMERA} ${TEX_MAIN} ${IMAGES}
 	latexmk ${TEX_MAIN_CAMERA}
 
+draft: ${PDF_DRAFT}
+
+blind: ${PDF_BLIND}
+
+camera: ${PDF_CAMERA}
+
 view-draft: ${TEX_MAIN_DRAFT} ${TEX_MAIN} ${IMAGES}
 	latexmk -pvc ${TEX_MAIN_DRAFT}
 
