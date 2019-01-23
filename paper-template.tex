@@ -201,6 +201,9 @@ Text of abstract \ldots.
 \end{abstract}
 
 
+% Only add ACM notes and keywords in camera ready version
+% Drop citations and footnotes in draft and blind mode.
+\ifx\paperversion\paperversioncamera
 %% 2012 ACM Computing Classification System (CSS) concepts
 %% Generate at 'http://dl.acm.org/ccs/ccs.cfm'.
 \begin{CCSXML}
@@ -226,6 +229,11 @@ Text of abstract \ldots.
 %% Keywords
 %% comma separated list
 \keywords{keyword1, keyword2, keyword3}  %% \keywords is optional
+
+\else
+\settopmatter{printacmref=false} % Removes citation information below abstract
+\renewcommand\footnotetextcopyrightpermission[1]{} % removes footnote with conference information in first column
+\fi
 
 %% \maketitle
 %% Note: \maketitle command must come after title commands, author
