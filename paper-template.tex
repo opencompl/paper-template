@@ -26,21 +26,37 @@
 
 \usepackage{xargs}
 \usepackage{todonotes}
+\usepackage{xparse}
+\usepackage{xifthen, xstring}
+\usepackage{ulem}
+\usepackage{xspace}
+\makeatletter
+\font\uwavefont=lasyb10 scaled 652
 
-% Add todo notes in draft mode
+\newcommand\colorwave[1][blue]{\bgroup\markoverwith{\lower3\p@\hbox{\uwavefont\textcolor{#1}{\char58}}}\ULon}
+\makeatother
+
 \ifx\paperversion\paperversiondraft
-  \newcommandx{\authorone}[2][1=]{#1\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{\textbf{Author One:} #2}}
+\newcommand\createtodoauthor[2]{%
+\def\tmpdefault{emptystring}
+\expandafter\newcommand\csname #1\endcsname[2][\tmpdefault]{\def\tmp{##1}\ifthenelse{\equal{\tmp}{\tmpdefault}}
+   {\todo[linecolor=#2!20,backgroundcolor=#2!25,bordercolor=#2]{\textbf{Author One:} ##2}\xspace}
+   {\ifthenelse{\equal{##2}{}}{\colorwave[#2]{##1}\xspace}{\todo[linecolor=#2!10,backgroundcolor=#2!25,bordercolor=#2]{\textbf{Author One:} ##2}\colorwave[#2]{##1}}}}}
+\else
+\newcommand\createtodoauthor[2]{%
+\expandafter\newcommand\csname #1\endcsname[2][\@nil]{}}
+\fi
 
-  % Broaden margins to make room for todo notes
+% Broaden margins to make room for todo notes
+\ifx\paperversion\paperversiondraft
   \paperwidth=\dimexpr \paperwidth + 6cm\relax
   \oddsidemargin=\dimexpr\oddsidemargin + 3cm\relax
   \evensidemargin=\dimexpr\evensidemargin + 3cm\relax
   \marginparwidth=\dimexpr \marginparwidth + 3cm\relax
   \setlength{\marginparwidth}{4cm}
-\else
-  \newcommandx{\authorone}[2][1=]{}
 \fi
 
+\createtodoauthor{authorone}{red}
 
 %% Note: Authors migrating a paper from traditional SIGPLAN
 %% proceedings format to PACMPL format should change 'sigplan' to
@@ -237,6 +253,11 @@ Text of abstract \ldots.
 \section{Introduction}
 
 Of this super cool article \ldots
+\authorone{Comment}
+
+Hallo this is a long \authorone[Text]{Comment} that is interesting.
+
+And here we only underline \authorone[Text]{} that is interesting.
 
 %% Acknowledgments
 \begin{acks}                            %% acks environment is optional
