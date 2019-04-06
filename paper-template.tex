@@ -29,7 +29,6 @@
 
 % Add todo notes in draft mode
 \ifx\paperversion\paperversiondraft
-  \newcommandx{\git}[2][1=]{#1\todo[linecolor=gray,backgroundcolor=gray!25,bordercolor=gray,#1]{\textbf{GIT} #2}}
   \newcommandx{\authorone}[2][1=]{#1\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{\textbf{Author One:} #2}}
 
   % Broaden margins to make room for todo notes
@@ -40,13 +39,7 @@
   \setlength{\marginparwidth}{4cm}
 \else
   \newcommandx{\authorone}[2][1=]{}
-  \newcommandx{\git}[2][1=]{}
 \fi
-
-\makeatletter
-\immediate\write18{git log -1 --pretty=format:"\@backslashchar gdef\@backslashchar GITHash{\@percentchar h}\@percentchar n \@backslashchar gdef\@backslashchar GITDate{\@percentchar ad}" --date=short > /tmp/temp.dat }
-\makeatother
-\input{/tmp/temp.dat}
 
 
 %% Note: Authors migrating a paper from traditional SIGPLAN
@@ -243,7 +236,6 @@ Text of abstract \ldots.
 
 \section{Introduction}
 
-\git{\GITDate--\GITHash}
 Of this super cool article \ldots
 
 %% Acknowledgments
