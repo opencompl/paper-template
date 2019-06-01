@@ -40,8 +40,8 @@
 \newcommand\createtodoauthor[2]{%
 \def\tmpdefault{emptystring}
 \expandafter\newcommand\csname #1\endcsname[2][\tmpdefault]{\def\tmp{##1}\ifthenelse{\equal{\tmp}{\tmpdefault}}
-   {\todo[linecolor=#2!20,backgroundcolor=#2!25,bordercolor=#2]{\textbf{Author One:} ##2}}
-   {\ifthenelse{\equal{##2}{}}{\colorwave[#2]{##1}\xspace}{\todo[linecolor=#2!10,backgroundcolor=#2!25,bordercolor=#2]{\textbf{Author One:} ##2}\colorwave[#2]{##1}}}}}
+   {\todo[linecolor=#2!20,backgroundcolor=#2!25,bordercolor=#2]{\textbf{#1:} ##2}}
+   {\ifthenelse{\equal{##2}{}}{\colorwave[#2]{##1}\xspace}{\todo[linecolor=#2!10,backgroundcolor=#2!25,bordercolor=#2]{\textbf{#1:} ##2}\colorwave[#2]{##1}}}}}
 \else
 \newcommand\createtodoauthor[2]{%
 \expandafter\newcommand\csname #1\endcsname[2][\@nil]{}}
@@ -56,11 +56,11 @@
   \setlength{\marginparwidth}{4cm}
 \fi
 
-\createtodoauthor{authorone}{red}
-\createtodoauthor{authortwo}{blue}
-\createtodoauthor{authorthree}{green}
-\createtodoauthor{authorfour}{orange}
-\createtodoauthor{authorfive}{purple}
+\createtodoauthor{authorOne}{red}
+\createtodoauthor{authorTwo}{blue}
+\createtodoauthor{authorThree}{green}
+\createtodoauthor{authorFour}{orange}
+\createtodoauthor{authorFive}{purple}
 
 %% Note: Authors migrating a paper from traditional SIGPLAN
 %% proceedings format to PACMPL format should change 'sigplan' to
@@ -257,18 +257,18 @@ Text of abstract \ldots.
 \section{Introduction}
 
 Of this super cool article \ldots
-\authorone{Comment}
+\authorOne{Comment}
 
-Hallo this is a long \authorone[Text]{Comment} that is interesting.
+Hallo this is a long \authorOne[Text]{Comment} that is interesting.
 
-And here we only underline \authorone[Text]{} that is interesting.
+And here we only underline \authorOne[Text]{} that is interesting.
 
 Now we have a sequence of comments,
-\authorone{Comment 1}
-\authortwo{Comment 2}
-\authorthree{Comment 3}
-\authorfour{Comment 4}
-\authorfive{Comment 5}
+\authorOne{Comment 1}
+\authorTwo{Comment 2}
+\authorThree{Comment 3}
+\authorFour{Comment 4}
+\authorFive{Comment 5}
 which should not introduce overlong white space sequences.
 
 %% Acknowledgments
