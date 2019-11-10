@@ -1,3 +1,5 @@
+\def\grammarly{off}
+
 \def\paperversiondraft{draft}
 \def\paperversionblind{blind}
 \def\paperversioncamera{camera}
@@ -12,12 +14,21 @@
   \fi
 \fi
 
+\def\grammarlyon{on}
+\def\grammarlyoff{off}
+
+\ifx\grammarly\grammarlyon
+\def\review{}
+\else
+\def\review{review,}
+\fi
+
 \ifx\paperversion\paperversiondraft
-  \documentclass[sigplan,review,anonymous]{acmart}
+  \documentclass[sigplan,\review anonymous]{acmart}
 \fi
 
 \ifx\paperversion\paperversionblind
-  \documentclass[sigplan,review,anonymous]{acmart}
+  \documentclass[sigplan,\review anonymous]{acmart}
 \fi
 
 \ifx\paperversion\paperversioncamera
@@ -253,6 +264,10 @@ Text of abstract \ldots.
 %% commands, abstract environment, Computing Classification System
 %% environment and commands, and keywords command.
 \maketitle
+\ifx\grammarly\grammarlyon 
+\onecolumn 
+\else 
+\fi
 
 \section{Introduction}
 
