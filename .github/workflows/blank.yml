@@ -1,13 +1,13 @@
-name: CI
-
+name: Build LaTeX document
 on: [push]
-
 jobs:
-  build:
-
-    runs-on: grosser/docker-latex
-
+  build_latex:
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Build Draft
-      run: make paper-template-draft.pdf
+      - name: Set up Git repository
+        uses: actions/checkout@v1
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@master
+        with:
+          root_file: make paper-template-draft.tex
+
