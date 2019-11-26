@@ -9,5 +9,5 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@master
         with:
-          root_file: make paper-template-draft.tex
+          root_file: paper-template-draft.tex
 
