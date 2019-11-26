@@ -11,6 +11,7 @@ jobs:
         with:
           root_file: paper-template-draft.tex
       - uses: actions/upload-artifact@v1
-        name: paper-template-draft.pdf
-        path: paper-template-draft.pdf
+        with:
+          name: paper-template-draft.pdf
+          path: paper-template-draft.pdf
 
