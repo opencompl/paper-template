@@ -47,8 +47,8 @@
 \newcommand\createtodoauthor[2]{%
 \def\tmpdefault{emptystring}
 \expandafter\newcommand\csname #1\endcsname[2][\tmpdefault]{\def\tmp{##1}\ifthenelse{\equal{\tmp}{\tmpdefault}}
-   {\todo[linecolor=#2!20,backgroundcolor=#2!25,bordercolor=#2]{\textbf{#1:} ##2}}
-   {\ifthenelse{\equal{##2}{}}{\colorwave[#2]{##1}\xspace}{ \todo[linecolor=#2!10,backgroundcolor=#2!25,bordercolor=#2]{\textbf{#1:} ##2}\colorwave[#2]{##1}}}}}
+   {\todo[linecolor=#2!20,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}}
+   {\ifthenelse{\equal{##2}{}}{\colorwave[#2]{##1}\xspace}{ \todo[linecolor=#2!10,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}\colorwave[#2]{##1}}}}}
 \else
 \newcommand\createtodoauthor[2]{%
 \expandafter\newcommand\csname #1\endcsname[2][\@nil]{}}
@@ -63,11 +63,27 @@
   \setlength{\marginparwidth}{4cm}
 \fi
 
-\createtodoauthor{grosser}{red}
-\createtodoauthor{authorTwo}{blue}
-\createtodoauthor{authorThree}{green}
-\createtodoauthor{authorFour}{orange}
-\createtodoauthor{authorFive}{purple}
+% We use the following color scheme
+% 
+% This scheme is both print-friendly and colorblind safe for
+% up to four colors (including the red tones makes it not
+% colorblind safe any more)
+%
+% https://colorbrewer2.org/#type=qualitative&scheme=Paired&n=4
+
+\definecolor{pairedOneLightBlue}{HTML}{a6cee3}
+\definecolor{pairedTwoDarkBlue}{HTML}{1f78b4}
+\definecolor{pairedThreeLightGreen}{HTML}{b2df8a}
+\definecolor{pairedFourDarkGreen}{HTML}{33a02c}
+\definecolor{pairedFiveLightRed}{HTML}{fb9a99}
+\definecolor{pairedSixDarkRed}{HTML}{e31a1c}
+
+\createtodoauthor{grosser}{pairedOneLightBlue}
+\createtodoauthor{authorTwo}{pairedTwoDarkBlue}
+\createtodoauthor{authorThree}{pairedThreeLightGreen}
+\createtodoauthor{authorFour}{pairedFourDarkGreen}
+\createtodoauthor{authorFive}{pairedFiveLightRed}
+\createtodoauthor{authorSix}{pairedSixDarkRed}
 
 %% Note: Authors migrating a paper from traditional SIGPLAN
 %% proceedings format to PACMPL format should change 'sigplan' to
@@ -275,11 +291,12 @@ Hallo this is a long \authorTwo[Text]{Comment} that is interesting.
 And here we only underline \authorTwo[Text]{} that is interesting.
 
 Now we have a sequence of comments,
-\authorTwo{Comment 1}
+\grosser{Comment 1}
 \authorTwo{Comment 2}
 \authorThree{Comment 3}
 \authorFour{Comment 4}
 \authorFive{Comment 5}
+\authorSix{Comment 6}
 which should not introduce overlong white space sequences.
 
 ~\\
