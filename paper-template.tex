@@ -63,7 +63,7 @@
   \setlength{\marginparwidth}{4cm}
 \fi
 
-\createtodoauthor{authorOne}{red}
+\createtodoauthor{grosser}{red}
 \createtodoauthor{authorTwo}{blue}
 \createtodoauthor{authorThree}{green}
 \createtodoauthor{authorFour}{orange}
@@ -268,14 +268,14 @@ Text of abstract \ldots.
 \section{Introduction}
 
 Of this super cool article \ldots
-\authorOne{Comment}
+\authorTwo{Comment}
 
-Hallo this is a long \authorOne[Text]{Comment} that is interesting.
+Hallo this is a long \authorTwo[Text]{Comment} that is interesting.
 
-And here we only underline \authorOne[Text]{} that is interesting.
+And here we only underline \authorTwo[Text]{} that is interesting.
 
 Now we have a sequence of comments,
-\authorOne{Comment 1}
+\authorTwo{Comment 1}
 \authorTwo{Comment 2}
 \authorThree{Comment 3}
 \authorFour{Comment 4}
@@ -301,6 +301,11 @@ which should not introduce overlong white space sequences.
 
 \section{Related Work}
 
+\grosser{Related work should always be at the end of the document,
+         as it otherwise becomes an obstacle your reader must
+	 overcome before reaching your idea. For details see:
+	 \url{https://www.microsoft.com/en-us/research/academic-program/write-great-research-paper/}
+}
 
 %% Bibliography
 %\bibliography{bibfile}
