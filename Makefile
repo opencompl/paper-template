@@ -1,20 +1,16 @@
-PROJECTNAME = paper
-
 # Source Latex files
 TEX_MAIN = ${PROJECTNAME}.tex
 
-TEX_MAIN_DRAFT = ${PROJECTNAME}.tex
-TEX_MAIN_GRAMMARLY = ${PROJECTNAME}-grammarly.tex
-TEX_MAIN_BLIND = ${PROJECTNAME}-blind.tex
-TEX_MAIN_CAMERA = ${PROJECTNAME}-camera.tex
+TEX_MAIN_DRAFT = paper.tex
+TEX_MAIN_GRAMMARLY = grammarly.tex
+TEX_MAIN_BLIND = blind.tex
+TEX_MAIN_CAMERA = camera.tex
 
 # Generate PDF files
-PDF_DRAFT = ${PROJECTNAME}.pdf
-PDF_GRAMMARLY = ${PROJECTNAME}-grammarly.pdf
-PDF_BLIND = ${PROJECTNAME}-blind.pdf
-PDF_CAMERA = ${PROJECTNAME}-camera.pdf
-
-DIFF_PREV_PDF = ${PROJECTNAME}-diff-prev-commit.pdf
+PDF_DRAFT = paper.pdf
+PDF_GRAMMARLY = grammarly.pdf
+PDF_BLIND = blind.pdf
+PDF_CAMERA = camera.pdf
 
 IMAGES := $(wildcard images/*.jpg images/*.pdf images/*.png)
 
@@ -51,9 +47,6 @@ view-blind: ${TEX_MAIN_BLIND} ${TEX_MAIN} ${IMAGES}
 
 view-camera: ${TEX_MAIN_CAMERA} ${TEX_MAIN} ${IMAGES}
 	latexmk -pvc ${TEX_MAIN_CAMERA}
-
-${DIFF_PREV_PDF}: ${TEX_MAIN_DRAFT} ${TEX_MAIN} ${IMAGES}
-	git latexdiff HEAD^ HEAD --main ${TEX_MAIN_DRAFT} -o ${DIFF_PREV_PDF}
 
 clean:
 	rm -rf ${DIFF_PREV_PDF} ; latexmk -C
