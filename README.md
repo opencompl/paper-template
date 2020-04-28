@@ -1,5 +1,9 @@
 ![Compile paper](../../workflows/Compile%20paper/badge.svg)
 
+Download:
+[Draft](../../releases/latest/download/paper-template-draft.pdf) |
+[Blind](../../releases/latest/download/paper-template-blind.pdf)
+
 This repository serves as a template for writing computer science papers in LaTeX. It supports
 the following useful features:
 
@@ -14,5 +18,3 @@ the following useful features:
       of room for comments
     - Pieces of text can be addressed specifically by underlining this text
 
-- [Paper (Draft)](../../releases/latest/download/paper-template-draft.pdf)
-- [Paper (Blind) - for submission](../../releases/latest/download/paper-template-blind.pdf)
