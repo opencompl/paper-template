@@ -24,12 +24,12 @@ def replaceFile(filename):
 
 replaceFile("Makefile")
 replaceFile("README.md")
-replaceFile(".gitlab-ci.yml")
-replaceFile("paper-template-draft.tex")
+replaceFile(".github/workflows/build_paper.yml")
+replaceFile("paper-template-grammarly.tex")
 replaceFile("paper-template-blind.tex")
 replaceFile("paper-template-camera.tex")
 
-os.rename("paper-template-draft.tex", projectname + "-draft.tex")
+os.rename("paper-template-grammarly.tex", projectname + "-grammarly.tex")
 os.rename("paper-template-blind.tex", projectname + "-blind.tex")
 os.rename("paper-template-camera.tex", projectname + "-camera.tex")
 
@@ -38,8 +38,7 @@ from subprocess import call
 call(['git', 'add', '*.tex'])
 call(['git', 'add', '*.pdf'])
 call(['git', 'rm', 'initialize.py'])
-call(['git', 'add', 'initialize.py'])
 call(['git', 'add', 'README.md'])
 call(['git', 'add', 'Makefile'])
-call(['git', 'add', '.gitlab-ci.yml'])
+call(['git', 'add', '.github'])
 call(['git', 'commit', '-m', 'Initialize project'])
