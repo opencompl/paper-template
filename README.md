@@ -2,6 +2,7 @@
 
 Download:
 [Draft](../../releases/latest/download/paper-template.pdf) |
+[Grammarly](../../releases/latest/download/paper-grammarly.pdf) |
 [Blind (for submission)](../../releases/latest/download/paper-template-blind.pdf) |
 [Camera-Ready](../../releases/latest/download/paper-template-camera.pdf)
 
@@ -11,6 +12,7 @@ the following useful features:
   - Automatic paper builds using GitHub Actions
   - Different variants of the same paper
     - Draft: Comments, wider margins, ...
+    - Grammarly: Draft without word-brakes and single-column to copy-paste into http://grammarly.com
     - Blind: No comments, anonymous for double-blind review
     - Camera: No comments, with author names for camery-ready publication
   - Useful Comments
