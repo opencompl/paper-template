@@ -47,8 +47,8 @@
 \newcommand\createtodoauthor[2]{%
 \def\tmpdefault{emptystring}
 \expandafter\newcommand\csname #1\endcsname[2][\tmpdefault]{\def\tmp{##1}\ifthenelse{\equal{\tmp}{\tmpdefault}}
-   {\todo[linecolor=#2!20,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}}
-   {\ifthenelse{\equal{##2}{}}{\colorwave[#2]{##1}\xspace}{ \todo[linecolor=#2!10,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}\colorwave[#2]{##1}}}}}
+   {\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}}
+   {\ifthenelse{\equal{##2}{}}{\colorwave[#2]{##1}\xspace}{ \todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}\colorwave[#2]{##1}}}}}
 \else
 \newcommand\createtodoauthor[2]{%
 \expandafter\newcommand\csname #1\endcsname[2][\@nil]{}}
@@ -284,15 +284,15 @@ Text of abstract \ldots.
 \section{Introduction}
 
 Of this super cool article \ldots
-\authorTwo{Comment}
+\grosser{A simple comment refering to a particular location}
 
-Hallo this is a long \authorTwo[Text]{Comment} that is interesting.
+If there is \authorTwo[some text we want to refer to specifically]{this looks
+particularly interesting} we can refer to this text from within our comments.
 
-And here we only underline \authorTwo[Text]{} that is interesting.
+And here we only underline \authorTwo[Text]{} that is interesting, but do not
+actually comment.
 
 Now we have a sequence of comments,
-\grosser{Comment 1}
-\authorTwo{Comment 2}
 \authorThree{Comment 3}
 \authorFour{Comment 4}
 \authorFive{Comment 5}
