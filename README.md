@@ -2,7 +2,7 @@
 
 Download:
 [Draft](../../releases/latest/download/paper-template.pdf) |
-[Grammarly](../../releases/latest/download/paper-grammarly.pdf) |
+[Grammarly](../../releases/latest/download/paper-template-grammarly.pdf) |
 [Blind (for submission)](../../releases/latest/download/paper-template-blind.pdf) |
 [Camera-Ready](../../releases/latest/download/paper-template-camera.pdf)
 
