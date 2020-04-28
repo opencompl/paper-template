@@ -1,7 +1,7 @@
 ![Compile paper](../../workflows/Compile%20paper/badge.svg)
 
 Download:
-[Draft](../../releases/latest/download/paper-template-draft.pdf) |
+[Draft](../../releases/latest/download/paper-template.pdf) |
 [Blind (for submission)](../../releases/latest/download/paper-template-blind.pdf) |
 [Camera-Ready](../../releases/latest/download/paper-template-camera.pdf)
 
