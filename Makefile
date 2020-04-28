@@ -3,12 +3,14 @@ PROJECTNAME = paper-template
 # Source Latex files
 TEX_MAIN = ${PROJECTNAME}.tex
 
-TEX_MAIN_DRAFT = ${PROJECTNAME}-draft.tex
+TEX_MAIN_DRAFT = ${PROJECTNAME}.tex
+TEX_MAIN_GRAMMARLY = ${PROJECTNAME}-grammarly.tex
 TEX_MAIN_BLIND = ${PROJECTNAME}-blind.tex
 TEX_MAIN_CAMERA = ${PROJECTNAME}-camera.tex
 
 # Generate PDF files
-PDF_DRAFT = ${PROJECTNAME}-draft.pdf
+PDF_DRAFT = ${PROJECTNAME}.pdf
+PDF_GRAMMARLY = ${PROJECTNAME}-grammarly.pdf
 PDF_BLIND = ${PROJECTNAME}-blind.pdf
 PDF_CAMERA = ${PROJECTNAME}-camera.pdf
 
@@ -16,10 +18,13 @@ DIFF_PREV_PDF = ${PROJECTNAME}-diff-prev-commit.pdf
 
 IMAGES := $(wildcard images/*.jpg images/*.pdf images/*.png)
 
-all: ${PDF_DRAFT} ${PDF_BLIND} ${PDF_CAMERA}
+all: ${PDF_DRAFT} ${PDF_GRAMMARLY} ${PDF_BLIND} ${PDF_CAMERA}
 
 ${PDF_DRAFT}: ${TEX_MAIN_DRAFT} ${TEX_MAIN} ${IMAGES}
 	latexmk ${TEX_MAIN_DRAFT}
+
+${PDF_GRAMMARLY}: ${TEX_MAIN_GRAMMARLY} ${TEX_MAIN} ${IMAGES}
+	latexmk ${TEX_MAIN_GRAMMARLY}
 
 ${PDF_BLIND}: ${TEX_MAIN_BLINE} ${TEX_MAIN} ${IMAGES}
 	latexmk ${TEX_MAIN_BLIND}
@@ -29,12 +34,17 @@ ${PDF_CAMERA}: ${TEX_MAIN_CAMERA} ${TEX_MAIN} ${IMAGES}
 
 draft: ${PDF_DRAFT}
 
+draft: ${PDF_GRAMMARLY}
+
 blind: ${PDF_BLIND}
 
 camera: ${PDF_CAMERA}
 
 view-draft: ${TEX_MAIN_DRAFT} ${TEX_MAIN} ${IMAGES}
 	latexmk -pvc ${TEX_MAIN_DRAFT}
+
+view-grammarly: ${TEX_MAIN_BLIND} ${TEX_MAIN} ${IMAGES}
+	latexmk -pvc ${TEX_MAIN_GRAMMARLY}
 
 view-blind: ${TEX_MAIN_BLIND} ${TEX_MAIN} ${IMAGES}
 	latexmk -pvc ${TEX_MAIN_BLIND}
