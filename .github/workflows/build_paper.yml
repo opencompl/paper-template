@@ -28,6 +28,12 @@ jobs:
       with:
         root_file: paper-template-blind.tex
 
+    - name: LaTeX compilation - Grammarly
+      uses: xu-cheng/latex-action@master
+      with:
+        root_file: paper-template-grammarly.tex
+
+
     - name: LaTeX compilation - Camera (for submission)
       uses: xu-cheng/latex-action@master
       with:
@@ -46,7 +52,7 @@ jobs:
         allowUpdates: true
 
     - name: Upload Draft
-      id: upload-release-asset
+      id: upload-release-draft
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -56,8 +62,19 @@ jobs:
         asset_name: paper-template.pdf
         asset_content_type: application/pdf
 
+    - name: Upload Grammarly
+      id: upload-release-grammarly
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+        asset_path: ./paper-template-grammarly.pdf
+        asset_name: paper-template-grammarly.pdf
+        asset_content_type: application/pdf
+
     - name: Upload Blind
-      id: upload-release-asset-2
+      id: upload-release-asset-blind
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -68,7 +85,7 @@ jobs:
         asset_content_type: application/pdf
 
     - name: UploadCamera
-      id: upload-release-asset-3
+      id: upload-release-asset-camera
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
