@@ -22,7 +22,7 @@ jobs:
       uses: xu-cheng/latex-action@master
       with:
         # The root LaTeX file to be compiled
-        root_file: paper-template-draft.tex
+        root_file: paper-template.tex
 
     - name: LaTeX compilation - Blind (for submsission)
       uses: xu-cheng/latex-action@master
@@ -48,8 +48,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: ./paper-template-draft.pdf
-        asset_name: paper-template-draft.pdf
+        asset_path: ./paper-template.pdf
+        asset_name: paper-template.pdf
         asset_content_type: application/pdf
     - name: Upload Release Asset
       id: upload-release-asset-2

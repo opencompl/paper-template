@@ -3,14 +3,13 @@
 \def\paperversiondraft{draft}
 \def\paperversionblind{blind}
 \def\paperversioncamera{camera}
-\ifx\paperversion\paperversiondraft
+
+% If no special paper-version is requested, compile in draft mode
+\ifx\paperversion\paperversionblind
 \else
-  \ifx\paperversion\paperversionblind
+  \ifx\paperversion\paperversioncamera
   \else
-    \ifx\paperversion\paperversioncamera
-    \else
-       \errmessage{paperversion must be set to 'draft', 'blind', or 'camera'}
-    \fi
+     \def\paperversion{draft}
   \fi
 \fi
 
