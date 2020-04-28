@@ -1,5 +1,5 @@
 # Source Latex files
-TEX_MAIN = ${PROJECTNAME}.tex
+TEX_MAIN = paper.tex
 
 TEX_MAIN_DRAFT = paper.tex
 TEX_MAIN_GRAMMARLY = grammarly.tex
