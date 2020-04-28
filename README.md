@@ -1,10 +1,10 @@
 ![Compile paper](../../workflows/Compile%20paper/badge.svg)
 
 Download:
-[Draft](../../releases/latest/download/paper-template.pdf) |
-[Grammarly](../../releases/latest/download/paper-template-grammarly.pdf) |
-[Blind (for submission)](../../releases/latest/download/paper-template-blind.pdf) |
-[Camera-Ready](../../releases/latest/download/paper-template-camera.pdf)
+[Draft](../../releases/latest/download/paper.pdf) |
+[Grammarly](../../releases/latest/download/grammarly.pdf) |
+[Blind (for submission)](../../releases/latest/download/blind.pdf) |
+[Camera-Ready](../../releases/latest/download/camera.pdf)
 
 This repository serves as a template for writing computer science papers in LaTeX. It supports
 the following useful features:

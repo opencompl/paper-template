@@ -1,4 +1,4 @@
-PROJECTNAME = paper-template
+PROJECTNAME = paper
 
 # Source Latex files
 TEX_MAIN = ${PROJECTNAME}.tex

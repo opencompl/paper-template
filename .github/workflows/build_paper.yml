@@ -21,23 +21,23 @@ jobs:
     - name: LaTeX compilation - Draft
       uses: xu-cheng/latex-action@master
       with:
-        root_file: paper-template.tex
+        root_file: paper.tex
 
     - name: LaTeX compilation - Blind (for submission)
       uses: xu-cheng/latex-action@master
       with:
-        root_file: paper-template-blind.tex
+        root_file: blind.tex
 
     - name: LaTeX compilation - Grammarly
       uses: xu-cheng/latex-action@master
       with:
-        root_file: paper-template-grammarly.tex
+        root_file: grammarly.tex
 
 
     - name: LaTeX compilation - Camera (for submission)
       uses: xu-cheng/latex-action@master
       with:
-        root_file: paper-template-camera.tex
+        root_file: camera.tex
 
     - name: Create Release
       id: create_release
@@ -58,8 +58,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: ./paper-template.pdf
-        asset_name: paper-template.pdf
+        asset_path: ./paper.pdf
+        asset_name: paper.pdf
         asset_content_type: application/pdf
 
     - name: Upload Grammarly
@@ -69,8 +69,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: ./paper-template-grammarly.pdf
-        asset_name: paper-template-grammarly.pdf
+        asset_path: ./grammarly.pdf
+        asset_name: grammarly.pdf
         asset_content_type: application/pdf
 
     - name: Upload Blind
@@ -80,8 +80,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: ./paper-template-blind.pdf
-        asset_name: paper-template-blind.pdf
+        asset_path: ./blind.pdf
+        asset_name: blind.pdf
         asset_content_type: application/pdf
 
     - name: UploadCamera
@@ -91,6 +91,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: ./paper-template-camera.pdf
-        asset_name: paper-template-camera.pdf
+        asset_path: ./camera.pdf
+        asset_name: camera.pdf
         asset_content_type: application/pdf
