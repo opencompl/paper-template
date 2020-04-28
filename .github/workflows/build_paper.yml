@@ -34,7 +34,7 @@ jobs:
         root_file: grammarly.tex
 
 
-    - name: LaTeX compilation - Camera (for submission)
+    - name: LaTeX compilation - Camera (for final publication)
       uses: xu-cheng/latex-action@master
       with:
         root_file: camera.tex
