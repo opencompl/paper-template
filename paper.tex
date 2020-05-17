@@ -52,7 +52,10 @@
    {\ifthenelse{\equal{##2}{}}{\colorwave[#2]{##1}\xspace}{ \todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}\colorwave[#2]{##1}}}}}
 \else
 \newcommand\createtodoauthor[2]{%
-\expandafter\newcommand\csname #1\endcsname[2][\@nil]{}}
+\def\tmpdefault{emptystring}
+\expandafter\newcommand\csname #1\endcsname[2][\tmpdefault]{\def\tmp{##1}\ifthenelse{\equal{\tmp}{\tmpdefault}}
+   {}
+   {\ifthenelse{\equal{##2}{}}{##1\xspace}{ ##1}}}}
 \fi
 
 % Broaden margins to make room for todo notes
