@@ -117,13 +117,16 @@
 %  Ben Liblit,
 %  Rholais Lii,
 %  LianTze Lim,
+%  Kuldeep S. Meel,
 %  Kai Mindermann,
 %  Frank Mittelbach,
 %  Serguei Mokhov,
 %  Ross Moore,
 %  John Owens,
 %  Joel Nider,
+%  Scott Pakin,
 %  Tobias Pape,
+%  Henning Pohl,
 %  Philip Quinn,
 %  Mathias Rav,
 %  Andreas Reichinger,
@@ -223,6 +226,7 @@
 % \item \textsl{geometry}, \url{http://www.ctan.org/pkg/geometry}
 % \item \textsl{graphics}, \url{http://www.ctan.org/pkg/graphics}
 % \item \textsl{hyperref}, \url{http://www.ctan.org/pkg/hyperref}
+% \item \textsl{hyperxmp}, \url{http://www.ctan.org/pkg/hyperxmp}
 % \item \textsl{iftex}, \url{http://www.ctan.org/pkg/iftex}
 % \item \textsl{inconsolata}, \url{http://www.ctan.org/pkg/inconsolata}
 % \item \textsl{libertine}, \url{http://www.ctan.org/pkg/libertine}
@@ -330,6 +334,10 @@
 % The option |review| is useful when combined with the |manuscript| format
 % option.  It provides a version suitable for reviewers and
 % copy editors.
+%
+% Two samples in the |samples| directory, |manuscript| and
+% |acmsmall-submission|, show manuscripts formatted for submission to
+% ACM.  
 %
 % The default for the option |screen| depends on the publication.  At
 % present it is |false| for all publications \emph{but} PACM, since
@@ -624,7 +632,11 @@
 % copy, but they \emph{are} necessary since they are used by the XML
 % metadata extraction programs.  Do \emph{not} put commas or |\\|
 % between the elements of \cs{affiliation}.  They will be provided
-% automatically.  
+% automatically.
+%
+% The fields \cs{institution}, \cs{city} and \cs{country} are
+% mandatory.  If they are not provided, the warning is issued.  In the
+% future ACM might decide to change the warning to the error.  
 %
 %
 % An example of the author block:
@@ -1671,6 +1683,9 @@
 % You should not abuse the command \cs{vspace}:  this command may
 % disturb the typesetting of ACM papers.
 %
+% You should not load |amssymb| package since the package |acmart|
+% defines the corresponding symbols itself.
+%
 %\subsection{A note for wizards: \texttt{acmart-preload-hook.tex}}
 %\label{sec:ug_preload}
 %
@@ -1871,7 +1886,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2020/04/30 v1.71 Typesetting articles for the Association for Computing Machinery]
+[2020/09/13 v1.73 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -2793,12 +2808,13 @@
 % \end{macro}
 %
 %
-% And now, |hyperref|
+% And now, |hyperref| 
 % \changes{v1.28}{2017/01/07}{Got rid of warnings in pdf keywords}
 % \changes{v1.46}{2017/08/25}{Delayed hypersetup since journal options
 % may change screen mode}
 % \changes{v1.55}{2018/10/20}{Now we use purple color for links}
-% \changes{v1.58}{2019/26/01}{Suppressed \cs{addtocounter} in pdf subject}
+% \changes{v1.58}{2019/26/01}{Suppressed \cs{addtocounter} in pdf
+% subject}
 %    \begin{macrocode}
 \let\@footnotemark@nolink\@footnotemark
 \let\@footnotetext@nolink\@footnotetext
@@ -2840,6 +2856,13 @@
   \hypersetup{pdflang={en},
     pdfdisplaydoctitle}}
 %    \end{macrocode}
+%
+% And |hyperxmp|
+% \changes{v1.72}{2020/06/14}{Added hyperxmp}
+%    \begin{macrocode}
+\RequirePackage{hyperxmp}
+%    \end{macrocode}
+% 
 %
 % Bibliography mangling.
 % \changes{v1.33}{2017/03/23}{Moved \cs{citename} definition for
@@ -3147,7 +3170,6 @@
 %
 % The code below is by Ross Moore.
 %    \begin{macrocode}
-\RequirePackage{iftex}
 \ifPDFTeX
 \input{glyphtounicode}
 \pdfglyphtounicode{f_f}{FB00}
@@ -3158,8 +3180,8 @@
 \pdfglyphtounicode{f_t}{0066 0074}
 \pdfglyphtounicode{T_h}{0054 0068}
 \pdfgentounicode=1
-\fi
 \RequirePackage{cmap}
+\fi
 %    \end{macrocode}
 %
 %
@@ -3173,7 +3195,7 @@
     have the libertine package installed.  Please upgrade your
     TeX}\@ACM@newfontsfalse}
 \IfFileExists{zi4.sty}{}{\ClassWarning{\@classname}{You do not
-    have the zi4 package installed.  Please upgrade your
+    have the inconsolata (zi4.sty) package installed.  Please upgrade your
     TeX}\@ACM@newfontsfalse}
 \IfFileExists{newtxmath.sty}{}{\ClassWarning{\@classname}{You do not
     have the newtxmath package installed.  Please upgrade your
@@ -3195,6 +3217,7 @@
 %    \begin{macrocode}
 \if@ACM@newfonts
   \RequirePackage[T1]{fontenc}
+  \RequirePackage[libertine]{newtxmath}
   \ifxetex
     \RequirePackage[tt=false]{libertine}
     \setmonofont[StylisticSet=3]{inconsolata}
@@ -3207,7 +3230,6 @@
        \RequirePackage[varqu]{zi4}
     \fi
   \fi
-  \RequirePackage[libertine]{newtxmath}
 \fi
 %    \end{macrocode}
 %
@@ -3274,6 +3296,8 @@
 % to prevent spurious space warnings}
 % \changes{v1.67}{2020/01/11}{Patching lstlisting and lstlisting*
 % to prevent spurious space warnings}
+% \changes{v1.73}{2020/08/23}{Patching minted and minted*
+% to prevent spurious space warnings}
 %    \begin{macrocode}
 \AtBeginEnvironment{figure}{\@Description@presentfalse
   \let\@vspace\@vspace@orig
@@ -3298,6 +3322,14 @@
 \AtBeginEnvironment{lstlisting}{\let\@vspace\@vspace@orig
   \let\@vspacer\@vspacer@orig}
 \AtBeginEnvironment{lstlisting*}{\let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig}
+\AtBeginEnvironment{minted}{\let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig}
+\AtBeginEnvironment{minted*}{\let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig}
+\AtBeginEnvironment{listing}{\let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig}
+\AtBeginEnvironment{listing*}{\let\@vspace\@vspace@orig
   \let\@vspacer\@vspacer@orig}
 
 %    \end{macrocode}
@@ -4055,10 +4087,11 @@
 % \changes{v1.46}{2017/08/27}{Started counting authors}
 % \changes{v1.54}{2018/06/23}{Added submission id in anonymous mode}
 % \changes{v1.57}{2018/12/09}{Added warning if \cs{author} has comma}
+% \changes{v1.72}{2020/05/04}{Added \cs{detokenize} (Kuldeep S. Meel)}
 %   Adding an author to the list of authors and addresses
 %    \begin{macrocode}
 \renewcommand\author[2][]{%
-  \IfSubStr{#2}{,}{\ClassWarning{\@classname}{Do not put several
+  \IfSubStr{\detokenize{#2}}{,}{\ClassWarning{\@classname}{Do not put several
       authors in the same \string\author\space macro!}}{}%
   \global\advance\num@authors by 1\relax
   \if@insideauthorgroup\else
@@ -5134,6 +5167,10 @@
 % \cs{maketitle}}
 % \changes{v1.64}{2019/08/17}{Added a switch setting to show that
 % \cs{maketitle} is typeset}
+% \changes{v1.72}{2020/06/14}{Do not andify authors for pdf metadata
+% (Scott Pakin)} 
+% \changes{v1.73}{2020/09/07}{Do not check again the presense of
+% address fields} 
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -5248,15 +5285,11 @@
        \fi
          \noindent\@keywords}\par\egroup
    \fi
-  \andify\authors
-  \andify\shortauthors
-  \global\let\authors=\authors
-  \global\let\shortauthors=\shortauthors
-  \if@ACM@printacmref
-     \@mkbibcitation
-  \fi
+  \let\metadata@authors=\authors
+  \nxandlist{, }{, }{, }\metadata@authors
+  \def\@ACM@checkaffil{}%
   \hypersetup{%
-    pdfauthor={\authors},
+    pdfauthor={\metadata@authors},
     pdftitle={\@title},
     pdfsubject={\@concepts},
     pdfkeywords={\@keywords},
@@ -5264,6 +5297,13 @@
       \csname ver@acmart.cls\endcsname\space
       and hyperref
       \csname ver@hyperref.sty\endcsname}}%
+  \andify\authors
+  \andify\shortauthors
+  \global\let\authors=\authors
+  \global\let\shortauthors=\shortauthors
+  \if@ACM@printacmref
+     \@mkbibcitation
+  \fi
   \global\@topnum\z@ % this prevents floats from falling
                      % at the top of page 1
   \global\@botnum\z@ % we do not want them to be on the bottom either
@@ -5577,6 +5617,7 @@
 % \begin{macro}{\institution}
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
+% \changes{v1.73}{2020/09/07}{Check the presence in affil}
 % \begin{macro}{\position}
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
@@ -5592,6 +5633,7 @@
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \changes{v1.40}{2017/06/15}{We now do not print this even in SIG}
+% \changes{v1.73}{2020/09/07}{Check the presence in affil}
 % \begin{macro}{\state}
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
@@ -5606,6 +5648,7 @@
 % \changes{v1.40}{2017/05/27}{Fixed bugs with extra spaces}
 % \changes{v1.43}{2017/07/11}{Added comma before country for journals}
 % \changes{v1.46}{2017/08/30}{Corrected spacing for institution}
+% \changes{v1.73}{2020/09/07}{Check the presence in affil}
 %   Theoretically we can define the macros for \cs{affiliation} inside
 %   the \cs{@mkauthors}-style commands.  However, this would lead to a
 %   strange error if an author uses them outside \cs{affiliation}.  Of
@@ -5615,21 +5658,24 @@
 \def\postcode#1{\unskip\ignorespaces}
 \if@ACM@journal
   \def\position#1{\unskip\ignorespaces}
-  \def\institution#1{\unskip~#1\ignorespaces}
-  \def\city#1{\unskip\ignorespaces}
+  \def\institution#1{\global\@ACM@instpresenttrue
+    \unskip~#1\ignorespaces}
+  \def\city#1{\global\@ACM@citypresenttrue\unskip\ignorespaces}
   \def\state#1{\unskip\ignorespaces}
   \newcommand\department[2][0]{\unskip\ignorespaces}
-  \def\country#1{\if@ACM@affiliation@obeypunctuation\else, \fi#1\ignorespaces}
+  \def\country#1{\global\@ACM@countrypresenttrue
+    \if@ACM@affiliation@obeypunctuation\else, \fi#1\ignorespaces}
 \else
   \def\position#1{\if@ACM@affiliation@obeypunctuation#1\else#1\par\fi}%
-  \def\institution#1{\if@ACM@affiliation@obeypunctuation#1\else#1\par\fi}%
+  \def\institution#1{\global\@ACM@instpresenttrue
+    \if@ACM@affiliation@obeypunctuation#1\else#1\par\fi}%
   \newcommand\department[2][0]{\if@ACM@affiliation@obeypunctuation
     #2\else#2\par\fi}%
 %  \def\streetaddress#1{\if@ACM@affiliation@obeypunctuation#1\else#1\par\fi}%
-  \let\city\@ACM@addtoaddress
+  \def\city#1{\global\@ACM@citypresenttrue\@ACM@addtoaddress{#1}}%
   \let\state\@ACM@addtoaddress
 %  \def\postcode#1{\if@ACM@affiliation@obeypunctuation#1\else\unskip\space#1\fi}%
-  \let\country\@ACM@addtoaddress
+  \def\country#1{\global\@ACM@countrypresenttrue\@ACM@addtoaddress{#1}}%
 \fi
 %    \end{macrocode}
 %
@@ -5738,11 +5784,78 @@
 %
 % \end{macro}
 %
+% \begin{macro}{\if@ACM@instpresent}
+% \changes{v1.73}{2020/09/07}{Added macro}
+% Whether the given affiliation has institution
+%    \begin{macrocode}
+\newif\if@ACM@instpresent
+\@ACM@instpresenttrue
+%    \end{macrocode}
+% 
+% \end{macro}
+%
+%
+% \begin{macro}{\if@ACM@citypresent}
+% \changes{v1.73}{2020/09/07}{Added macro}
+% Whether the given affiliation has city
+%    \begin{macrocode}
+\newif\if@ACM@citypresent
+\@ACM@citypresenttrue
+%    \end{macrocode}
+% 
+% \end{macro}
+% \begin{macro}{\if@ACM@countrypresent}
+% \changes{v1.73}{2020/09/07}{Added macro}
+% Whether the given affiliation has country
+%    \begin{macrocode}
+\newif\if@ACM@countrypresent
+\@ACM@countrypresenttrue
+%    \end{macrocode}
+% 
+% \end{macro}
+% 
+%
+% \begin{macro}{\@ACM@resetaffil}
+% \changes{v1.73}{2020/09/07}{Added macro}
+% Reset affiliation flags
+%    \begin{macrocode}
+\def\@ACM@resetaffil{%
+  \global\@ACM@instpresentfalse
+  \global\@ACM@citypresentfalse
+  \global\@ACM@countrypresentfalse
+}
+%    \end{macrocode}
+% 
+% \end{macro}
+%
+% \begin{macro}{\@ACM@checkaffil}
+% \changes{v1.73}{2020/09/07}{Added macro}
+% Check affiliation flags
+%    \begin{macrocode}
+\def\@ACM@checkaffil{%
+  \if@ACM@instpresent\else
+  \ClassWarningNoLine{\@classname}{No institution present for an affiliation}%
+  \fi
+  \if@ACM@citypresent\else
+  \ClassWarningNoLine{\@classname}{No city present for an affiliation}%
+  \fi
+  \if@ACM@countrypresent\else
+  \ClassWarningNoLine{\@classname}{No country present for an affiliation}%
+  \fi
+}
+%    \end{macrocode}
+% 
+% \end{macro}
+%
+%
+%
 %
 % \begin{macro}{\@mkauthors@i}
 % \changes{v1.18}{2016/07/12}{Now we andify affiliations}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \changes{v1.40}{2017/06/04}{Switched to MakeTextUppercase}
+% \changes{v1.73}{2020/09/07}{Check the presence of required elements
+% for affiliations}
 %   This version is used in most journal formats.  Note that \cs{and} between
 %   authors with the same affiliation becomes \verb*| and |:
 %    \begin{macrocode}
@@ -5764,11 +5877,13 @@
           \gdef\@currentaffiliations{%
             \setkeys{@ACM@affiliation@}{obeypunctuation=false}%
             \setkeys{@ACM@affiliation@}{##1}%
-            \@affiliationfont##2}%
+            \@ACM@resetaffil
+            \@affiliationfont##2\@ACM@checkaffil}%
        \else
          \g@addto@macro{\@currentaffiliations}{\and
            \setkeys{@ACM@affiliation@}{obeypunctuation=false}%
-           \setkeys{@ACM@affiliation@}{##1}##2}%
+           \setkeys{@ACM@affiliation@}{##1}\@ACM@resetaffil
+           ##2\@ACM@checkaffil}%
       \fi
     \fi
      \global\let\and\@typeset@author@line}%
@@ -5835,6 +5950,8 @@
 % \changes{v1.15}{2016/07/04}{New authors system}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \changes{v1.36}{2017/05/12}{Added authorsperrow overrride}
+% \changes{v1.73}{2020/09/07}{Check the presence of required elements
+% for affiliations}
 %   The |sigconf| version.  Here we use a centered design with each
 %   author in a separate box.
 %    \begin{macrocode}
@@ -5886,11 +6003,13 @@
   \def\affiliation##1##2{\ifx\@currentaffiliation\@empty
     \gdef\@currentaffiliation{%
       \setkeys{@ACM@affiliation@}{obeypunctuation=false}%
-      \setkeys{@ACM@affiliation@}{##1}##2}%
+      \setkeys{@ACM@affiliation@}{##1}\@ACM@resetaffil
+      ##2\@ACM@checkaffil}%
   \else
     \g@addto@macro\@currentaffiliation{\par
       \setkeys{@ACM@affiliation@}{obeypunctuation=false}%
-      \setkeys{@ACM@affiliation@}{##1}##2}%
+      \setkeys{@ACM@affiliation@}{##1}\@ACM@resetaffil
+      ##2\@ACM@checkaffil}%
   \fi
   \global\let\and\@typeset@author@bx
 }%
@@ -5910,6 +6029,8 @@
 % \begin{macro}{\@mkauthors@iv}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
 % \changes{v1.36}{2017/05/12}{Added authorsperrow overrride}
+% \changes{v1.73}{2020/09/07}{Check the presence of required elements
+% for affiliations}
 %   The |sigchi-a| version.  We put authors in the main text with
 %   no more than 2 authors per line, unless overriden.
 %    \begin{macrocode}
@@ -5953,11 +6074,13 @@
   \def\affiliation##1##2{\ifx\@currentaffiliation\@empty
     \gdef\@currentaffiliation{%
       \setkeys{@ACM@affiliation@}{obeypunctuation=false}%
-           \setkeys{@ACM@affiliation@}{##1}##2}%
+      \setkeys{@ACM@affiliation@}{##1}\@ACM@resetaffil
+      ##2\@ACM@checkaffil}%
   \else
     \g@addto@macro\@currentaffiliation{\par
       \setkeys{@ACM@affiliation@}{obeypunctuation=false}%
-      \setkeys{@ACM@affiliation@}{##1}##2}%
+      \setkeys{@ACM@affiliation@}{##1}\@ACM@resetaffil
+      ##2\@ACM@checkaffil}%
   \fi
   \global\let\and\@typeset@author@bx}%
 %
