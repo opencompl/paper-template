@@ -94,3 +94,10 @@ jobs:
         asset_path: ./camera.pdf
         asset_name: camera.pdf
         asset_content_type: application/pdf
+
+    - name: Publish generated content to GitHub Pages
+      uses: tsunematsu21/actions-publish-gh-pages@v1.0.1
+      with:
+        dir: .
+        branch: gh-pages
+        token: ${{ secrets.ACCESS_TOKEN }}
