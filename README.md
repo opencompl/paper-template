@@ -26,6 +26,5 @@ the following useful features:
       paper.pdf, grammarly.pdf, blind.pdf, and camera.pdf in the root folder of
       the GitHub page of this respository.
 
-      To enable this create go to the settings of this respository, create a
-      secret named `ACCESS_TOKEN` and store there an access token for your
-      GitHub account that allows write access to repositories.
+      WARNING: in case you use a private repository, you may need to push once manually
+      to the gh-pages branch for the rebuilds to be triggered.
