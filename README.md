@@ -24,7 +24,7 @@ the following useful features:
     - The rebuilt repository will be pushed to GitHub Pages to such that the PDFs are
       also available for users without a GitHub Account. The PDFs are availble as
       paper.pdf, grammarly.pdf, blind.pdf, and camera.pdf in the root folder of
-      the GitHub pages directory.
+      the GitHub page of this respository.
 
       To enable this create go to the settings of this respository, create a
       secret named `ACCESS_TOKEN` and store there an access token for your
