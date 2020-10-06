@@ -20,4 +20,3 @@ the following useful features:
     - Wide margins (that do not change the paper layout) to have plenty
       of room for comments
     - Pieces of text can be addressed specifically by underlining this text
-
