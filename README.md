@@ -15,8 +15,17 @@ the following useful features:
     - Grammarly: Draft without word-brakes and single-column to copy-paste into http://grammarly.com
     - Blind: No comments, anonymous for double-blind review
     - Camera: No comments, with author names for camery-ready publication
-  - Useful Comments
+  - Comments
     - Notes are in the margin to not change the length of the paper
     - Wide margins (that do not change the paper layout) to have plenty
       of room for comments
     - Pieces of text can be addressed specifically by underlining this text
+  - GitHub Pages Support
+    - The rebuilt repository will be pushed to GitHub Pages to such that the PDFs are
+      also available for users without a GitHub Account. The PDFs are availble as
+      paper.pdf, grammarly.pdf, blind.pdf, and camera.pdf in the root folder of
+      the GitHub page of this respository.
+
+      To enable this create go to the settings of this respository, create a
+      secret named `ACCESS_TOKEN` and store there an access token for your
+      GitHub account that allows write access to repositories.
