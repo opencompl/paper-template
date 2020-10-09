@@ -51,7 +51,6 @@ jobs:
         release_name: Release ${{ github.ref }}-${{ github.run_number }}
         draft: false
         prerelease: false
-        allowUpdates: true
 
     - name: Upload Draft
       id: upload-release-draft
