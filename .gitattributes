@@ -1,0 +1,5 @@
+.gitignore export-ignore
+blind.tex export-ignore
+grammarly.tex export-ignore
+create-source-archive.sh export-ignore
+.github/** export-ignore
