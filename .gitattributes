@@ -3,3 +3,7 @@ blind.tex export-ignore
 grammarly.tex export-ignore
 create-source-archive.sh export-ignore
 .github/** export-ignore
+.gitattributes export-ignore
+.latexmkrc export-ignore
+README.md export-ignore
+Makefile export-ignore
