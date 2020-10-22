@@ -4,7 +4,8 @@ Download:
 [Draft](../../releases/latest/download/paper.pdf) |
 [Grammarly](../../releases/latest/download/grammarly.pdf) |
 [Blind (for submission)](../../releases/latest/download/blind.pdf) |
-[Camera-Ready](../../releases/latest/download/camera.pdf)
+[Camera-Ready](../../releases/latest/download/camera.pdf) |
+[Paper Source Archive](../../releases/latest/download/paper-source.zip)
 
 This repository serves as a template for writing computer science papers in LaTeX. It supports
 the following useful features:
@@ -15,6 +16,9 @@ the following useful features:
     - Grammarly: Draft without word-brakes and single-column to copy-paste into http://grammarly.com
     - Blind: No comments, anonymous for double-blind review
     - Camera: No comments, with author names for camery-ready publication
+  - Automatically generate a source archive of the paper
+    By running `create-source-archive.sh` a file `paper-source.zip` is
+    generated that contains the paper latex sources.
   - Comments
     - Notes are in the margin to not change the length of the paper
     - Wide margins (that do not change the paper layout) to have plenty
