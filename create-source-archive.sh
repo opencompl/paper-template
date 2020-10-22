@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-git archive  --prefix="paper-source/" HEAD . > paper-source.zip
+git archive  --prefix="paper-source/" --format=zip HEAD . > paper-source.zip
