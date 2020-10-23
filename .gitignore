@@ -3,4 +3,9 @@
 *.fdb_latexmk
 *.out
 *.fls
+/*.pdf
+*.synctex.gz
+*.bbl
+*.blg
+*.zip
 tags
