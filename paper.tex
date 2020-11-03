@@ -49,6 +49,7 @@
 \usepackage{xifthen, xstring}
 \usepackage{ulem}
 \usepackage{xspace}
+\usepackage{marginnote}
 \makeatletter
 \font\uwavefont=lasyb10 scaled 652
 
@@ -60,13 +61,22 @@
 \def\tmpdefault{emptystring}
 \expandafter\newcommand\csname #1\endcsname[2][\tmpdefault]{\def\tmp{##1}\ifthenelse{\equal{\tmp}{\tmpdefault}}
    {\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}}
-   {\ifthenelse{\equal{##2}{}}{\colorwave[#2]{##1}\xspace}{ \todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}\colorwave[#2]{##1}}}}}
+   {\ifthenelse{\equal{##2}{}}{\colorwave[#2]{##1}\xspace}{ \todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}\colorwave[#2]{##1}}}}
+\expandafter\newcommand\csname #1f\endcsname[2][\tmpdefault]{
+	\marginnote{
+		\todo[inline,linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1 (Figure):} ##2}}
+   }
+}
+
 \else
 \newcommand\createtodoauthor[2]{%
 \def\tmpdefault{emptystring}
 \expandafter\newcommand\csname #1\endcsname[2][\tmpdefault]{\def\tmp{##1}\ifthenelse{\equal{\tmp}{\tmpdefault}}
    {}
-   {\ifthenelse{\equal{##2}{}}{##1\xspace}{ ##1}}}}
+   {\ifthenelse{\equal{##2}{}}{##1\xspace}{ ##1}}}
+\expandafter\newcommand\csname #1f\endcsname[2][\tmpdefault]{
+   }
+   }
 \fi
 
 % Broaden margins to make room for todo notes
@@ -316,6 +326,7 @@ which should not introduce overlong white space sequences.
 % https://docs.google.com/drawings/d/1juKp43D3rLC-luBQPwQZ_wCnDK2S_6C1k6USV0wKE0g/edit?usp=sharing
 \includegraphics[width=\columnwidth]{images/overview.pdf}
 \caption{Our key idea visualized}
+\grosserf{Replace this figure with your own drawing.}
 \end{figure}
 
 ~\\
