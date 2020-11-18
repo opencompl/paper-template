@@ -31,6 +31,8 @@
   \documentclass[sigplan]{acmart}\settopmatter{}
 \fi
 
+\usepackage{colortbl}
+
 % Most PL conferences are edited by conference-publishing.com. Follow their
 % advice to add the following packages.
 %
@@ -361,9 +363,37 @@ the remaining paper should be to support the claims stated here.
 
 \subsection{Figures}
 
+\paragraph{Color Scheme} 
+
+In Figures we use a color scheme that is print-friendly and also visible
+with red-green blindness. The following colors are all print-friendly
+and red-green save when only using Color 1-4:
+
+\medskip
+{
+	\small
+\newcolumntype{a}{>{\columncolor{pairedOneLightBlue}}c}
+\newcolumntype{b}{>{\columncolor{pairedTwoDarkBlue}}c}
+\newcolumntype{d}{>{\columncolor{pairedThreeLightGreen}}c}
+\newcolumntype{e}{>{\columncolor{pairedFourDarkGreen}}c}
+\newcolumntype{f}{>{\columncolor{pairedFiveLightRed}}c}
+\newcolumntype{g}{>{\columncolor{pairedSixDarkRed}}c}
+
+\begin{tabular}{a b d e f g}
+Color 1 & Color 2 & Color 3 & Color 4 & Color 5 & Color 6\\
+\#a6cee3 & \#1f78b4 & \#b2df8a & \#33a02c & \#fb9a99 & \#e31a1c
+\end{tabular}
+}
+
+Single-color graphs are plotted in Color 1 - Light Blue.
+
+\paragraph{Labels in Figures}
 Complex diagrams often benefit from labels inside the diagrams. We suggest to
 use a filled circle (e.g, in light blue) to highlight these numbers and use
 these references, e.g., \circled{1} implemented as \texttt{\textbackslash{}circled\{1\}}, in the text to refer to them.
+
+\paragraph{Plotting}
+For plotting we use matplotlib.
 
 \section{Related Work}
 
