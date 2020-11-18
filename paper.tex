@@ -115,6 +115,16 @@
 \renewcommand*{\subsectionautorefname}{Section}
 \renewcommand*{\subsubsectionautorefname}{Section}
 
+% \circled command to print a colored circle.
+% \circled{1} pretty-prints "(1)"
+% This is useful to refer to labels that are embedded within figures.
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,fill=pairedOneLightBlue,inner sep=1pt] (char) {#1};}}
+
+
 %% Note: Authors migrating a paper from traditional SIGPLAN
 %% proceedings format to PACMPL format should change 'sigplan' to
 %% 'acmsmall'.
@@ -349,7 +359,11 @@ the remaining paper should be to support the claims stated here.
 
 \section{Implementation}
 
-\lipsum[1-3]
+\subsection{Figures}
+
+Complex diagrams often benefit from labels inside the diagrams. We suggest to
+use a filled circle (e.g, in light blue) to highlight these numbers and use
+these references, e.g., \circled{1} implemented as \texttt{\textbackslash{}circled\{1\}}, in the text to refer to them.
 
 \section{Related Work}
 
