@@ -33,6 +33,14 @@
 
 \usepackage{colortbl}
 
+% 'draftonly' environment
+\usepackage{environ}
+\ifx\paperversion\paperversiondraft
+\newenvironment{draftonly}{}{}
+\else
+\NewEnviron{draftonly}{}
+\fi
+
 % Most PL conferences are edited by conference-publishing.com. Follow their
 % advice to add the following packages.
 %
@@ -400,6 +408,7 @@ the remaining paper should be to support the claims stated here.
 
 %% Appendix
 \appendix
+\begin{draftonly}
 \section{Formatting Guidelines}
 
 These formatting guidelines aim to standartize our writing. They ensure that
@@ -456,6 +465,7 @@ these references, e.g., \circled{1} implemented as \texttt{\textbackslash{}circl
 
 \paragraph{PlottingMatplotlib}
 For plotting we use matplotlib.
+\end{draftonly}
 
 
 \end{document}
