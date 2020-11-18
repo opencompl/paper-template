@@ -98,6 +98,8 @@
 %
 % https://colorbrewer2.org/#type=qualitative&scheme=Paired&n=4
 
+\definecolor{pairedNegOneLightGray}{HTML}{cacaca}
+\definecolor{pairedNegTwoDarkGray}{HTML}{827b7b}
 \definecolor{pairedOneLightBlue}{HTML}{a6cee3}
 \definecolor{pairedTwoDarkBlue}{HTML}{1f78b4}
 \definecolor{pairedThreeLightGreen}{HTML}{b2df8a}
@@ -385,6 +387,23 @@ Color 1 & Color 2 & Color 3 & Color 4 & Color 5 & Color 6\\
 \end{tabular}
 }
 
+We de-emphasize components in figures by using additionally two shades of gray.
+Especially in complex figures, it is often helpful to de-emphasize visual
+elements that we want to represent but that should not be the focus of a
+reader's attention.
+
+\medskip
+{
+	\small
+\newcolumntype{h}{>{\columncolor{pairedNegOneLightGray}}c}
+\newcolumntype{i}{>{\columncolor{pairedNegTwoDarkGray}}c}
+
+\begin{tabular}{h i}
+Color -1 & Color -2\\
+\#cacaca & \#827b7b\\
+\end{tabular}
+}
+
 Single-color graphs are plotted in Color 1 - Light Blue.
 
 \paragraph{Labels in Figures}
@@ -392,7 +411,7 @@ Complex diagrams often benefit from labels inside the diagrams. We suggest to
 use a filled circle (e.g, in light blue) to highlight these numbers and use
 these references, e.g., \circled{1} implemented as \texttt{\textbackslash{}circled\{1\}}, in the text to refer to them.
 
-\paragraph{Plotting}
+\paragraph{PlottingMatplotlib}
 For plotting we use matplotlib.
 
 \section{Related Work}
