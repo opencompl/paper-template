@@ -52,7 +52,7 @@ def createImageOfPaper(path, width = 7, pages = 21):
       cmd.append(name + "-tmp-row-" + str(row) + ".png")
     cmd.append("-append")
     cmd.append(name + "-full.png")
-    removePNGFiles(path, tmpOnly=True)
+    removePNGFiles(os.path.dirname(path), tmpOnly=True)
     run(cmd)
 
 def getReleases(path):
