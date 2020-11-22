@@ -36,13 +36,13 @@ def createImageOfPaper(path, width = 7, pages = 21):
         shutil.copyfile(name + ".png", name + "-tmp-0.png")
 
     for i in range(pageNumber, pages):
-        cmd = ['convert', '-size', '1020x1320', 'xc:white', name + '-' + str(i) + '.png']
+        cmd = ['convert', '-size', '1020x1320', 'xc:white', name + '-tmp-' + str(i) + '.png']
         run(cmd)
 
     for row in range(0, math.ceil(pages / width)):
         cmd = ['convert']
         for imageId in range(row * width, min((row + 1) * width, pages)):
-            cmd.append(name + "-" + str(imageId) + ".png")
+            cmd.append(name + "-tmp-" + str(imageId) + ".png")
         cmd.append("+append")
         cmd.append(name + "-tmp-row-" + str(row) + ".png")
         run(cmd)
@@ -52,8 +52,8 @@ def createImageOfPaper(path, width = 7, pages = 21):
       cmd.append(name + "-tmp-row-" + str(row) + ".png")
     cmd.append("-append")
     cmd.append(name + "-full.png")
-    removePNGFiles(os.path.dirname(path), tmpOnly=True)
     run(cmd)
+    removePNGFiles(os.path.dirname(path), tmpOnly=True)
 
 def getReleases(path):
     releases = os.listdir(path)
