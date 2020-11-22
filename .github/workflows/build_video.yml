@@ -32,7 +32,7 @@ jobs:
       run: sudo apt install imagemagick
 
     - name: Download artefacts
-      run: grd --token ${{ secrets.GITHUB_TOKEN }} --owner ${GITHUB_REPOSITORY_OWNER} --repository ${GITHUB_REPOSITORY_NAME}	 --timeout 3000 --parallel 20
+      run: grd --token ${{ secrets.GITHUB_TOKEN }} --owner ${GITHUB_REPOSITORY_OWNER} --repository ${GITHUB_REPOSITORY_NAME}	 --timeout 3000 --parallel 20 --filter-asset "blind.*"
 
     - name: Remove PDF restrictions
       run: sudo mv /etc/ImageMagick-6/policy.xml /etc/ImageMagick-6/policy.xmlout
