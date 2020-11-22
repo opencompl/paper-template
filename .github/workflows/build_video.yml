@@ -1,0 +1,60 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Create Video
+
+# Controls when the action will run. Triggers the workflow on push or pull request 
+# events but only for the master branch
+on: [tags]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    - uses: FranzDiebold/github-env-vars-action@v1.2.1
+
+    - uses: actions/checkout@v2
+
+    - name: Install GitHub Release Downloader
+      run: sudo npm install -g github-release-downloader
+
+    - name: Install FFMPEG
+      run: sudo apt install ffmpeg
+
+    - name: Install ImageMagick
+      run: sudo apt install imagemagick
+
+    - name: Download artefacts
+      run: grd --token ${{ secrets.GITHUB_TOKEN }} --owner ${GITHUB_REPOSITORY_OWNER} --repository ${GITHUB_REPOSITORY_NAME}	 --timeout 3000 --parallel 20
+
+    - name: Remove PDF restrictions
+      run: sudo mv /etc/ImageMagick-6/policy.xml /etc/ImageMagick-6/policy.xmlout
+
+    - name: Create Video
+      run: tools/create-video.py ${GITHUB_REPOSITORY_OWNER}/${GITHUB_REPOSITORY_NAME}
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@latest
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: video-${{ github.ref }}-release-${{ github.run_number }}
+        release_name: Release video-${{ github.ref }}-${{ github.run_number }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Video
+      id: upload-release-asset-archive
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+        asset_path: ./tobiasgrosser/paper-template-staging/refs/heads/video.mp4
+        asset_name: video.mp4
+        asset_content_type: video/mp4
