@@ -32,9 +32,8 @@ def createImageOfPaper(path, width = 7, pages = 21):
     run(cmd)
 
     pageNumber = getPageNumber(path);
-    run(['ls', os.path.dirname(path)])
     if pageNumber == 1:
-        shutil.copyfile(name + ".png", name + "-tmp-0.png")
+        shutil.copyfile(name + "-tmp.png", name + "-tmp-0.png")
 
     for i in range(pageNumber, pages):
         cmd = ['convert', '-size', '1020x1320', 'xc:white', name + '-tmp-' + str(i) + '.png']
