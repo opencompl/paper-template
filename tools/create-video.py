@@ -19,7 +19,7 @@ def removePNGFiles(directory):
     for f in files:
       os.remove(directory + '/' + f)
 
-def createImageOfPaper(path, width = 6, pages = 18):
+def createImageOfPaper(path, width = 7, pages = 21):
     print(path)
     removePNGFiles(os.path.dirname(path))
 
