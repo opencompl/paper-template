@@ -68,12 +68,13 @@ def getReleases(path):
     releases = list(releases)
     return list(releases)
 
+from multiprocessing import Pool
 
 def createImages(path):
     releases = getReleases(path)
 
-    for release in releases:
-        createImageOfPaper(release)
+    with Pool(4) as p:
+        p.map(createImageOfPaper, releases)
 
 def moveImages(path):
     removePNGFiles(path)
