@@ -84,7 +84,7 @@ def moveImages(path):
 
 def createVideo(path):
     run(['rm', path + 'video.mp4'])
-    cmd = ['ffmpeg', '-r', '1', '-i', path + 'still-%05d.png', '-vcodec', 'libx264', '-crf', '25', '-pix_fmt', 'yuv420p', path + 'video.mp4']
+    cmd = ['ffmpeg', '-r', '1', '-i', path + 'still-%05d.png', '-vcodec', 'libx264', '-crf', '25', '-pix_fmt', 'yuv420p', '-vf', 'scale=3840:2160', path + 'video.mp4']
     run(cmd)
     print(path + 'video.mp4')
 
