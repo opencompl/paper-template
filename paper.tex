@@ -464,8 +464,33 @@ Complex diagrams often benefit from labels inside the diagrams. We suggest to
 use a filled circle (e.g, in light blue) to highlight these numbers and use
 these references, e.g., \circled{1} implemented as \texttt{\textbackslash{}circled\{1\}}, in the text to refer to them.
 
-\paragraph{PlottingMatplotlib}
-For plotting we use matplotlib.
+\subsubsection{Plots} We use matplotlib to create performance
+plots such as \autoref{fig:speedup}. We use the following
+formatting guidelines:
+\begin{itemize}
+  \item Use a vertical y-label to make it easier to read.
+  \item Remove top and right frames to reduce visual noise
+	and allow the reader to focus on the data in the
+	figure.
+  \item Provide the concrete data at the top of each bar.
+\end{itemize}
+
+\noindent
+We also suggest to follow these technical remarks:
+\begin{itemize}
+  \item Create pdf plots and do not use bitmap formats (e.g., png) to
+	ensure high quality when zooming in.
+  \item Avoid Type-3 bitmap fonts by
+	setting fonttype to 42.
+\end{itemize}
+
+\begin{figure}
+\includegraphics[width=\columnwidth]{plots/speedup}
+\caption{Improved running speed after 4 weeks of training.
+}
+\label{fig:speedup}
+\end{figure}
+
 \end{draftonly}
 
 
