@@ -17,12 +17,22 @@ labels = ['G1', 'G2', 'G3', 'G4', 'G5']
 men_means = [1.5, 1.2, 1.3, 1.1, 1.0]
 women_means = [1.8, 1.5, 1.1, 1.3, 0.9]
 
+# Color palette
+light_gray = "#cacaca"
+dark_gray = "#827b7b"
+light_blue = "#a6cee3"
+dark_blue = "#1f78b4"
+light_green = "#b2df8a"
+dark_green = "#33a02c"
+light_red = "#fb9a99"
+dark_red = "#e31a1c"
+
 x = np.arange(len(labels))  # the label locations
 width = 0.35  # the width of the bars
 
 fig, ax = plt.subplots()
-rects1 = ax.bar(x - width/2, men_means, width, label='Men', color = "#a6cee3")
-rects2 = ax.bar(x + width/2, women_means, width, label='Women', color = "#1f78b4")
+rects1 = ax.bar(x - width/2, men_means, width, label='Men', color = light_blue)
+rects2 = ax.bar(x + width/2, women_means, width, label='Women', color = dark_blue)
 
 # Y-Axis Label
 #
