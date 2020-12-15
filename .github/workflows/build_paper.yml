@@ -16,7 +16,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@latest
 
     - name: LaTeX compilation - Draft
       uses: xu-cheng/latex-action@master
@@ -54,7 +54,7 @@ jobs:
 
     - name: Upload Draft
       id: upload-release-draft
-      uses: actions/upload-release-asset@v1
+      uses: actions/upload-release-asset@latest
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -65,7 +65,7 @@ jobs:
 
     - name: Upload Grammarly
       id: upload-release-grammarly
-      uses: actions/upload-release-asset@v1
+      uses: actions/upload-release-asset@latest
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -76,7 +76,7 @@ jobs:
 
     - name: Upload Blind
       id: upload-release-asset-blind
-      uses: actions/upload-release-asset@v1
+      uses: actions/upload-release-asset@latest
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -87,7 +87,7 @@ jobs:
 
     - name: Upload Camera-ready
       id: upload-release-asset-camera
-      uses: actions/upload-release-asset@v1
+      uses: actions/upload-release-asset@latest
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -98,7 +98,7 @@ jobs:
 
     - name: Upload Archive
       id: upload-release-asset-archive
-      uses: actions/upload-release-asset@v1
+      uses: actions/upload-release-asset@latest
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
