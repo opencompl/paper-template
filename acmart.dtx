@@ -104,6 +104,7 @@
 %  Andrew Black,
 %  Joachim Breitner,
 %  Benjamin Byholm,
+%  John Collins,
 %  Nils Anders Danielsson,
 %  Michael Ekstrand,
 %  Matthew Fluet,
@@ -635,8 +636,9 @@
 % automatically.
 %
 % The fields \cs{institution}, \cs{city} and \cs{country} are
-% mandatory.  If they are not provided, the warning is issued.  In the
-% future ACM might decide to change the warning to the error.  
+% mandatory.  If they are not provided, an error or a warning  is
+% issued. Currently the absence of \cs{country} produces and error;
+% ACM may change this in the future.
 %
 %
 % An example of the author block:
@@ -1686,7 +1688,7 @@
 % You should not load |amssymb| package since the package |acmart|
 % defines the corresponding symbols itself.
 %
-%\subsection{A note for wizards: \texttt{acmart-preload-hook.tex}}
+%\subsection{Notes for wizards}
 %\label{sec:ug_preload}
 %
 % Sometimes you need to change the behavior of |acmart|.  The
@@ -1728,6 +1730,13 @@
 % \emph{do not ask for support.}  If you decide to use this hook, you
 % are on your own.
 %
+% \DescribeMacro{\AtBeginMaketitle}%
+% Another hook is \cs{AtBeginMaketitle}.  The commands in this hook
+% are executed before \cs{maketitle}, for example,
+% \begin{verbatim}
+% \AtBeginMaketitle{\acmPrice{125.00}}
+% \end{verbatim}
+% 
 %
 %\subsection{Currently supported publications}
 %\label{sec:pubs}
@@ -1886,7 +1895,7 @@
 \ProvidesFile{acmart.dtx}
 %</gobble>
 %<class>\ProvidesClass{acmart}
-[2020/09/13 v1.73 Typesetting articles for the Association for Computing Machinery]
+[2020/11/15 v1.75 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -1990,7 +1999,9 @@
 % \changes{1.71}{2020/05/01}{Retired sigchi and sigchi-a}
 % \changes{1.71}{2020/05/02}{Bibliography change: volume for
 % @inproceedings is now in brackets together with series}
-% \changes{1.71}{2020/05/02}{LuaTeX now uses the OTF versions of fonts}
+% \changes{1.71}{2020/05/02}{LuaTeX now uses the OTF versions of
+% fonts}
+% \changes{1.75}{2020/10/29}{Documentation update}
 %
 % And the driver code:
 %    \begin{macrocode}
@@ -3212,22 +3223,29 @@
 % Breitner)}
 % \changes{v1.54}{2018/07/16}{XeTeX now uses T1 encoding}
 % \changes{v1.56}{2018/11/11}{Looks like XeTeX requires explicit
-% monotype font delcaration}
+% monotype font declaration}
+% \changes{v1.74}{2020/10/25}{Changed the order of font loading}%
 % We use Libertine throughout.
 %    \begin{macrocode}
 \if@ACM@newfonts
   \RequirePackage[T1]{fontenc}
-  \RequirePackage[libertine]{newtxmath}
+  % Note that the order in which packages are loaded matters,
+  % and the correct order depends on the LaTeX engine used.
+  % See https://github.com/borisveytsman/acmart/issues/402
+  % and https://github.com/borisveytsman/acmart/issues/410
   \ifxetex
+    \RequirePackage[libertine]{newtxmath}
     \RequirePackage[tt=false]{libertine}
     \setmonofont[StylisticSet=3]{inconsolata}
   \else
     \ifluatex
+      \RequirePackage[libertine]{newtxmath}
       \RequirePackage[tt=false]{libertine}
       \setmonofont[StylisticSet=3]{inconsolata}
     \else
        \RequirePackage[tt=false, type1=true]{libertine}
        \RequirePackage[varqu]{zi4}
+       \RequirePackage[libertine]{newtxmath}
     \fi
   \fi
 \fi
@@ -5123,8 +5141,34 @@
 %
 % \end{macro}
 %
+%
+%\subsection{Maketitle hook}
+%\label{sec:hook}
+%
+% The current \LaTeX\ provides a nice |lthooks| mechanism.  However,
+% since it is relatively new, we will use oldfashioned approach---at
+% least for now.
+%
+% \begin{macro}{\@beginmaketitlehook}
+% \changes{v1.75}{2020/11/15}{Introduced macro}
+% The hook
+%    \begin{macrocode}
+\ifx\@beginmaketitlehook\@undefined
+  \let\@beginmaketitlehook\@empty
+\fi
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\AtBeginMaketitle}
+% \changes{v1.75}{2020/11/15}{Introduced macro}
+% Adding to the hook
+%    \begin{macrocode}
+\def\AtBeginMaketitle{\g@addto@macro\@beginmaketitlehook}
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsection{Typesetting top matter}
-% \label{sec:makefile}
+% \label{sec:maketitle}
 %
 % \begin{macro}{\mktitle@bx}
 %   Some of our formats use a two-column design.  Some use a one-column
@@ -5171,6 +5215,7 @@
 % (Scott Pakin)} 
 % \changes{v1.73}{2020/09/07}{Do not check again the presense of
 % address fields} 
+% \changes{v1.75}{2020/11/15}{Added \cs{@beginmaketitlehook}} 
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -5179,7 +5224,7 @@
 %  and therefore belong to the copyright/permission block.  By the
 %  way, this was the default behavior of the old ACM classes.
 %    \begin{macrocode}
-\def\maketitle{%
+\def\maketitle{\@beginmaketitlehook
   \@ACM@maketitle@typesettrue
   \if@ACM@anonymous
     % Anonymize omission of \author-s
@@ -5830,6 +5875,7 @@
 %
 % \begin{macro}{\@ACM@checkaffil}
 % \changes{v1.73}{2020/09/07}{Added macro}
+% \changes{v1.75}{2020/11/15}{Changed warning to error for country}
 % Check affiliation flags
 %    \begin{macrocode}
 \def\@ACM@checkaffil{%
@@ -5840,7 +5886,8 @@
   \ClassWarningNoLine{\@classname}{No city present for an affiliation}%
   \fi
   \if@ACM@countrypresent\else
-  \ClassWarningNoLine{\@classname}{No country present for an affiliation}%
+  \ClassError{\@classname}{No country present for an affiliation}{ACM
+    requires each author to indicate their country using country macro.}%
   \fi
 }
 %    \end{macrocode}
