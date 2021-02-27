@@ -166,7 +166,7 @@ jobs:
       run: sudo apt install ffmpeg
 
     - name: Download artefacts
-      run: grd --token ${{ secrets.GITHUB_TOKEN }} --owner ${GITHUB_REPOSITORY_OWNER} --repository ${GITHUB_REPOSITORY_NAME}	 --timeout 3000 --parallel 20 --filter-asset "blind.png"
+      run: grd --token ${{ secrets.GITHUB_TOKEN }} --owner tobiasgrosser --repository paper-template	 --timeout 3000 --parallel 20 --filter-asset "blind.png"
 
     - name: Create Video
       run: tools/create-video-only.py ${GITHUB_REPOSITORY_OWNER}/${GITHUB_REPOSITORY_NAME}
