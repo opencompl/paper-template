@@ -114,7 +114,7 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Install ImageMagick
-      run: sudo apt install imagemagick
+      run: sudo apt install imagemagick ghostscript-x ghostscript
 
     - name: Remove PDF restrictions
       run: sudo mv /etc/ImageMagick-6/policy.xml /etc/ImageMagick-6/policy.xmlout
