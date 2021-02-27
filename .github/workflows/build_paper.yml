@@ -172,12 +172,12 @@ jobs:
       run: tools/create-video-only.py ${GITHUB_REPOSITORY_OWNER}/${GITHUB_REPOSITORY_NAME}
 
     - name: Upload Video
-      id: upload-release-asset-archive
+      id: upload-release-asset-video
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./${{ github.repository }}/refs/heads/video.mp4
         asset_name: blind.mp4
         asset_content_type: video/mp4
