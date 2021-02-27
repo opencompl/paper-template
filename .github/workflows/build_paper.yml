@@ -121,6 +121,10 @@ jobs:
 
     - name: Create Image (Blind)
       run: tools/create-image.py blind.pdf
+    - name: Create Image (Camera)
+      run: tools/create-image.py camera.pdf
+    - name: Create Image (Draft)
+      run: tools/create-image.py draft.pdf
 
     - name: Upload Image (Blind)
       id: upload-release-asset-image-blind
@@ -128,7 +132,29 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./blind.pdf-full.png
         asset_name: blind.png
-        asset_content_type: application/zip
+        asset_content_type: image/png
+
+    - name: Upload Image (Camera)
+      id: upload-release-asset-image-camera
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./camera.pdf-full.png
+        asset_name: camera.png
+        asset_content_type: image/png
+
+    - name: Upload Image (draft)
+      id: upload-release-asset-image-draft
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./paper.pdf-full.png
+        asset_name: paper.png
+        asset_content_type: image/png
