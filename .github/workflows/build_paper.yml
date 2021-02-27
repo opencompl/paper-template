@@ -119,10 +119,10 @@ jobs:
     - name: Remove PDF restrictions
       run: sudo mv /etc/ImageMagick-6/policy.xml /etc/ImageMagick-6/policy.xmlout
 
-    - name: Create Video
+    - name: Create Image (Blind)
       run: tools/create-image.py blind.pdf
 
-    - name: Upload Image Blind
+    - name: Upload Image (Blind)
       id: upload-release-asset-image-blind
       uses: actions/upload-release-asset@v1
       env:
