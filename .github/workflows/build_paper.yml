@@ -124,7 +124,7 @@ jobs:
     - name: Create Image (Camera)
       run: tools/create-image.py camera.pdf
     - name: Create Image (Draft)
-      run: tools/create-image.py draft.pdf
+      run: tools/create-image.py paper.pdf
 
     - name: Upload Image (Blind)
       id: upload-release-asset-image-blind
