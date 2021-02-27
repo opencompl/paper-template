@@ -5,7 +5,8 @@ Download:
 [Grammarly](../../releases/latest/download/grammarly.pdf) |
 [Blind (for submission)](../../releases/latest/download/blind.pdf) |
 [Camera-Ready](../../releases/latest/download/camera.pdf) |
-[Paper Source Archive](../../releases/latest/download/paper-source.zip)
+[Paper Source Archive](../../releases/latest/download/paper-source.zip) |
+[Video](../../releases/latest/download/blind.mp4)
 
 ![Blind Paper](../../releases/latest/download/blind.png)
 
@@ -28,8 +29,7 @@ the following useful features:
     - Pieces of text can be addressed specifically by underlining this text
     - Comments in float enviroments (e.g., figure)
   - Paper Video
-    Whenever a commit is tagged, the automatically built PDFs are combined into a release
-    video that illustrates the writing process.
+    - At each commit, we also build a small video that visualizes the paper-writing process
   - GitHub Pages Support
     - The rebuilt repository will be pushed to GitHub Pages to such that the PDFs are
       also available for users without a GitHub Account. The PDFs are availble as
