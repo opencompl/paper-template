@@ -112,3 +112,23 @@ jobs:
       with:
         publish_dir: .
         github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Install ImageMagick
+      run: sudo apt install imagemagick
+
+    - name: Remove PDF restrictions
+      run: sudo mv /etc/ImageMagick-6/policy.xml /etc/ImageMagick-6/policy.xmlout
+
+    - name: Create Video
+      run: tools/create-image.py blind.pdf
+
+    - name: Upload Image Blind
+      id: upload-release-asset-image-blind
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+        asset_path: ./blind.pdf-full.png
+        asset_name: blind.png
+        asset_content_type: application/zip
