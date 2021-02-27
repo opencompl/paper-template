@@ -7,6 +7,8 @@ Download:
 [Camera-Ready](../../releases/latest/download/camera.pdf) |
 [Paper Source Archive](../../releases/latest/download/paper-source.zip)
 
+![Blind Paper](../../releases/latest/download/blind.png)
+
 This repository serves as a template for writing computer science papers in LaTeX. It supports
 the following useful features:
 
@@ -37,4 +39,3 @@ the following useful features:
       WARNING: in case you use a private repository, you may need to push once manually
       to the gh-pages branch for the rebuilds to be triggered.
 
-![Blind Paper](../../releases/latest/download/blind.png)
