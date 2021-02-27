@@ -38,4 +38,3 @@ the following useful features:
 
       WARNING: in case you use a private repository, you may need to push once manually
       to the gh-pages branch for the rebuilds to be triggered.
-
