@@ -31,7 +31,7 @@ the following features:
   - Paper Video
     - At each commit, we also build a small video that visualizes the paper-writing process
   - GitHub Pages Support
-    - The rebuilt repository will be pushed to GitHub Pages to such that the PDFs are
+    - The rebuilt repository will be pushed to GitHub Pages such that the PDFs are
       also available for users without a GitHub Account. The PDFs are availble as
       paper.pdf, grammarly.pdf, blind.pdf, and camera.pdf in the root folder of
       the GitHub page of this respository.
