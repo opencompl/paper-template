@@ -140,8 +140,13 @@
 \@onlypreamble\requiredelimiter
 \makeatother
 
-\newcommand\toolname{Tool}
+\newcommand\newdelimitedcommand[2]{
+\expandafter\newcommand\csname #1\endcsname{#2}
 \requiredelimiter{\toolname}
+}
+
+\newdelimitedcommand{toolname}{Tool}
+
 
 % Print \autoref as "Section X.Y.Z"
 \renewcommand*{\sectionautorefname}{Section}
