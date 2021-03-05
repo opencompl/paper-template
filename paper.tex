@@ -142,7 +142,8 @@
 
 \newcommand\newdelimitedcommand[2]{
 \expandafter\newcommand\csname #1\endcsname{#2}
-\requiredelimiter{\toolname}
+\expandafter\requiredelimiter
+\csname #1 \endcsname
 }
 
 \newdelimitedcommand{toolname}{Tool}
