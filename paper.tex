@@ -124,6 +124,25 @@
 
 \graphicspath{{./images/}}
 
+% Define macros that are used in this paper
+%
+% We require all macros to end with a delimiter (by default {}) to enusure
+% that LaTeX adds whitespace correctly.
+\makeatletter
+\newcommand\requiredelimiter[2][########]{%
+  \ifdefined#2%
+    \def\@temp{\def#2#1}%
+    \expandafter\@temp\expandafter{#2}%
+  \else
+    \@latex@error{\noexpand#2undefined}\@ehc
+  \fi
+}
+\@onlypreamble\requiredelimiter
+\makeatother
+
+\newcommand\toolname{Tool}
+\requiredelimiter{\toolname}
+
 % Print \autoref as "Section X.Y.Z"
 \renewcommand*{\sectionautorefname}{Section}
 \renewcommand*{\subsectionautorefname}{Section}
@@ -344,6 +363,9 @@ which should not introduce overlong white space sequences.
 
 Sometimes it is also important to \emph{emphasize} text to understand if it is
 underlined or printed in italic.
+
+We sometimes use macros to state that a tool as the name \toolname{} in a
+flexible way.
 
 \lipsum[1-3]
 
