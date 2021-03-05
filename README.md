@@ -11,7 +11,7 @@ Download:
 ![Blind Paper](../../releases/latest/download/blind.png)
 
 This repository serves as a template for writing computer science papers in LaTeX. It supports
-the following useful features:
+the following features:
 
   - Automatic paper builds using GitHub Actions
   - Different variants of the same paper
