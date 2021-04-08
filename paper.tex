@@ -90,12 +90,26 @@
 \fi
 
 % Broaden margins to make room for todo notes
+\makeatletter
+\patchcmd{\@addmarginpar}{\ifodd\c@page}{\ifodd\c@page\@tempcnta\m@ne}{}{}
+\makeatother
 \ifx\paperversion\paperversiondraft
-  \paperwidth=\dimexpr \paperwidth + 6cm\relax
-  \oddsidemargin=\dimexpr\oddsidemargin + 3cm\relax
-  \evensidemargin=\dimexpr\evensidemargin + 3cm\relax
-  \marginparwidth=\dimexpr \marginparwidth + 3cm\relax
-  \setlength{\marginparwidth}{4.6cm}
+  \makeatletter
+  \if@ACM@journal
+    \paperwidth=\dimexpr \paperwidth + 3.5cm\relax
+    \oddsidemargin=\dimexpr\oddsidemargin + 0cm\relax
+    \evensidemargin=\dimexpr\evensidemargin + 0cm\relax
+    \marginparwidth=\dimexpr \marginparwidth + 3cm\relax
+    \setlength{\marginparwidth}{4.6cm}
+    \reversemarginpar
+  \else
+    \paperwidth=\dimexpr \paperwidth + 6cm\relax
+    \oddsidemargin=\dimexpr\oddsidemargin + 3cm\relax
+    \evensidemargin=\dimexpr\evensidemargin + 3cm\relax
+    \marginparwidth=\dimexpr \marginparwidth + 3cm\relax
+    \setlength{\marginparwidth}{4.6cm}
+  \fi
+  \makeatother
 \fi
 
 % We use the following color scheme
