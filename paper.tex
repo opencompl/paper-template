@@ -90,9 +90,11 @@
 \fi
 
 % Broaden margins to make room for todo notes
+\makeatletter
+\patchcmd{\@addmarginpar}{\ifodd\c@page}{\ifodd\c@page\@tempcnta\m@ne}{}{}
+\makeatother
 \ifx\paperversion\paperversiondraft
   \makeatletter
-  \patchcmd{\@addmarginpar}{\ifodd\c@page}{\ifodd\c@page\@tempcnta\m@ne}{}{}
   \if@ACM@journal
     \paperwidth=\dimexpr \paperwidth + 3.5cm\relax
     \oddsidemargin=\dimexpr\oddsidemargin + 0cm\relax
