@@ -6,7 +6,6 @@ Download:
 [Blind (for submission)](../../releases/latest/download/blind.pdf) |
 [Camera-Ready](../../releases/latest/download/camera.pdf) |
 [Paper Source Archive](../../releases/latest/download/paper-source.zip) |
-[Video](../../releases/latest/download/blind.mp4)
 
 ![Blind Paper](../../releases/latest/download/blind.png)
 
@@ -28,8 +27,6 @@ the following features:
       of room for comments
     - Pieces of text can be addressed specifically by underlining this text
     - Comments in float enviroments (e.g., figure)
-  - Paper Video
-    - At each commit, we also build a small video that visualizes the paper-writing process
   - GitHub Pages Support
     - The rebuilt repository will be pushed to GitHub Pages such that the PDFs are
       also available for users without a GitHub Account. The PDFs are availble as

@@ -158,29 +158,3 @@ jobs:
         asset_path: ./paper.pdf-full.png
         asset_name: paper.png
         asset_content_type: image/png
-
-    - name: Install GitHub Release Downloader
-      run: sudo npm install -g github-release-downloader
-
-    - name: Install FFMPEG
-      run: sudo apt install ffmpeg
-
-    - uses: FranzDiebold/github-env-vars-action@v1.2.1
-
-    - name: Download artefacts
-      run: grd --token ${{ secrets.GITHUB_TOKEN }} --owner ${GITHUB_REPOSITORY_OWNER} --repository ${GITHUB_REPOSITORY_NAME} --timeout 3000 --parallel 20 --filter-asset "blind.png"
-
-
-    - name: Create Video
-      run: tools/create-video-only.py ${GITHUB_REPOSITORY_OWNER}/${GITHUB_REPOSITORY_NAME}
-
-    - name: Upload Video
-      id: upload-release-asset-video
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./${{ github.repository }}/refs/heads/video.mp4
-        asset_name: blind.mp4
-        asset_content_type: video/mp4
