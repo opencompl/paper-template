@@ -374,19 +374,78 @@ the effective exploration of a large set of mapping choices.
 \end{itemize}
 
 The focus of year three in this Ambizione project was move our polyhedral core
-infrastructure into real-world compilers such as MLIR and improve its
-performance. In addition, we worked on establishing backend abstractions for 
-dral techniques. In the
-following, we discuss four milestones we identified as important to reach these goals:
-1. Fast, robust, and (provably?) correct polyhedral libraries
-2. Solid polyhedral compiler infrastructure
-• Modular pattern-based optimizations for CPU and GPU systems
-• DeLICM: Scalar dependence removal
-3. Precise cache models for fully-associative caches
-4. Domain-specific optimization for climate science
-The following two goals from year one remain important:
-1. Solidify and formalize our underlying models
-2. Effective accelerator offloading for large-scale programs
+infrastructure into real-world compilers (e.g, LLVM/MLIR) and improve its
+performance and scalability. In addition, we worked on establishing backends
+for targetting accelerators such as GPUs and FPGAs. Finally, we worked on
+performance modelling. As mentioned in the year 2 report, our focus moved from
+Julia to MLIR as a compiler and programming language infrastructure.
+
+In the following, we discuss four milestones we identified as important to
+reach these goals:
+
+\begin{enumerate}
+\item Fast, robust, and correct polyhedral libraries
+\item Solid polyhedral compiler infrastructure
+\begin{itemize}
+\item  Modular pattern-based optimizations for CPU and GPU systems
+\item 
+DeLICM: Scalar dependence removal
+\end{itemize}
+\item Domain-specific optimization for climate science
+\end{enumerate}
+
+
+\subsection{Fast, robust, and correct polyhedral libraries}
+Presburger arithmetic provides the mathematical core for the polyhedral
+compilation techniques that drive analytical cache models, loop optimization
+for ML and HPC, formal verification, and even hardware design.  Polyhedral
+compilation is widely regarded as being slow due to the potentially high
+computational cost of the underlying Presburger libraries. Researchers
+typically use these libraries as powerful black-box tools, but a lack of
+internal documentation and decade-old C implementations hold back broader
+performance-optimization efforts. With FPL, we introduced a new library for
+Presburger arithmetic for the MLIR compiler built from the ground up in modern
+C++. We carefully documented its internal algorithmic foundations, use
+lightweight C++ data structures to minimize memory management costs, and deployed
+transprecision computing across the entire library to effectively exploit
+machine integers and vector instructions. On a newly-developed comprehensive
+benchmark suite for Presburger arithmetic, we show a 5.25x speedup in total
+runtime over the state-of-the-art library isl in its default configuration and
+3.14x when over a variant of isl optimized with element-wise transprecision
+computing. We expect that the availability of a well-documented and fast
+Presburger library will accelerate the adoption of polyhedral compilation
+techniques in production compilers.
+
+The central compnents of this library have already been upstreamed into the
+open-source LLVM/MLIR project and are usable by the wider research and 
+industrial community.
+
+The work in this subproject has been published in \citet{grosser2020fast} and
+\citet{pichanatan2021}.
+
+\subsection{Domain-specific optimization for climate science}
+
+Most compilers have a single core intermediate representation (IR) (e.g., LLVM)
+sometimes complemented with vaguely-defined IR-like data structures. This IR is
+commonly low-level and close to machine instructions. As a result,
+optimizations relying on domain-specific information are either not possible or
+require complex analysis to recover the missing information. In contrast,
+multi-level rewriting instantiates a hierarchy of dialects (IRs), lowers
+programs level-by-level, and performs code transformations at the most suitable
+level. We demonstrate the effectiveness of this approach for the weather and
+climate domain. In particular, we develop a prototype compiler and design
+stencil- and GPU-specific dialects based on a set of newly introduced design
+principles. We find that two domain-specific optimizations (500 lines of code)
+realized on top of LLVM’s extensible MLIR compiler infrastructure suffice to
+outperform state-of-the-art solutions. In essence, multi-level rewriting
+promises to herald the age of specialized compilers composed from domain- and
+target-specific dialects implemented on top of a shared infrastructure.
+
+The GPU backend of the open-earth compiler has already been upstreamed into
+the open-source LLVM/MLIR project and is useable by the wider research
+and industrial community.
+
+The work in this subproject has been published in \citet{gysi2020ooc}
 
 \section{Deviations}
 
