@@ -2358,24 +2358,7 @@
     \lineskip=1pc\noindent
     \addresses\let\and\@typeset@author@bx\and\par\bigskip\egroup}
 \def\@mkauthorsaddresses{%
-  \ifnum\num@authors>1\relax
-  Authors' \else Author's \fi
-  \ifnum\num@authorgroups>1\relax
-  addresses: \else address: \fi
-  \bgroup
-  \def\streetaddress##1{\unskip, ##1}%
-  \def\postcode##1{\unskip, ##1}%
-  \def\position##1{\unskip\ignorespaces}%
-  \def\institution##1{\unskip, ##1}%
-  \def\city##1{\unskip, ##1}%
-  \def\state##1{\unskip, ##1}%
-  \renewcommand\department[2][0]{\unskip\@addpunct, ##2}%
-  \def\country##1{\unskip, ##1}%
-  \def\and{\unskip; }%
-  \def\@author##1{##1}%
-  \def\email##1##2{\unskip, \nolinkurl{##2}}%
-  \addresses
-  \egroup}
+  }
 \AtEndDocument{\if@ACM@nonacm\else\if@ACM@journal
   \ifx\@authorsaddresses\@empty
   \ClassWarningNoLine{\@classname}{Authors'
