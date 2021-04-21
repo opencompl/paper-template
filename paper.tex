@@ -304,8 +304,8 @@
 	\centering
 	Scientific Report - Summary of Research\\
 	~\\
-``Automatized compilation of sequential software to a diverse set of
-hardware accelerators''\\
+Automatized compilation of sequential software to a diverse set of
+hardware accelerators\\
 }
 ~\\
 \vspace{18em}
@@ -381,12 +381,12 @@ the effective exploration of a large set of mapping choices.
 \item Evolve our new performance modeling techniques to work within the resource constraints of Julias dynamic run-time system and use Julia to experiment with distributed learning techniques.
 \end{itemize}
 
-The focus of year three in this Ambizione project was move our polyhedral core
-infrastructure into real-world compilers (e.g, LLVM/MLIR) and improve its
-performance and scalability. In addition, we worked on establishing backends
-for targetting accelerators such as GPUs and FPGAs. Finally, we worked on
-performance modelling. As mentioned in the year 2 report, our focus moved from
-Julia to MLIR as a compiler and programming language infrastructure.
+The focus of year three in this Ambizione project was the integration of a scalable
+polyhedral core infrastructure into real-world compilers (e.g, LLVM/MLIR),
+establishing backends for targetting accelerators such as GPUs and FPGAs, and,
+finally, developing good performance models. As mentioned in the year 2
+report, our focus moved from Julia to MLIR as a compiler and programming
+language infrastructure.
 
 In the following, we discuss four milestones we identified as important to
 reach these goals:
@@ -399,7 +399,8 @@ reach these goals:
 \item 
 DeLICM: Scalar dependence removal
 \end{itemize}
-\item Domain-specific optimization for climate science
+\item Fast GPU code generation for climate models
+\item Code Generation for Emerging Architectures and FPGA
 \end{enumerate}
 
 
@@ -431,7 +432,7 @@ industrial community.
 The work in this subproject has been published in \citet{grosser2020fast} and
 \citet{pichanatan2021}.
 
-\subsection{Domain-specific optimization for climate science}
+\subsection{Fast GPU code generation for climate models}
 
 Most compilers have a single core intermediate representation (IR) (e.g., LLVM)
 sometimes complemented with vaguely-defined IR-like data structures. This IR is
@@ -454,6 +455,14 @@ the open-source LLVM/MLIR project and is useable by the wider research
 and industrial community.
 
 The work in this subproject has been published in \citet{gysi2020ooc}
+
+
+\subsection{Code Generation for Emerging Architectures and FPGA}
+
+In this context 
+
+The work in this subproject has been published in \citet{khan2020polyhedral},
+\citet{schueki2020llhd}, \citet{kurth2020mixed}.
 
 \section{Deviations}
 
