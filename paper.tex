@@ -244,7 +244,7 @@
 \usepackage{subcaption} %% For complex figures with subfigures/subcaptions
                         %% http://ctan.org/pkg/subcaption
 \usepackage{bibentry}
-
+\nobibliography*
 
 \makeatletter\if@ACM@journal\makeatother
 %% Journal information (used by PACMPL format)
@@ -279,7 +279,6 @@
 
 
 %% Bibliography style
-\bibliographystyle{ACM-Reference-Format}
 %% Citation style
 %% Note: author/year citations are required for papers published as an
 %% issue of PACMPL.
@@ -373,12 +372,24 @@ Grantee: Tobias Grosser\\
 \section{Research Output}
 
 \subsection{Publications (published)}
+\begin{itemize}
+	\item \bibentry{chelini2021mlir}
+	\item \bibentry{10.1145/3437801.3441613}
+	\item \bibentry{grosser2020fast}
+	\item \bibentry{chelini2020automatic}
+	\item \bibentry{khan2020polyhedral}
+	\item \bibentry{schueki2020llhd}
+	\item \bibentry{kurth2020mixed}
+	\item \bibentry{kourtis2020compiling}
+\end{itemize}
 \subsection{Publications (accepted)}
 \subsection{Publications (in preparation)}
-\bibentry{khan2020polyhedral}
+\begin{itemize}
+	\item \bibentry{gysi2020ooc}
+\end{itemize}
 
 %% Bibliography
 \bibliographystyle{plainnat}
-\bibliography{references}
+\nobibliography{references}
 
 \end{document}
