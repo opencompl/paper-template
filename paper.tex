@@ -363,6 +363,31 @@ Grantee: Tobias Grosser\\
 
 \section{Research Work Conducted}
 
+The primary goals of this Ambizione research project were proposed as:
+\begin{itemize}
+\item Develop a multi-target heterogeneous compute compiler for C++ and Julia code that generates binaries which effectively exploit
+OpenCL-capable accelerators including GPU, Xeon-Phi, and FPGA.
+\item Research new techniques to scale polyhedral optimization to large kernels and to improve their efficiency to a level that permits
+the effective exploration of a large set of mapping choices.
+\item Derive effective performance models based on hybrid analytical/machine-learning techniques and use them to analyze and optimize accelerator mapping decisions in a large body of existing software.
+\item Evolve our new performance modeling techniques to work within the resource constraints of Julias dynamic run-time system and use Julia to experiment with distributed learning techniques.
+\end{itemize}
+
+The focus of year three in this Ambizione project was move our polyhedral core
+infrastructure into real-world compilers such as MLIR and improve its
+performance. In addition, we worked on establishing backend abstractions for 
+dral techniques. In the
+following, we discuss four milestones we identified as important to reach these goals:
+1. Fast, robust, and (provably?) correct polyhedral libraries
+2. Solid polyhedral compiler infrastructure
+• Modular pattern-based optimizations for CPU and GPU systems
+• DeLICM: Scalar dependence removal
+3. Precise cache models for fully-associative caches
+4. Domain-specific optimization for climate science
+The following two goals from year one remain important:
+1. Solidify and formalize our underlying models
+2. Effective accelerator offloading for large-scale programs
+
 \section{Deviations}
 
 \section{Important Events}
