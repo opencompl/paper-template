@@ -1,20 +1,907 @@
-@article{grosser2015polyast,
- author = {Grosser, Tobias and Verdoolaege, Sven and Cohen, Albert},
- title = {Polyhedral {AST} Generation Is More Than Scanning Polyhedra},
- journal = {ACM Trans. Program. Lang. Syst.},
- issue_date = {July 2015},
- volume = {37},
- number = {4},
- month = jul,
- year = {2015},
- issn = {0164-0925},
- pages = {12:1--12:50},
- articleno = {12},
- numpages = {50},
- url = {http://doi.acm.org/10.1145/2743016},
- doi = {10.1145/2743016},
- acmid = {2743016},
+@inproceedings{trifunovic2010graphite,
+  title={Graphite Two Years After: First Lessons Learned From Real-World Polyhedral Compilation},
+  author={Trifunovic, Konrad and Cohen, Albert and Edelsohn, David and Li, Feng and Grosser, Tobias and Jagasia, Harsha and Ladelsky, Razya and Pop, Sebastian and Sj{\"o}din, Jan and Upadrasta, Ramakrishna},
+  booktitle={GCC Research Opportunities Workshop},
+  series={GROW},
+  _type="workshop",
+  _pdf={grosser-2010-Graphite-Two-Years-After-GROW.pdf},
+  _slides={grosser-2010-Graphite-Two-Years-After-GROW_slides.pdf},
+  year={2010}
+}
+
+@inproceedings{chelini2021mlir,
+  title={{Progressive Raising in Multi-level IR}},
+  author={Chelini, Lorenzo and Drebes, Andi and Zinenko, Oleksandr and Cohen, Albert and Vasilache, Nicolas and Grosser, Tobias and Corporaal, Henk},
+  pages = {to appear},
+  series = {CGO},
+  year={2021},
+  abstract={
+  Multi-level intermediate representations (IR) show great promise for lowering
+  the design costs for domain-specific compilers by providing a reusable,
+  extensible, and non-opinionated framework for expressing domain-specific and
+  high-level abstractions directly in the IR. But, while such frameworks support
+  the progressive lowering of high-level representations to low-level IR, they do
+  not raise in the opposite direction. Thus, the entry point into the compilation
+  pipeline defines the highest level of abstraction for all subsequent
+  transformations, limiting the set of applicable optimizations, in particular
+  for general-purpose languages that are not semantically rich enough to model
+  the required abstractions.
+
+  We propose Progressive Raising, a complementary approach to the
+  progressive lowering in multi-level IRs that raises from lower to higher-level
+  abstractions to leverage domain-specific transformations for low-level
+  representations. We further introduce Multi-level Tactics, our
+  declarative approach for progressive raising, implemented on top of the MLIR
+  framework, and demonstrate the progressive raising from affine loop nests
+  specified in a general-purpose language to high-level linear algebra
+  operations.  Our raising paths leverage subsequent high-level domain-specific
+  transformations with significant performance improvements.
+  },
+  _pdf = {chelini-2021-abstraction-raising.pdf}
+}
+
+@inproceedings{sjodin2009design,
+  title={Design of Graphite and the Polyhedral Compilation Package},
+  author={Sj{\"o}din, Jan and Pop, Sebastian and Jagasia, Harsha and Grosser, Tobias and Pop, Antoniu},
+  booktitle={GCC Developers' Summit},
+  _type="workshop",
+  _pdf = {grosser-2009-Design-of-Graphite-and-the-Polyhedral-Compilation-Package-GCC-Summit.pdf},
+  _slides = {grosser-2009-Design-of-Graphite-and-the-Polyhedral-Compilation-Package-GCC-Summit_slides.pdf},
+  year={2009}
+}
+
+@inproceedings{grosser2009optimizationOpportunities,
+  title={Optimization Opportunities Based on the Polyhedral Model in GRAPHITE},
+  booktitle={GCC Developers' Summit},
+  author={Grosser, Tobias},
+  _type="workshop",
+  _pdf = {grosser-2009-Optimization-opportunities-in-graphite-GCC-Summit.pdf},
+  _slides = {grosser-2009-Optimization-opportunities-in-graphite-GCC-Summit_slides.pdf},
+  year={2009}
+}
+
+@article{grosser2012polly,
+  title={Polly - Performing Polyhedral Optimizations on a Low-level Intermediate Representation},
+  author={Grosser, Tobias and Armin, Groesslinger and Lengauer, Christian},
+  series={PPL},
+  journal={Parallel Processing Letters},
+  volume={22},
+  number={04},
+  year={2012},
+  publisher={World Scientific Publishing Company},
+  _pdf = {grosser-2012-Polly-Performing-polyhedral-optimizations-on-a-low-level-intermediate-representation.pdf},
+  _note = {2nd most cited paper in PPL},
+  _note_url = {http://www.worldscientific.com/worldscinet/ppl?null&journalTabs=cited},
+  url = {http://www.worldscientific.com/doi/abs/10.1142/S0129626412500107?af=R}
+}
+
+@inproceedings{riyadh2012pencil,
+  title={Pencil: Towards a Platform-Neutral Compute Intermediate Language for DSLs},
+  author={Riyadh, Baghadi and Cohen, Albert and Guelton, Serge and Verdoolaege, Sven and Inoue, Jun and Grosser, Tobias and Kouveli, Georgia and Kravets, Alexey and Lokhmotov, Anton and Nugteren, Cedric and others},
+  booktitle={Second International Workshop on Domain-Specific
+Languages and High-Level Frameworks for High Performance
+Computing},
+  series={WOLFHPC},
+  _type="workshop",
+  year={2012}
+}
+
+@inproceedings{verdoolaege2012polyhedral,
+  title={Polyhedral Extraction Tool},
+  author={Verdoolaege, Sven and Grosser, Tobias},
+  booktitle={Second International Workshop on Polyhedral Compilation Techniques},
+  _type="workshop",
+  series={IMPACT},
+  _pdf={grosser-2012-Polyhedral-Extraction-Tool-IMPACT.pdf},
+  _slides={grosser-2012-Polyhedral-Extraction-Tool-IMPACT_slides.pdf},
+  year={2012}
+}
+
+@inproceedings{grosser2013split,
+  title={Split tiling for GPUs: automatic parallelization using trapezoidal tiles},
+  author={Grosser, Tobias and Cohen, Albert and Kelly, Paul HJ and Ramanujam, J and Sadayappan, P and Verdoolaege, Sven},
+  booktitle={Proc. of the 6th Workshop on General Purpose Processor Using Graphics Processing Units},
+  pages={24--31},
+  year={2013},
+  _type="workshop",
+  series={GPGPU},
+  organization={ACM}
+}
+
+@phdthesis{grosser2011diplomathesis,
+  title={Enabling Polyhedral Optimizations in LLVM},
+  author={Grosser, Tobias},
+  year={2011},
+  school={University of Passau},
+  _pdf = {grosser-2011-Enabling-Polyhedral-Optimizations-in-LLVM-diplomathesis.pdf}
+}
+
+@techreport{grosser2013promises,
+  TITLE = {The Promises of Hybrid Hexagonal/Classical Tiling for GPU},
+  AUTHOR = {Grosser, Tobias and Verdoolaege, Sven and Cohen, Albert and Sadayappan, P.},
+  URL = {https://hal.inria.fr/hal-00848691},
+  NUMBER = {RR-8339},
+  INSTITUTION = {{INRIA}},
+  YEAR = {2013},
+  MONTH = {Jul},
+  PDF = {https://hal.inria.fr/hal-00848691/file/RR-8339.pdf},
+  HAL_ID = {hal-00848691},
+  HAL_VERSION = {v1},
+}
+
+@inproceedings{grosser2014hybrid,
+  title={Hybrid Hexagonal/Classical Tiling for GPUs},
+  author={Grosser, Tobias and Cohen, Albert and Holewinski, Justin and Sadayappan, Ponuswamy and Verdoolaege, Sven},
+  booktitle={Proc. of Annual IEEE/ACM International Symposium on Code Generation and Optimization},
+  series={CGO},
+  pages={66},
+  year={2014},
+  organization={ACM},
+  _authorize={http://dl.acm.org/authorize?N91181}
+}
+
+@inproceedings{verdoolaege2014schedule,
+  title={Schedule Trees},
+  author={Verdoolaege, Sven and Guelton, Serge and Grosser, Tobias and Cohen, Albert},
+  booktitle={Proc. of the 4th International Workshop on Polyhedral Compilation Techniques. Vienna, Austria},
+  _type="workshop",
+  series = {IMPACT},
+  _pdf = {grosser-2014-Schedule-Trees.pdf},
+  _slides = {grosser-2014-Schedule-Trees_slides.pdf},
+  year={2014}
+}
+
+@article{grosser2014relation,
+  title={The relation between diamond tiling and hexagonal tiling},
+  author={Grosser, Tobias and Verdoolaege, Sven and Cohen, Albert and Sadayappan, P},
+  journal={Parallel Processing Letters},
+  series={PPL},
+  volume={24},
+  number={03},
+  pages={1441002},
+  year={2014},
+  publisher={World Scientific Publishing Company},
+  url={http://www.worldscientific.com/doi/abs/10.1142/S0129626414410023}
+}
+
+@inproceedings{stock2014framework,
+ author = {Stock, Kevin and Kong, Martin and Grosser, Tobias and Pouchet, Louis-No\"{e}l and Rastello, Fabrice and Ramanujam, J. and Sadayappan, P.},
+ title = {A Framework for Enhancing Data Reuse via Associative Reordering},
+ booktitle = {Proc. of the 35th ACM SIGPLAN Conference on Programming Language Design and Implementation},
+ series = {PLDI},
+ year = {2014},
+ isbn = {978-1-4503-2784-8},
+ location = {Edinburgh, United Kingdom},
+ pages = {65--76},
+ numpages = {12},
+ url = {http://doi.acm.org/10.1145/2594291.2594342},
+ _authorize = {http://dl.acm.org/authorize?N91180},
+ _pdf = {grosser-2014-A-Framework-for-Enhanced-Data-Reuse-via-Associative-Reordering.pdf},
+ doi = {10.1145/2594291.2594342},
+ acmid = {2594342},
  publisher = {ACM},
  address = {New York, NY, USA},
- keywords = {Polyhedral compilation, Presburger relations, code generation, index set splitting, unrolling},
 } 
+
+@phdthesis{grosser2014thesis,
+  title={A Decoupled Approach to High-level Loop Optimization: Tile Shapes, Polyhedral Building Blocks and Low-level Compilers},
+  author={Grosser, Tobias},
+  year={2014},
+  school={Universit{\'e} Pierre et Marie Curie},
+  _pdf = {grosser-2014-A-Decoupled-Approach-to-High-Level-Loop-Optimization-doctoral-thesis.pdf}
+}
+
+@inproceedings{grosser2015recovering,
+  title={On Recovering Multi-Dimensional Arrays in Polly},
+  author={Grosser, Tobias and Pop, Sebastian and Ramanujam, J and Sadayappan, P},
+  booktitle={Proc. of the Fifth International Workshop on Polyhedral Compilation Techniques},
+  series={IMPACT},
+  year={2015},
+  _pdf = {grosser-2015-On-Recovering-Multi-Dimensional-Arrays-in-Polly.pdf},
+  _slides = {grosser-2015-On-Recovering-Multi-Dimensional-Arrays-in-Polly_slides.pdf},
+  _type={workshop}
+}
+
+@inproceedings{gysi2015modesto,
+  title={MODESTO: Data-centric Analytic Optimization of Complex Stencil programs on Heterogeneous Architectures},
+  author={Gysi, Tobias and Grosser, Tobias and Hoefler, Torsten},
+  booktitle={Proc. of the 29th ACM on International Conference on Supercomputing},
+  pages={177--186},
+  year={2015},
+  series={ICS},
+  _authorize={http://dl.acm.org/authorize?N20709},
+  _pdf={grosser-2015-MODESTO-Data-centric-Analytical-Optimization-of-Complex-Stencil-Programs-on-Heterogenous-Architectures.pdf},
+  organization={ACM}
+}
+
+@article{grosser2015polyhedral,
+  title={Polyhedral AST generation is more than scanning polyhedra},
+  author={Grosser, Tobias and Verdoolaege, Sven and Cohen, Albert},
+  journal={ACM Transactions on Programming Languages and Systems},
+  series={TOPLAS},
+  volume={37},
+  number={4},
+  pages={12},
+  year={2015},
+  publisher={ACM},
+  _pdf={grosser-2015-Polyhedral-AST-generation-is-more-than-scanning-polyhedra.pdf},
+  _slides={grosser-2015-Polyhedral-AST-generation-is-more-than-scanning-polyhedra_slides.pdf},
+  _authorize = {http://dl.acm.org/authorize?N06202}
+}
+
+@inproceedings{grosser2015optimistic,
+  title={Optimistic Delinearization of Parametrically Sized Arrays},
+  author={Grosser, Tobias and Ramanujam, J. and Pouchet, Louis-Noel and Sadayappan, Ponnuswamy and Pop, Sebastian},
+  booktitle={Proc. of the 29th ACM on International Conference on Supercomputing},
+  pages={351--360},
+  year={2015},
+  series={ICS},
+  organization={ACM},
+  _authorize={http://dl.acm.org/authorize?N91189}
+}
+
+@inproceedings{baghdadi2015pencil,
+  title={PENCIL: A Platform-Neutral Compute Intermediate Language for Accelerator Programming},
+  author={Baghdadi, Riyadh and Beaugnon, Ulysse and Cohen, Albert and Grosser, Tobias and Kruse, Michael and Reddy, Chandan and Verdoolaege, Sven and Betts, Adam and Donaldson, Alastair F and Ketema, Jeroen and others},
+  booktitle={2015 International Conference on Parallel Architecture and Compilation},
+  pages={138--149},
+  year={2015},
+  series={PACT},
+  url={http://ieeexplore.ieee.org/document/7429301/},
+  organization={IEEE}
+}
+
+@inproceedings{gruber2015runtime,
+  title={Runtime pointer disambiguation},
+  author={Gruber, Fabian and Doerfert, Johannes and Lambrineas, Alexandros and Grosser, Tobias and Rastello, Fabrice and Pereira, Fernando Magno Quint{\~a}o},
+  booktitle={Proc. of the 2015 ACM SIGPLAN International Conference on Object-Oriented Programming, Systems, Languages, and Applications},
+  series = {OOPSLA},
+  pages={18},
+  year={2015},
+  _authorize={http://dl.acm.org/authorize?N20708},
+  organization={ACM}
+}
+
+@inproceedings{beaugnon2014pencil,
+  title={PENCIL: A platform-neutral intermediate language for the parallelizing compilation of DSLs},
+  author={Beaugnon, Ulysse and Baghdadi, Riyadh and Absar, Javed and Betts, Adam and Cohen, Albert and Donaldson, Alastair and Grosser, Tobias and Haastregt, Sven and Hu, Yabin and Ketema, Jeroen and others},
+  booktitle={Domain-Specific Language Design and Implementation},
+  series={DSLDI},
+  _type="workshop",
+  year={2014}
+}
+
+@inproceedings{grosser2016pollyacc,
+ author = {Grosser, Tobias and Hoefler, Torsten},
+ title = {Polly-ACC Transparent Compilation to Heterogeneous Hardware},
+ booktitle = {Proc. of the 2016 International Conference on Supercomputing},
+ series = {ICS},
+ year = {2016},
+ isbn = {978-1-4503-4361-9},
+ location = {Istanbul, Turkey},
+ pages = {1:1--1:13},
+ articleno = {1},
+ numpages = {13},
+ url = {http://doi.acm.org/10.1145/2925426.2926286},
+ doi = {10.1145/2925426.2926286},
+ acmid = {2926286},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {Auto-Parallelization, GPGPU, Polyhedral Compilation},
+ _pdf = {grosser-2016-polly-acc-transparent-compilation-to-heterogeneous-hardware.pdf},
+ abstract = {Programming today's increasingly complex heterogeneous hardware is difficult, as it commonly requires the use of data-parallel languages, pragma annotations, specialized libraries, or DSL compilers. Adding explicit accelerator support into a larger code base is not only costly, but also introduces additional complexity that hinders long-term maintenance. We propose a new heterogeneous compiler that brings us closer to the dream of automatic accelerator mapping. Starting from a sequential compiler IR, we automatically generate a hybrid executable that - in combination with a new data management system - transparently offloads suitable code regions. Our approach is almost regression free for a wide range of applications while improving a range of compute kernels as well as two full SPEC CPU applications. We expect our work to reduce the initial cost of accelerator usage and to free developer time to investigate algorithmic changes.}
+} 
+
+@techreport{baghdadi2015pencilspec,
+  TITLE = {{PENCIL Language Specification}},
+  AUTHOR = {Baghdadi, Riyadh and Cohen, Albert and Grosser, Tobias and Verdoolaege, Sven and Lokhmotov, Anton and Absar, Javed and Van Haastregt, Sven and Kravets, Alexey and Donaldson, Alastair},
+  URL = {https://hal.inria.fr/hal-01154812},
+  NUMBER = {RR-8706},
+  PAGES = {37},
+  INSTITUTION = {{INRIA}},
+  YEAR = {2015},
+  MONTH = {May},
+  KEYWORDS = {PENCIL ; DSL ; Accelerator ; Domain Specific Language ; Intermediate Language ; OpenCL},
+  PDF = {https://hal.inria.fr/hal-01154812/file/RR-8706.pdf},
+  HAL_ID = {hal-01154812},
+  HAL_VERSION = {v3},
+}
+
+@inproceedings{grosser2011polly,
+  title={Polly - Polyhedral optimization in LLVM},
+  author={Grosser, Tobias and Zheng, Hongbin and Aloor, Raghesh and Simb{\"u}rger, Andreas and Gr{\"o}{\ss}linger, Armin and Pouchet, Louis-No{\"e}l},
+  booktitle={Proc. of the First International Workshop on Polyhedral Compilation Techniques},
+  series={IMPACT},
+  volume={2011},
+  _type="workshop",
+  _pdf={grosser-2011-Polly-Polyhedral-Optimizations-in-LLVM-IMPACT.pdf},
+  _slides={grosser-2011-Polly-Polyhedral-Optimizations-in-LLVM-IMPACT_slides.pdf},
+  year={2011}
+}
+
+@inproceedings{prajapati2017timemodeling,
+ author = {Prajapati, Nirmal and Ranasinghe, Waruna and Rajopadhye, Sanjay and Andonov, Rumen and Djidjev, Hristo and Grosser, Tobias},
+ title = {Simple, Accurate, Analytical Time Modeling and Optimal Tile Size Selection for GPGPU Stencils},
+ booktitle = {Proc. of the 22Nd ACM SIGPLAN Symposium on Principles and Practice of Parallel Programming},
+ series = {PPoPP},
+ year = {2017},
+ isbn = {978-1-4503-4493-7},
+ location = {Austin, Texas, USA},
+ pages = {163--177},
+ numpages = {15},
+ url = {http://doi.acm.org/10.1145/3018743.3018744},
+ _authorize={http://dl.acm.org/authorize?N21650},
+ _pdf = {grosser-2017-Simple-Accurate-Analytical-Time-Modeling-and-Optimal-Tile-Size-Selection-for-GPGPU-Stencils.pdf},
+ doi = {10.1145/3018743.3018744},
+ acmid = {3018744},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {analytical models, gpgpu, hybrid hexagonal classic tiling, performance prediction, polyhedral method, stencils},
+ abstract = {Stencil computations are an important class of compute and data
+intensive programs that occur widely in scientific and engineeringapplications.
+A number of tools use sophisticated tiling, parallelization, and memory mapping
+strategies, and generate code that relies on vendor-supplied compilers. This
+code has a number of parameters, such as tile sizes, that are then tuned via
+empirical exploration.
+
+We develop a model that guides such a choice. Our model is a simple set of
+analytical functions that predict the execution time of the generated code. It
+is deliberately optimistic, since tile
+sizes and, moreover, the optimistic assumptions are intended to enable we are
+targeting modeling and parameter selections yielding highly tuned codes.
+
+We experimentally validate the model on a number of 2D and 3D stencil codes,
+and show that the root mean square error in the execution time is less than
+10\% for the subset of the codes that achieve performance within 20\% of the
+best. Furthermore, script, based on using our model, we are able to predict
+tile sizes that achieve a further improvement of 9\% on average.}
+}
+
+@inproceedings{doerfert2017optimistic,
+ author = {Doerfert, Johannes and Grosser, Tobias and Hack, Sebastian},
+ title = {Optimistic Loop Optimization},
+ booktitle = {Proc. of the 2017 International Symposium on Code Generation and Optimization},
+ series = {CGO},
+ year = {2017},
+ isbn = {978-1-5090-4931-8},
+ location = {Austin, USA},
+ pages = {292--304},
+ numpages = {13},
+ url = {http://dl.acm.org/citation.cfm?id=3049832.3049864},
+ acmid = {3049864},
+ _pdf = {grosser-2017-Optimistic-Loop-Optimization.pdf},
+ _slides = {grosser-2017-Optimistic-Loop-Optimization_slides.pdf},
+ publisher = {IEEE Press},
+ address = {Piscataway, NJ, USA},
+ keywords = {Polyhedral Model, Presburger Precondition, Program Versioning, Static Analysis},
+ abstract = {Compilers use static analyses to justify program optimizations.
+As every optimization must preserve the semantics of the original program,
+static analysis typically fall-back to conservative approximations.
+Consequently, the set of states for which the optimization is invalid is
+overapproximated and potential optimization opportunities are missed. Instead
+of justifying the optimization statically, a compiler can also synthesize
+preconditions that imply the correctness of the optimizations and are checked
+at the runtime of the program.  In this paper, we present a framework to
+collect, generalize, and simplify assumptions based on Presburger arithmetic.
+We introduce different assumptions necessary to enable a variety of complex
+loop transformations and derive a (close to) minimal set of preconditions to
+validate them at runtime. Our evaluation shows that the runtime verification
+introduces negligible overhead and that the assumptions we propose almost
+always hold true. On a large benchmark set including SPEC and NPB our technique
+increases the number of modeled non-trivial loop nests by a factor of 3.9×.}
+}
+@inproceedings{Kruse2018,
+ author = {Kruse, Michael and Grosser, Tobias},
+ title = {DeLICM: Scalar Dependence Removal at Zero Memory Cost},
+ booktitle = {Proc. of the 2018 International Symposium on Code Generation and Optimization},
+ series = {CGO},
+ year = {2018},
+ isbn = {978-1-4503-5617-6},
+ location = {Vienna, Austria},
+ pages = {241--253},
+ numpages = {13},
+ url = {https://dl.acm.org/authorize?N663340},
+ doi = {10.1145/3168815},
+ acmid = {3168815},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ _pdf = {kruse-2018-DeLICM-Scalar-dependence-removal-at-zero-memory-cost.pdf},
+ keywords = {LLVM, Polly, Polyhedral Framework, Scalar Dependence},
+ abstract = {
+  Increasing data movement costs motivate the integration of polyhedral loop optimizers in the standard flow (-O3) of production compilers. While polyhedral optimizers have been shown to be effective when applied as source-to-source transformation, the single static assignment form used in modern compiler mid-ends makes such optimizers less effective. Scalar dependencies (dependencies carried over a single memory location) are the main obstacle preventing effective optimization. We present DeLICM, a set of transformations which, backed by a polyhedral value analysis, eliminate problematic scalar dependences by 1) relocating scalar memory references to unused array locations and by 2) forwarding computations that otherwise cause scalar dependences. Our experiments show that DeLICM effectively eliminates dependencies introduced by compiler-internal canonicalization passes, human programmers, optimizing code generators, or inlining -- without the need for any additional memory allocation. As a result, polyhedral loop optimizations can be better integrated into compiler pass pipelines which is essential for metaprogramming optimization.
+ }
+}
+
+@inproceedings{Zinenko2018,
+ author = {Zinenko, Oleksandr and Verdoolaege, Sven and Reddy, Chandan and Shirako, Jun and Grosser, Tobias and Sarkar, Vivek and Cohen, Albert},
+ title = {Modeling the Conflicting Demands of Parallelism and Temporal/Spatial Locality in Affine Scheduling},
+ booktitle = {Proc. of the 27th International Conference on Compiler Construction},
+ series = {CC},
+ year = {2018},
+ isbn = {978-1-4503-5644-2},
+ location = {Vienna, Austria},
+ pages = {3--13},
+ numpages = {11},
+ url = {https://dl.acm.org/authorize?N663341},
+ doi = {10.1145/3178372.3179507},
+ acmid = {3179507},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {Compiler Optimizations, Polyhedral Model},
+ abstract = {
+The construction of effective loop nest optimizers and parallelizers remains challenging despite decades of work in the area. Due to the increasing diversity of loop-intensive applications and to the complex memory/computation hierarchies in modern processors, optimization heuristics are pulled towards conflicting goals, highlighting the lack of a systematic approach to optimizing locality and parallelism. Acknowledging these conflicting demands on loop nest optimization, we propose an algorithmic template capable of modeling the multi-level parallelism and the temporal/spatial locality of multiprocessors and accelerators. This algorithmic template orchestrates a collection of parameterizable, linear optimization problems over a polyhedral space of semantics-preserving transformations. While the overall problem is not convex, effective algorithms can be derived from this template delivering unprecedented performance portability over GPU and multicore CPU. We discuss the rationale for this algorithmic template and validate it on representative computational kernels/benchmarks.
+ }
+}
+
+@article{Gareev2018,
+ author = {Gareev, Roman and Grosser, Tobias and Kruse, Michael},
+ title = {High-Performance Generalized Tensor Operations: A Compiler-Oriented Approach},
+ series = {TACO},
+ journal = {ACM Trans. Archit. Code Optim.},
+ volume = {15},
+ number = {3},
+ month = {Sep},
+ year = {2018},
+ issn = {1544-3566},
+ pages = {34:1--34:27},
+ articleno = {34},
+ numpages = {27},
+ url = {https://dl.acm.org/authorize?N663342},
+ doi = {10.1145/3235029},
+ acmid = {3235029},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {Tensor contractions, high-performance computing, matrix-matrix multiplication},
+ abstract = {
+  The efficiency of tensor contraction is of great importance. Compilers cannot
+optimize it well enough to come close to the performance of expert-tuned
+implementations. All existing approaches that provide competitive performance
+require optimized external code. We introduce a compiler optimization that
+reaches the performance of optimized BLAS libraries without the need for an
+external implementation or automatic tuning. Our approach provides competitive
+performance across hardware architectures and can be generalized to deliver the
+same benefits for algebraic path problems. By making fast linear algebra
+kernels available to everyone, we expect productivity increases when optimized
+libraries are not available.
+ }
+}
+
+@inproceedings{Gysi2019,
+  author={Gysi,Tobias and Grosser, Tobias and Brandner, Laurin and Hoefler, Torsten},
+  title={{A Fast Analytical Model of Fully Associative Caches}},
+  booktitle={Proc. of the 40th ACM SIGPLAN Conference on Programming Language Design and Implementation},
+  series = {PLDI},
+  year={2019},
+  month={06},
+  publisher={ACM},
+  abstract={
+    While the cost of computation is an easy to understand local property, the
+cost of data movement on cached architectures depends on global state, does not
+compose, and is hard to predict. As a result, programmers often fail to
+consider the cost of data movement. Existing cache models and simulators
+provide the missing information but are computationally expensive. We present a
+lightweight cache model for fully associative caches with least recently used
+(LRU) replacement policy that gives fast and accurate results. We count the
+cache misses without explicit enumeration of all memory accesses by using
+symbolic counting techniques twice: 1) to derive the stack distance for each
+memory access and 2) to count the memory accesses with stack distance larger
+than the cache size. While this technique seems infeasible in theory, due to
+non-linearities after the first round of counting, we show that the counting
+problems are sufficiently linear in practice. Our cache model often computes
+the results within seconds and contrary to simulation the execution time is
+mostly problem size independent. Our evaluation measures modeling errors below
+0.6% on real hardware. By providing accurate data placement information we
+enable memory hierarchy aware software development.
+  },
+  youtube ={5Bw3depVN4s},
+  _pdf = {gysi-2019-a-fast-analytical-model-of-fully-associative-caches.pdf},
+  _slides ={gysi-2019-a-fast-analytical-model-of-fully-associative-caches_slides.pdf},
+  _arxiv={https://arxiv.org/abs/2001.01653},
+  url={https://dl.acm.org/doi/10.1145/3314221.3314606},
+  _authorize={http://dl.acm.org/authorize?N686476},
+  _highlight={yes},
+  highlight={yes}
+}
+
+@inproceedings{Pfaffe2019,
+  title={Efficient Hierarchical Online-Autotuning},
+  author={Pfaffe, Philip and Grosser, Tobias and Tillmann, Martin},
+  booktitle={Proc. of the 29th ACM on International Conference on Supercomputing},
+  year={2019},
+  series={ICS},
+  _pdf={pfaffe-2019-efficient-hierarchical-online-autotuning.pdf},
+  url={Efficient Hierarchical Online-Autotuning},
+  organization={ACM},
+  abstract={ Identifying the (near) optimal program variants an optimizing and
+parallelizing compiler should generate is known to be difficult. Au- totuning
+is the best solution to navigate the often high-dimensional space of possible
+options.  However, to be practical an autotuner should (a) have high
+convergence speed and (b) be robust in face of varying inputs. Current
+techniques for offline tuning, where convergence speed is less important,
+provide solutions only for known inputs, whereas online tuning can be input
+sensitive but currently lacks in convergence speed. In this paper, we present
+hierarchical online-autotuning, a novel technique to exploit struc- ture in the
+search space and the underlying tuning problem to increase convergence speed
+during online tuning. By modeling symmetries and redundancies in configurations
+and by exploiting domain knowledge to predict performance we reduce the search
+space size by orders of magnitudes. Combining our tuner with a polyhedral
+parallelizing compiler for GPUs, we show that the performance of a GEMM GPU
+kernel generated with default pa- rameters is increased by 6× and that the
+convergence speed of the tuning process is increased by a factor of up to 1.7
+compared to OpenTuner. With hierarchical tuning we make the deployment of
+always-on online-autotuning practical.
+  }
+}
+@inproceedings{Gysi2019Absinthe,
+  author={Tobias Gysi and Tobias Grosser and Torsten Hoefler},
+  title={{Absinthe: Learning an Analytical Performance Model to Fuse and Tile Stencil Codes in One Shot}},
+  year={2019},
+  month={09},
+  booktitle={Proceedings of the 28th International Conference on Parallel Architectures and Compilation Techniques (PACT)},
+  location={Seattle, WA, USA},
+  publisher={IEEE},
+  _pdf={gysi-2019-absinthe.pdf},
+  _slides={gysi-2019-absinthe_slides.pdf},
+  url={https://ieeexplore.ieee.org/document/8891630},
+  series={PACT},
+  abstract={
+Expensive data movement makes the optimal target-specific selection
+of data-locality transformations essential. Loopfusion and tiling are
+the most important data-locality trans-formations. Their optimal
+selection is hard since good tilesize choices inherently depend on
+the fusion choices and vice versa. Existing approaches avoid this
+difficulty by optimizing independent analytical models or by reverting
+to heuristics. Absinthe formulates the first unified linear
+optimization problem to derive single shot fusion and tile size
+decisions for stencil codes. At the core of our optimization problem,
+we place a learned analytic performance model that captures the
+characteristics ofthe target system. The tuned application kernels
+demonstrate excellent performance within 10% of exhaustively
+auto-tuned versions and up to 74% faster than the results of
+independent optimization with max fusion heuristic and Absinthe tile
+size selection. While the full search space is non-linear, bounding
+it to relevant solutions enables the efficient exploration of
+the exponential search space using linear solvers. As a result,
+the tuning of our application kernels takes less than one minute.
+Our approach thus establishes the foundations for
+next-generation compilers, which exploit empirical information to
+guide target-specific code transformations.
+  }
+}
+
+@article{chelini2019declarative,
+  title={Declarative Loop Tactics for Domain-specific Optimization},
+  author={Chelini, Lorenzo and Zinenko, Oleksandr and Grosser, Tobias and Corporaal, Henk},
+  journal={ACM Transactions on Architecture and Code Optimization},
+  series={TACO},
+  volume={16},
+  number={4},
+  pages={1--25},
+  year={2019},
+  publisher={ACM New York, NY, USA},
+  abstract={
+Increasingly complex hardware makes the design of effective compilers
+	difficult. To reduce this problem, we introduce Declarative Loop
+	Tactics, which is a novel framework of composable program
+	transformations based on an internal tree-like program representation
+	of a polyhedral compiler. The framework is based on a declarative C++
+	API built around easy-to-program matchers and builders, which provide
+	the foundation to develop loop optimization strategies. Using our
+	matchers and builders, we express computational patterns and core
+	building blocks, such as loop tiling, fusion, and data-layout
+	transformations, and compose them into algorithm-specific
+	optimizations. Declarative Loop Tactics (Loop Tactics for short) can be
+	applied to many domains. For two of them, stencils and linear algebra,
+we show how developers can express sophisticated domain-specific optimizations
+	as a set of composable transformations or calls to optimized libraries.
+	By allowing developers to add highly customized optimizations for a
+	given computational pattern, we expect our approach to reduce the need
+	for DSLs and to extend the range of optimizations that can be performed
+by a current general-purpose compiler.
+  },
+  url={https://dl.acm.org/doi/abs/10.1145/3372266},
+  _authorize={https://dl.acm.org/doi/10.1145/3372266?cid=81555889856},
+  _slides = {chelini-2019-declarative-loop-tactics-for-domain-specific-optimization_slides.pdf},
+  _pdf = {chelini-2019-declarative-loop-tactics-for-domain-specific-optimization_paper.pdf}
+}
+
+@online{chelinieurollvm,
+  title={MultiLevel Tactics: Lifting loops in MLIR},
+  author={Chelini, Lorenzo and Drebes, Andi and Zinenko, Oleksandr and Cohen, Albert and Corporaal, Henk and Grosser, Tobias and Vasilache, Nicolas},
+  publisher={EuroLLVM},
+  series = {EuroLLVM},
+  year={2020},
+  month={04},
+  abstract= {
+  We propose MultiLevel Tactics, or ML Tactics for short, an extension to MLIR
+  that recognizes high-level abstractions patterns (e.g., linear algebra
+  operations) in low-level dialects and replaces them with the corresponding
+  operations of an appropriate high-level dialect. Our current prototype
+  recognizes matrix multiplications in loop nests of the Affine dialect and lifts
+  these to the Linalg dialect. The pattern recognition and replacement scheme are
+  designed as reusable building blocks for transformations between arbitrary
+  dialects and can recognize commonly recurrent patterns in HPC applications.  
+  },
+  url={http://llvm.org/devmtg/2020-04/talks.html#Poster_52},
+  _type="workshop",
+  _pdf={chelini-eurollvm2020-paper52.pdf},
+  _poster={chelini-eurollvm2020-poster52.pdf}
+}
+
+@inproceedings{kurth2020mixed,
+  title={Mixed-data-model heterogeneous compilation and OpenMP offloading},
+  author={Kurth, Andreas and Wolters, Koen and Forsberg, Bj{\"o}rn and Capotondi, Alessandro and Marongiu, Andrea and Grosser, Tobias and Benini, Luca},
+  booktitle={Proceedings of the 29th International Conference on Compiler Construction},
+  series={CC},
+  pages={119--131},
+  year={2020},
+  url={https://dl.acm.org/doi/abs/10.1145/3377555.3377891},
+  month={02},
+  abstract={
+Heterogeneous computers combine a general-purpose host processor with
+	domain-specific programmable many-core accelerators, uniting high
+	versatility with high performance and energy efficiency. While the host
+	manages ever-more application memory, accelerators are designed to work
+	mainly on their local memory. This difference in addressed memory leads
+	to a discrepancy between the optimal address width of the host and the
+	accelerator. Today 64-bit host processors are commonplace, but few
+	accelerators exceed 32-bit address-able local memory, a difference
+	expected to increase with 128-bit hosts in the exascale era. Managing
+	this discrepancy requires support for multiple data models in
+	heterogeneous compilers. So far, compiler support for multiple data
+	models has not been explored, which hampers the programmability of such
+	systems and inhibits their adoption.In this work, we perform the first
+	exploration of the feasibility and performance of implementing a
+	mixed-data-model heterogeneous system. To support this, we present and
+	evaluate the first mixed-data-model compiler, supporting arbitrary
+	address widths on host and accelerator. To hide the inherent complexity
+	and to enable high programmer productivity, we implement transparent
+	offloading on top of OpenMP. The proposed compiler techniques are
+	implemented in LLVM and evaluated on a 64+32-bit heterogeneous SoC.
+	Results on benchmarks from the PolyBench-ACC suite show that memory can
+	be transparently shared between host and accelerator at overheads below
+	0.7\% compared to 32-bit-only execution, enabling mixed-data-model
+	computers to execute at near-native performance.
+  },
+  _slides={kurth-2020-Mixed-data-model-heterogeneous-compilation-and-OpenMP-offloading.pdf}
+}
+
+
+@inproceedings{schueki2020llhd,
+  author={Schueki, Fabian and Kurth, Andreas and Grosser, Tobias and Benini, Luca},
+  title={{	LLHD: A Multi-Level Intermediate Representation for Hardware Description Languages
+}},
+  booktitle={Proc. of the 41th ACM SIGPLAN Conference on Programming Language Design and Implementation},
+  series = {PLDI},
+  _important = {yes},
+  year={2020},
+  month={06},
+  publisher={ACM},
+  url={https://dl.acm.org/doi/abs/10.1145/3385412.3386024},
+  _pdf={schuiki-2020-llhd-a-multi-level-intermediate-representation-for-hardware-description-languages.pdf},
+  abstract={
+Modern Hardware Description Languages (HDLs) such as
+SystemVerilog or VHDL are, due to their sheer complexity,
+insufficient to transport designs through modern circuit design flows. Instead, each design automation tool lowers HDLs
+to its own Intermediate Representation (IR). These tools are
+monolithic and mostly proprietary, disagree in their implementation of HDLs, and while many redundant IRs exists,
+no IR today can be used through the entire circuit design
+flow. To solve this problem, we propose the LLHD multi-level IR. LLHD is designed as simple, unambiguous reference
+description of a digital circuit, yet fully captures existing
+HDLs. We show this with our reference compiler on designs
+as complex as full CPU cores. LLHD comes with lowering
+passes to a hardware-near structural IR, which readily integrates with existing tools. LLHD establishes the basis for
+innovation in HDLs and tools without redundant compilers or disjoint IRs. For instance, we implement an LLHD
+simulator that runs up to 2.4× faster than commercial simulators but produces equivalent, cycle-accurate results. An
+initial vertically-integrated research prototype is capable of
+representing all levels of the IR, implements lowering from
+the behavioural to the structural IR, and covers a sufficient
+subset of SystemVerilog to support a full CPU design.
+  },
+  _slides={schuiki-2020-llhd-a-multi-level-intermediate-representation-for-hardware-description-languages_slides.pdf},
+  _arxiv={https://arxiv.org/abs/2004.03494},
+  youtube={mCszHvPAdtw},
+  highlight={yes},
+  _highlight={yes}
+}
+
+
+@inproceedings{gysi2020ooc,
+  author={Gysi, Tobias and M\"uller, Christoph and Zinenko, Oleksandr and Herhut, Stephan and Davis, Eddie and Wicky, Tobias and Fuhrer, Oliver and Hoefler, Torsten and Grosser, Tobias},
+  title={Domain-Specific Multi-Level IR Rewriting for GPU},
+  abstract={
+  Traditional compilers operate on a single generic intermediate representation (IR). These IRs are usually low-level and close to machine instructions. As a result, optimizations relying on domain-specific information are either not possible or require complex analysis to recover the missing information. In contrast, multi-level rewriting instantiates a hierarchy of dialects (IRs), lowers programs level-by-level, and performs code transformations at the most suitable level. We demonstrate the effectiveness of this approach for the weather and climate domain. In particular, we develop a prototype compiler and design stencil- and GPU-specific dialects based on a set of newly introduced design principles. We find that two domain-specific optimizations (500 lines of code) realized on top of LLVM's extensible MLIR compiler infrastructure suffice to outperform state-of-the-art solutions. In essence, multi-level rewriting promises to herald the age of specialized compilers composed from domain- and target-specific dialects implemented on top of a shared infrastructure.
+  },
+  note = "Under review at ACM Transactions on Architecture and Code Optimization, minor revision"
+}
+
+@article{kourtis2020compiling,
+  title={Compiling Neural Networks for a Computational Memory Accelerator},
+  author={Kourtis, Kornilios and Dazzi, Martino and Ioannou, Nikolas and Grosser, Tobias and Sebastian, Abu and Eleftheriou, Evangelos},
+  journal={arXiv preprint arXiv:2003.04293},
+  year={2020},
+  series={SPMA},
+  abstract = {
+  Computational memory (CM) is a promising approach for accelerating inference
+on neural networks (NN) by using enhanced memories that, in addition to storing
+data, allow computations on them. One of the main challenges of this approach
+is defining a hardware/software interface that allows a compiler to map NN
+models for efficient execution on the underlying CM accelerator. This is a
+non-trivial task because efficiency dictates that the CM accelerator is
+explicitly programmed as a dataflow engine where the execution of the different
+NN layers form a pipeline. In this paper, we present our work towards a
+software stack for executing ML models on such a multi-core CM accelerator. We
+describe an architecture for the hardware and software, and focus on the
+problem of implementing the appropriate control logic so that data dependencies
+are respected. We propose a solution to the latter that is based on polyhedral
+compilation.  
+},
+  _arxiv={https://arxiv.org/abs/2003.04293},
+  _slides={kourtis-Compiling-Neural-Networks-for-a-Computationl-Memory-Accelerator_slides.pdf},
+  url={https://sites.google.com/view/spma2020eurosys/Program/accepted},
+  youtube={YQOqJhRy4yI}
+}
+
+@inproceedings{drebes2020tc,
+  title={TC-CIM: Empowering Tensor Comprehensions for Computing-In-Memory},
+  author={Drebes, Andi and Chelini, Lorenzo and Zinenko, Oleksandr and Cohen, Albert and Corporaal, Henk and Grosser, Tobias and Vadivel, Kanishkan and Vasilache, Nicolas},
+  booktitle={IMPACT 2020-10th International Workshop on Polyhedral Compilation Techniques},
+  year={2020},
+  series={IMPACT},
+  month={1},
+  abstract={
+  Memristor-based, non-von-Neumann architectures performing tensor
+  operations directly in memory are a promising approach to address the
+  ever-increasing demand for energy-efficient, high-throughput hardware
+  accelerators for Machine Learning (ML) inference. A major challenge
+  for the programmability and exploitation of such
+  Computing-In-Memory (CIM) architectures consists in the efficient mapping of tensor
+  operations from high-level ML frameworks to fixed-function
+  hardware blocks implementing in-memory computations.
+
+  We demonstrate the programmability of memristor-based accelerators
+  with TC-CIM, a fully-automatic, end-to-end compilation flow from
+  Tensor Comprehensions, a mathematical notation for tensor
+  operations, to fixed-function memristor-based hardware blocks.
+  Operations suitable for acceleration are identified
+  using Loop Tactics, a declarative framework to describe
+  computational patterns in a polyhedral representation.
+  We evaluate our compilation flow on a
+  system-level simulator based on Gem5, incorporating crossbar arrays of
+  memristive devices. Our results show that TC-CIM reliably
+  recognizes tensor operations commonly used in ML workloads across
+  multiple benchmarks in order to offload these operations to the
+  accelerator. 
+  }, 
+  _pdf={drebes-2020.pdf},
+  url={http://impact.gforge.inria.fr/impact2020/},
+  _slides={drebes-2020-TC-CIM:Empowering-Tensor-Comprehensions-for-Computing-In-Memory_slides.pdf}
+}
+
+@inproceedings{grosser2020fast,
+  title={Fast Linear Programming through Transprecision Computing on Small and Sparse Data},
+  author={Grosser, Tobias and Theodoridis, Theodoros and Falkenstein, Maximilian and Pitchanathan, Arjun and Kruse, Michael and Rigger, Manuel and Su, Zhendong and Hoefler, Torsten},
+  booktitle={Proc. of the 2020 ACM SIGPLAN International Conference on Object-Oriented Programming, Systems, Languages, and Applications},
+  series = {OOPSLA},
+  month={11},
+  year={2020},
+  organization={ACM},
+  abstract={
+	A plethora of program analysis and optimization techniques rely on linear
+	programming at their heart. However, such techniques are often
+	considered too slow for production use. While today’s best solvers are
+	optimized for complex problems with thousands of dimensions, linear
+	programming, as used in compilers, is typically applied to small and
+	seemingly trivial problems, but to many instances in a single
+	compilation run. As a result, compilers do not benefit from the decades
+	of research on optimizing large-scale linear programming. We design a
+	simplex solver targeted at compilers. A novel theory of transprecison
+	computation applied from individual elements to full data-structures
+	provides the computational foundation. By carefully combining it with
+	optimized representations for small and sparse matrices and specialized
+	small-coefficient algorithms, we (1) reduce memory traffic, (2) exploit
+	wide vectors, and (3) use low-precision arithmetic units effectively.
+	We evaluate our work by embedding our solver into a state-of-the-art
+	integer set library and implement one essential operation, coalescing,
+	on top of our transprecision solver. Our evaluation shows multiple orders-
+	of-magnitude speedup on the core simplex pivot operation and a mean
+	speedup 3.2x (vs. GMP) and 4.6x (vs. IMath) for the optimized
+	coalescing operation. Our results demonstrate that optimizations for
+	low dimensionality and small coefficients exploit the wide SIMD
+	instructions of modern microarchitectures effectively. Our work on
+	optimizing a rational simplex solver as well as a single key operation
+	on integer sets, coalescing, is the first of several steps towards a
+	future where integer set libraries based on transprecision arithmetic
+	power compiler analysis and optimization frameworks.
+  },
+  url={https://dl.acm.org/doi/10.1145/3428263},
+  _authorize={https://dl.acm.org/doi/pdf/10.1145/3428263},
+  youtube={_qqalt3tahM},
+  important={yes},
+  _slides={grosser-2020-Fast-Linear-Programming-through-Transprecision-Computing_slides.pdf},
+  highlight={yes},
+  _highlight={yes}
+}
+
+
+@inproceedings{chelini2020automatic,
+author = {Chelini, Lorenzo and Gysi, Tobias and Grosser, Tobias and Kong, Martin and Corporaal, Henk},
+title = {Automatic Generation of Multi-Objective Polyhedral Compiler Transformations},
+year = {2020},
+isbn = {9781450380751},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3410463.3414635},
+doi = {10.1145/3410463.3414635},
+abstract = {To this day, polyhedral optimizing compilers use either extremely rigid (but accurate) cost models, one-size-fits-all general-purpose heuristics, or auto-tuning strategies to traverse and evaluate large optimization spaces. In this paper, we introduce an adaptive and automatic scheduler that permits to generate novel loop transformation sequences (or recipes) capable of delivering strong performance for a variety of different architectures without relying on auto-tuning, nor on pre-determined transformation strategies. We evaluate our approach using the Polybench/C benchmark suite against two modern state-of-the-art optimizers on three different architectures: An AMD ThreadRipper, an Intel Xeon Phi, and an Intel Xeon Platinum. Our results provide evidence that a set of high-level objectives backed up by an automatic adaptive scheduler (i.e., not hard-wired) is capable of achieving competitive performance, while only resorting to evaluating a handful of tuned variants.},
+booktitle = {Proceedings of the ACM International Conference on Parallel Architectures and Compilation Techniques},
+pages = {83–96},
+numpages = {14},
+keywords = {polyhedral model, loop optimization, affine transformations},
+location = {Virtual Event, GA, USA},
+series = {PACT},
+month = {9},
+_pdf={chelini-2020-automatic-generation-of-multi-objective-polyhedral-compiler-transformations_pdf.pdf},
+_slides={chelini-2020-automatic-generation-of-multi-objective-polyhedral-compiler-transformations_slides.pdf}
+}
+
+@article{khan2020polyhedral,
+  title={Polyhedral Compilation for Racetrack Memories},
+  author={Khan, Asif Ali and Mewes, Hauke and Grosser, Tobias and Hoefler, Torsten and Castrillon, Jeronimo},
+  journal={IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems},
+  month={9},
+  year={2020},
+  publisher={IEEE},
+  series={TCAD},
+  abstract={
+Traditional memory hierarchy designs, primarily based on SRAM and DRAM, become
+	increasingly unsuitable to meet the performance, energy, bandwidth and
+	area requirements of modern embedded and high-performance computer
+	systems.  Racetrack Memory (RTM), an emerging non-volatile memory
+	technology, promises to meet these conflicting demands by offering
+	simultaneously high speed, higher density, and nonvolatility. RTM
+	provides these efficiency gains by not providing immediate access to
+	all storage locations, but by instead storing data sequentially in the
+	equivalent to nanoscale tapes called tracks. Before any data can be
+	accessed, explicit shift operations must be issued that cost energy and
+	increase access latency.  The result is a fundamental change in memory
+	performance behavior: the address distance between subsequent memory
+	accesses now has a linear effect on memory performance. While there are
+	first techniques to optimize programs for linear-latency memories such
+	as RTM, existing automatic solutions treat only scalar memory accesses.
+	This work presents the first automatic compilation framework that
+	optimizes static loop programs over arrays for linear-latency memories.
+	We extend the polyhedral compilation framework Polly to generate code
+	that maximizes accesses to the same or consecutive locations, thereby
+	minimizing the number of shifts. Our experimental results show that the
+	optimized code incurs up to 85% fewer shifts (average 41%), improving
+	both performance and energy consumption by an average of 17.9% and
+	39.8%, respectively. Our results show that automatic techniques make it
+	possible to effectively program linear-latency memory architectures
+	such as RTM.
+  },
+  youtube={A7BetI7jGIU},
+  url={https://ieeexplore.ieee.org/abstract/document/9216560},
+  _pdf={khan-2020-polyhedral-compilation-for-racetrack-memories.pdf},
+  _slides={khan-2020-polyhedral-compilation-for-racetrack-memories_slides.pdf}
+}
+
+@inproceedings{10.1145/3437801.3441613,
+author = {Copik, Marcin and Calotoiu, Alexandru and Grosser, Tobias and Wicki, Nicolas and Wolf, Felix and Hoefler, Torsten},
+title = {Extracting Clean Performance Models from Tainted Programs},
+year = {2021},
+isbn = {9781450382946},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3437801.3441613},
+doi = {10.1145/3437801.3441613},
+abstract = {Performance models are well-known instruments to understand the scaling behavior of parallel applications. They express how performance changes as key execution parameters, such as the number of processes or the size of the input problem, vary. Besides reasoning about program behavior, such models can also be automatically derived from performance data. This is called empirical performance modeling. While this sounds simple at the first glance, this approach faces several serious interrelated challenges, including expensive performance measurements, inaccuracies inflicted by noisy benchmark data, and overall complex experiment design, starting with the selection of the right parameters. The more parameters one considers, the more experiments are needed and the stronger the impact of noise. In this paper, we show how taint analysis, a technique borrowed from the domain of computer security, can substantially improve the modeling process, lowering its cost, improving model quality, and help validate performance models and experimental setups.},
+booktitle = {Proceedings of the 26th ACM SIGPLAN Symposium on Principles and Practice of Parallel Programming},
+pages = {403–417},
+numpages = {15},
+keywords = {LLVM, high-performance computing, taint analysis, compiler techniques, performance modeling},
+location = {Virtual Event, Republic of Korea},
+series = {PPoPP 21},
+_arxiv={https://arxiv.org/abs/2012.15592},
+}
+
