@@ -9,37 +9,6 @@
   year={2010}
 }
 
-@inproceedings{chelini2021mlir,
-  title={{Progressive Raising in Multi-level IR}},
-  author={Chelini, Lorenzo and Drebes, Andi and Zinenko, Oleksandr and Cohen, Albert and Vasilache, Nicolas and Grosser, Tobias and Corporaal, Henk},
-  pages = {to appear},
-  series = {CGO},
-  year={2021},
-  abstract={
-  Multi-level intermediate representations (IR) show great promise for lowering
-  the design costs for domain-specific compilers by providing a reusable,
-  extensible, and non-opinionated framework for expressing domain-specific and
-  high-level abstractions directly in the IR. But, while such frameworks support
-  the progressive lowering of high-level representations to low-level IR, they do
-  not raise in the opposite direction. Thus, the entry point into the compilation
-  pipeline defines the highest level of abstraction for all subsequent
-  transformations, limiting the set of applicable optimizations, in particular
-  for general-purpose languages that are not semantically rich enough to model
-  the required abstractions.
-
-  We propose Progressive Raising, a complementary approach to the
-  progressive lowering in multi-level IRs that raises from lower to higher-level
-  abstractions to leverage domain-specific transformations for low-level
-  representations. We further introduce Multi-level Tactics, our
-  declarative approach for progressive raising, implemented on top of the MLIR
-  framework, and demonstrate the progressive raising from affine loop nests
-  specified in a general-purpose language to high-level linear algebra
-  operations.  Our raising paths leverage subsequent high-level domain-specific
-  transformations with significant performance improvements.
-  },
-  _pdf = {chelini-2021-abstraction-raising.pdf}
-}
-
 @inproceedings{sjodin2009design,
   title={Design of Graphite and the Polyhedral Compilation Package},
   author={Sj{\"o}din, Jan and Pop, Sebastian and Jagasia, Harsha and Grosser, Tobias and Pop, Antoniu},
@@ -945,3 +914,13 @@ booktitle={Transactions on Parallel and Distributed Systems},
 year = {2021},
 note = {under review}
 }
+
+@INPROCEEDINGS{chelini2021mlir,
+  author={Chelini, Lorenzo and Drebes, Andi and Zinenko, Oleksandr and Cohen, Albert and Vasilache, Nicolas and Grosser, Tobias and Corporaal, Henk},
+  booktitle={2021 IEEE/ACM International Symposium on Code Generation and Optimization (CGO)},
+  title={Progressive Raising in Multi-level IR},
+  year={2021},
+  volume={},
+  number={},
+  pages={15-26},
+  url={https://doi.org/10.1109/CGO51591.2021.9370332}}
