@@ -709,13 +709,10 @@ subset of SystemVerilog to support a full CPU design.
 @inproceedings{gysi2020ooc,
   author={Gysi, Tobias and M\"uller, Christoph and Zinenko, Oleksandr and Herhut, Stephan and Davis, Eddie and Wicky, Tobias and Fuhrer, Oliver and Hoefler, Torsten and Grosser, Tobias},
   title={Domain-Specific Multi-Level IR Rewriting for GPU},
-  _arxiv={https://arxiv.org/abs/2005.13014},
-  year={2020},
-  month={10},
-  series={arXiv},
   abstract={
   Traditional compilers operate on a single generic intermediate representation (IR). These IRs are usually low-level and close to machine instructions. As a result, optimizations relying on domain-specific information are either not possible or require complex analysis to recover the missing information. In contrast, multi-level rewriting instantiates a hierarchy of dialects (IRs), lowers programs level-by-level, and performs code transformations at the most suitable level. We demonstrate the effectiveness of this approach for the weather and climate domain. In particular, we develop a prototype compiler and design stencil- and GPU-specific dialects based on a set of newly introduced design principles. We find that two domain-specific optimizations (500 lines of code) realized on top of LLVM's extensible MLIR compiler infrastructure suffice to outperform state-of-the-art solutions. In essence, multi-level rewriting promises to herald the age of specialized compilers composed from domain- and target-specific dialects implemented on top of a shared infrastructure.
-  }
+  },
+  note = "Under review at ACM Transactions on Architecture and Code Optimization, minor revision"
 }
 
 @article{kourtis2020compiling,
