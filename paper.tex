@@ -28,7 +28,7 @@
 \fi
 
 \ifx\paperversion\paperversioncamera
-  \documentclass[manuscript, nonacm]{acmart}\settopmatter{}
+  \documentclass[manuscript, nonacm, natbib]{acmart}\settopmatter{}
 \fi
 
 \usepackage{colortbl}
@@ -243,6 +243,7 @@
                         %% http://ctan.org/pkg/booktabs
 \usepackage{subcaption} %% For complex figures with subfigures/subcaptions
                         %% http://ctan.org/pkg/subcaption
+\usepackage{bibentry}
 
 
 \makeatletter\if@ACM@journal\makeatother
@@ -360,8 +361,6 @@ Grantee: Tobias Grosser\\
 \else 
 \fi
 
-%% Bibliography
-%\bibliography{bibfile}
 
 \section{Research Work Conducted}
 
@@ -376,5 +375,10 @@ Grantee: Tobias Grosser\\
 \subsection{Publications (published)}
 \subsection{Publications (accepted)}
 \subsection{Publications (in preparation)}
+\cite{khan2020polyhedral}
+
+%% Bibliography
+\bibliographystyle{plainnat}
+\bibliography{references}
 
 \end{document}
