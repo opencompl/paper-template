@@ -394,14 +394,10 @@ reach these goals:
 
 \begin{enumerate}
 \item Fast, robust, and correct polyhedral libraries
-\item Solid polyhedral compiler infrastructure
-\begin{itemize}
-\item  Modular pattern-based optimizations for CPU and GPU systems
-\item 
-DeLICM: Scalar dependence removal
-\end{itemize}
+\item Automatic Raising to high-level descriptions
 \item Fast GPU code generation demonstrated via a climate DSL
-\item Code Generation for Emerging Architectures and FPGA
+\item Code generation for emerging architectures and FPGA
+\item Scalable performance analysis within a compiler.
 \end{enumerate}
 
 
@@ -429,7 +425,32 @@ techniques in production compilers.
 The central components of this library have already been upstreamed into the
 open-source LLVM/MLIR project and are usable by the wider research and 
 industrial community. The work in this subproject has been published in \citet{grosser2020fast} and
-\citet{pichanatan2021}.
+is under review in \citet{pichanatan2021}.
+
+\subsection{Automatic Raising to high-level descriptions}
+
+Multi-level intermediate representations (IR) show great promise for lowering
+the design costs for domain-specific compilers by providing a reusable,
+extensible, and non-opinionated framework for expressing domain-specific and
+high-level abstractions directly in the IR. But, while such frameworks support
+the progressive lowering of high-level representations to low-level IR, they do
+not raise in the opposite direction. Thus, the entry point into the compilation
+pipeline defines the highest level of abstraction for all subsequent
+transformations, limiting the set of applicable optimizations, in particular
+for general-purpose languages that are not semantically rich enough to model
+the required abstractions.  We propose Progressive Raising, a complementary
+approach to the progressive lowering in multi-level IRs that raises from lower
+to higher-level abstractions to leverage domain-specific transformations for
+low-level representations. We further introduce MultiLevel Tactics, our
+declarative approach for progressive raising, implemented on top of the MLIR
+framework, and demonstrate the progressive raising from affine loop nests
+specified in a general-purpose language to high-level linear algebra
+operations.  Our raising paths leverage subsequent high-level domain-specific
+transformations with significant performance improvements.
+
+All this work has been has already been upstreamed into the open-source
+LLVM/MLIR project and is usable by the wider research and industrial community.
+The work in this subproject has been published in \citet{chelini2021mlir}.
 
 \subsection{Fast GPU code generation demonstrated via a climate DSL}
 
@@ -471,6 +492,32 @@ support mixed-data-model offloading.
 The LLHD compiler has been upstreamed as open-source into the LLVM/CIRCT
 project. The work in this subproject has been published in \citet{khan2020polyhedral},
 \citet{schueki2020llhd}, \citet{kurth2020mixed}, and \citet{kourtis2020compiling}.
+
+\subsection{Scalable performance analysis within a compiler}
+
+Performance models are well-known instruments to understand the scaling
+behavior of parallel applications. They express how performance changes as key
+execution parameters, such as the number of processes or the size of the input
+problem, vary. Besides reasoning about program behavior, such models can also
+be automatically derived from performance data. This is called empirical
+performance modeling. While this sounds simple at the first glance, this
+approach faces several serious interrelated challenges, including expensive
+performance measurements, inaccuracies inflicted by noisy benchmark data, and
+overall complex experiment design, starting with the selection of the right
+parameters. The more parameters one considers, the more experiments are needed
+and the stronger the impact of noise. In this paper, we show how taint
+analysis, a technique borrowed from the domain of computer security, can
+substantially improve the modeling process, lowering its cost, improving model
+quality, and help validate performance models and experimental setups.
+
+In a subsequent step, we analyzed the optimality of function inlining as a means
+to minimize code size and alter expose further optimization opportunities. This
+work has shown promising code size reductions on SPEC 2017 and the LLVM compiler.
+We hope to use it in the future as an enabling transformation for large-scale
+automatic accelerator mapping.
+
+The work in this subproject has been published in \citet{copic2021} and is under review in
+\citet{theo2021}.
 
 \section{Deviations}
 
