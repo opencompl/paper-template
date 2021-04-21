@@ -360,182 +360,21 @@ Grantee: Tobias Grosser\\
 \else 
 \fi
 
-\section{Introduction}
-
-Of this super cool article \ldots
-\grosser{A simple comment refering to a particular location}
-
-If there is \authorTwo[some text we want to refer to specifically]{this looks
-particularly interesting} we can refer to this text from within our comments.
-
-And here we only underline \authorTwo[Text]{} that is interesting, but do not
-actually comment.
-
-Now we have a sequence of comments,
-\authorThree{Comment 3}
-\authorFour{Comment 4}
-\authorFive{Comment 5}
-\authorSix{Comment 6}
-which should not introduce overlong white space sequences.
-
-Sometimes it is also important to \emph{emphasize} text to understand if it is
-underlined or printed in italic.
-
-We sometimes use macros to state that a tool as the name \toolname{} in a
-flexible way.
-
-\lipsum[1-3]
-
-\begin{figure}
-% Link to figure
-%
-% https://docs.google.com/drawings/d/1juKp43D3rLC-luBQPwQZ_wCnDK2S_6C1k6USV0wKE0g/edit?usp=sharing
-\includegraphics[width=\columnwidth]{overview.pdf}
-\caption{Our key idea visualized}
-\grosserf{Replace this figure with your own drawing.}
-\end{figure}
-
-~\\
-Our contributions are:
-\grosser{Always state your contributions explicitly: (A) this makes it
-easy for the reader to understand what novelty is presented, and (B)
-these contributions help you to focus. In particular, the objective of
-the remaining paper should be to support the claims stated here.
-}
-\begin{itemize}
-	\item Contribution 1
-	\item Contribution 2
-	\item Contribution 3
-	\item Contribution 4
-\end{itemize}
-
-\section{Our New Idea}
-
-\lipsum[1-3]
-
-\section{Implementation}
-
-\section{Related Work}
-
-\lipsum[1-3]
-
-\grosser{Related work should always be at the end of the document,
-         as it otherwise becomes an obstacle your reader must
-	 overcome before reaching your idea. For details see:
-	 \url{https://www.microsoft.com/en-us/research/academic-program/write-great-research-paper/}
-}
-
-\section{Conclusion}
-\lipsum[1]
-
-
-%% Acknowledgments
-\begin{acks}                            %% acks environment is optional
-                                        %% contents suppressed with 'anonymous'
-  %% Commands \grantsponsor{<sponsorID>}{<name>}{<url>} and
-  %% \grantnum[<url>]{<sponsorID>}{<number>} should be used to
-  %% acknowledge financial support and will be used by metadata
-  %% extraction tools.
-  This material is based upon work supported by the
-  \grantsponsor{GS100000001}{National Science
-    Foundation}{http://dx.doi.org/10.13039/100000001} under Grant
-  No.~\grantnum{GS100000001}{nnnnnnn} and Grant
-  No.~\grantnum{GS100000001}{mmmmmmm}.  Any opinions, findings, and
-  conclusions or recommendations expressed in this material are those
-  of the author and do not necessarily reflect the views of the
-  National Science Foundation.
-\end{acks}
-
 %% Bibliography
 %\bibliography{bibfile}
 
+\section{Research Work Conducted}
 
-%% Appendix
-\newpage
-\appendix
-\begin{draftonly}
-\section{Formatting Guidelines}
+\section{Deviations}
 
-These formatting guidelines aim to standartize our writing. They ensure that
-papers with multiple authors have a consistent look and that commonly occuring
-items are formatted in ways that are known to work well.
+\section{Important Events}
 
-\subsection{Figures}
+\section{Contributions}
 
-\paragraph{Color Scheme} 
+\section{Research Output}
 
-In Figures we use a color scheme that is print-friendly and also visible
-with red-green blindness. The following colors are all print-friendly
-and red-green save when only using Color 1-4:
-
-\medskip
-{
-	\small
-\newcolumntype{a}{>{\columncolor{pairedOneLightBlue}}c}
-\newcolumntype{b}{>{\columncolor{pairedTwoDarkBlue}}c}
-\newcolumntype{d}{>{\columncolor{pairedThreeLightGreen}}c}
-\newcolumntype{e}{>{\columncolor{pairedFourDarkGreen}}c}
-\newcolumntype{f}{>{\columncolor{pairedFiveLightRed}}c}
-\newcolumntype{g}{>{\columncolor{pairedSixDarkRed}}c}
-
-\begin{tabular}{a b d e f g}
-Color 1 & Color 2 & Color 3 & Color 4 & Color 5 & Color 6\\
-\#a6cee3 & \#1f78b4 & \#b2df8a & \#33a02c & \#fb9a99 & \#e31a1c
-\end{tabular}
-}
-
-We de-emphasize components in figures by using additionally two shades of gray.
-Especially in complex figures, it is often helpful to de-emphasize visual
-elements that we want to represent but that should not be the focus of a
-reader's attention.
-
-\medskip
-{
-	\small
-\newcolumntype{h}{>{\columncolor{pairedNegOneLightGray}}c}
-\newcolumntype{i}{>{\columncolor{pairedNegTwoDarkGray}}c}
-
-\begin{tabular}{h i}
-Color -1 & Color -2\\
-\#cacaca & \#827b7b\\
-\end{tabular}
-}
-
-Single-color graphs are plotted in Color 1 - Light Blue.
-
-\paragraph{Labels in Figures}
-Complex diagrams often benefit from labels inside the diagrams. We suggest to
-use a filled circle (e.g, in light blue) to highlight these numbers and use
-these references, e.g., \circled{1} implemented as \texttt{\textbackslash{}circled\{1\}}, in the text to refer to them.
-
-\subsubsection{Plots} We use matplotlib to create performance
-plots such as \autoref{fig:speedup}. We use the following
-formatting guidelines:
-\begin{itemize}
-  \item Use a vertical y-label to make it easier to read.
-  \item Remove top and right frames to reduce visual noise
-	and allow the reader to focus on the data in the
-	figure.
-  \item Provide the concrete data at the top of each bar.
-\end{itemize}
-
-\noindent
-We also suggest to follow these technical remarks:
-\begin{itemize}
-  \item Create pdf plots and do not use bitmap formats (e.g., png) to
-	ensure high quality when zooming in.
-  \item Avoid Type-3 bitmap fonts by
-	setting fonttype to 42.
-\end{itemize}
-
-\begin{figure}
-\includegraphics[width=\columnwidth]{plots/speedup}
-\caption{Improved running speed after 4 weeks of training.
-}
-\label{fig:speedup}
-\end{figure}
-
-\end{draftonly}
-
+\subsection{Publications (published)}
+\subsection{Publications (accepted)}
+\subsection{Publications (in preparation)}
 
 \end{document}
