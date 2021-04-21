@@ -27,7 +27,7 @@ def createImageOfPaper(path, width = 7, pages = 21):
 
     name = path
 
-    cmd = ['convert', '-density', '300', path, '-resize', '40%', '-background', 'white', '-alpha', 'remove', '-alpha', 'off', name + "-tmp.png"]
+    cmd = ['convert', '-density', '150', path, '-resize', '40%', '-background', 'white', '-alpha', 'remove', '-alpha', 'off', name + "-tmp.png"]
     run(cmd)
 
     pageNumber = getPageNumber(path);
