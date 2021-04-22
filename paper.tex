@@ -19,16 +19,22 @@
 \def\review{review,}
 \fi
 
+% The format used for this paper.
+%
+% PLDI -> sigplan
+% OOPSLA/ASPLOS -> acmsmall
+\def\ClassFormat{sigplan}
+
 \ifx\paperversion\paperversiondraft
-  \documentclass[sigplan,\review anonymous]{acmart}
+  \documentclass[\ClassFormat,\review anonymous]{acmart}
 \fi
 
 \ifx\paperversion\paperversionblind
-  \documentclass[sigplan,\review anonymous]{acmart}
+  \documentclass[\ClassFormat,\review anonymous]{acmart}
 \fi
 
 \ifx\paperversion\paperversioncamera
-  \documentclass[sigplan]{acmart}
+  \documentclass[\ClassFormat]{acmart}
 \fi
 
 \usepackage{colortbl}
