@@ -50,8 +50,8 @@ jobs:
         asset_name: draft.pdf
         asset_content_type: application/pdf
 
-    - name: Upload Blind
-      id: upload-release-asset-blind
+    - name: Upload Paper
+      id: upload-release-asset-paper
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
