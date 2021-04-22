@@ -13,13 +13,6 @@
 
 \def\grammarlyon{on}
 
-
-% The format used for this paper.
-%
-% PLDI -> sigplan
-% OOPSLA/ASPLOS -> acmsmall
-\def\ClassFormat{sigplan}
-
 % Enable review mode for draft and blind variants of the paper
 % but disable it for the grammarly and camera-ready versions.
 \ifx\grammarly\grammarlyon
@@ -39,7 +32,7 @@
 \def\ClassAnonymous{anonymous,}
 \fi
 
-\documentclass[\ClassReview \ClassAnonymous \ClassFormat]{acmart}
+\documentclass[\ClassReview \ClassAnonymous sigplan]{acmart}
 
 \usepackage{colortbl}
 
