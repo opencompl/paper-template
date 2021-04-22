@@ -28,9 +28,6 @@ jobs:
       with:
         root_file: blind.tex
 
-    - name: Create Source Archive
-      run: ./create-source-archive.sh
-
     - name: Create Release
       id: create_release
       uses: actions/create-release@latest
@@ -63,17 +60,6 @@ jobs:
         asset_path: ./blind.pdf
         asset_name: blind.pdf
         asset_content_type: application/pdf
-
-    - name: Upload Archive
-      id: upload-release-asset-archive
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: ./paper-source.zip
-        asset_name: paper-source.zip
-        asset_content_type: application/zip
 
     - name: Install ImageMagick
       run: sudo apt install imagemagick ghostscript-x ghostscript
