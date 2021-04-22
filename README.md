@@ -3,7 +3,6 @@
 Download:
 [Draft](../../releases/latest/download/paper.pdf) |
 [Blind (for submission)](../../releases/latest/download/blind.pdf) |
-[Camera-Ready](../../releases/latest/download/camera.pdf) |
 [Paper Source Archive](../../releases/latest/download/paper-source.zip) |
 
 ![Blind Paper](../../releases/latest/download/blind.png)
