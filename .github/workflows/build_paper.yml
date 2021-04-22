@@ -28,11 +28,6 @@ jobs:
       with:
         root_file: blind.tex
 
-    - name: LaTeX compilation - Camera (for final publication)
-      uses: xu-cheng/latex-action@master
-      with:
-        root_file: camera.tex
-
     - name: Create Source Archive
       run: ./create-source-archive.sh
 
@@ -69,17 +64,6 @@ jobs:
         asset_name: blind.pdf
         asset_content_type: application/pdf
 
-    - name: Upload Camera-ready
-      id: upload-release-asset-camera
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: ./camera.pdf
-        asset_name: camera.pdf
-        asset_content_type: application/pdf
-
     - name: Upload Archive
       id: upload-release-asset-archive
       uses: actions/upload-release-asset@v1
@@ -111,15 +95,4 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./blind.pdf-full.png
         asset_name: blind.png
-        asset_content_type: image/png
-
-    - name: Upload Image (Camera)
-      id: upload-release-asset-image-camera
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./camera.pdf-full.png
-        asset_name: camera.png
         asset_content_type: image/png
