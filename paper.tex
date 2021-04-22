@@ -13,23 +13,33 @@
 
 \def\grammarlyon{on}
 
+
+% The format used for this paper.
+%
+% PLDI -> sigplan
+% OOPSLA/ASPLOS -> acmsmall
+\def\ClassFormat{sigplan}
+
+% Enable review mode for draft and blind variants of the paper
+% but disable it for the grammarly and camera-ready versions.
 \ifx\grammarly\grammarlyon
-\def\review{}
+\def\ClassReview{}
 \else
-\def\review{review,}
-\fi
-
-\ifx\paperversion\paperversiondraft
-  \documentclass[sigplan,\review anonymous]{acmart}
-\fi
-
-\ifx\paperversion\paperversionblind
-  \documentclass[sigplan,\review anonymous]{acmart}
-\fi
-
 \ifx\paperversion\paperversioncamera
-  \documentclass[sigplan]{acmart}
+\def\ClassReview{}
+\else
+\def\ClassReview{review,}
 \fi
+\fi
+
+% Disable anonymous mode for camera ready variant of this code.
+\ifx\paperversion\paperversioncamera
+\def\ClassAnonymous{}
+\else
+\def\ClassAnonymous{anonymous,}
+\fi
+
+\documentclass[\ClassReview \ClassAnonymous \ClassFormat]{acmart}
 
 \usepackage{colortbl}
 
