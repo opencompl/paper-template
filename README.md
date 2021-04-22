@@ -10,11 +10,7 @@ This repository serves as a template for writing computer science papers in LaTe
 the following features:
 
   - Automatic paper builds using GitHub Actions
-  - Different variants of the same paper
-    - Draft: Comments, wider margins, ...
-    - Grammarly: Draft without word-brakes and single-column to copy-paste into http://grammarly.com
-    - Blind: No comments, anonymous for double-blind review
-    - Camera: No comments, with author names for camery-ready publication
+  - Normal and Draft variants of the same paper
   - Automatically generate a source archive of the paper
     By running `create-source-archive.sh` a file `paper-source.zip` is
     generated that contains the paper latex sources.
