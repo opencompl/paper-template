@@ -28,11 +28,6 @@ jobs:
       with:
         root_file: blind.tex
 
-    - name: LaTeX compilation - Grammarly
-      uses: xu-cheng/latex-action@master
-      with:
-        root_file: grammarly.tex
-
     - name: LaTeX compilation - Camera (for final publication)
       uses: xu-cheng/latex-action@master
       with:
@@ -61,17 +56,6 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
         asset_path: ./paper.pdf
         asset_name: paper.pdf
-        asset_content_type: application/pdf
-
-    - name: Upload Grammarly
-      id: upload-release-grammarly
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: ./grammarly.pdf
-        asset_name: grammarly.pdf
         asset_content_type: application/pdf
 
     - name: Upload Blind

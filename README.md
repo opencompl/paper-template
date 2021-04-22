@@ -2,7 +2,6 @@
 
 Download:
 [Draft](../../releases/latest/download/paper.pdf) |
-[Grammarly](../../releases/latest/download/grammarly.pdf) |
 [Blind (for submission)](../../releases/latest/download/blind.pdf) |
 [Camera-Ready](../../releases/latest/download/camera.pdf) |
 [Paper Source Archive](../../releases/latest/download/paper-source.zip) |
