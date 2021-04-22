@@ -13,11 +13,6 @@
 
 \def\grammarlyon{on}
 
-\ifx\grammarly\grammarlyon
-\def\review{}
-\else
-\def\review{review,}
-\fi
 
 % The format used for this paper.
 %
@@ -25,16 +20,28 @@
 % OOPSLA/ASPLOS -> acmsmall
 \def\ClassFormat{sigplan}
 
+% Enable review mode for draft and blind variants of the paper
+% but disable it for the grammarly and camera-ready versions.
+\ifx\grammarly\grammarlyon
+\def\ClassReview{}
+\else
+\ifx\paperversion\paperversioncamera
+\def\ClassReview{}
+\else
+\def\ClassReview{review,}
+\fi
+\fi
+
 \ifx\paperversion\paperversiondraft
-  \documentclass[\ClassFormat,\review anonymous]{acmart}
+  \documentclass[\ClassReview \ClassFormat, anonymous]{acmart}
 \fi
 
 \ifx\paperversion\paperversionblind
-  \documentclass[\ClassFormat,\review anonymous]{acmart}
+  \documentclass[\ClassReview \ClassFormat, anonymous]{acmart}
 \fi
 
 \ifx\paperversion\paperversioncamera
-  \documentclass[\ClassFormat]{acmart}
+  \documentclass[\ClassReview \ClassFormat]{acmart}
 \fi
 
 \usepackage{colortbl}
