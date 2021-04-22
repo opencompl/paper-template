@@ -32,17 +32,14 @@
 \fi
 \fi
 
-\ifx\paperversion\paperversiondraft
-  \documentclass[\ClassReview \ClassFormat, anonymous]{acmart}
-\fi
-
-\ifx\paperversion\paperversionblind
-  \documentclass[\ClassReview \ClassFormat, anonymous]{acmart}
-\fi
-
+% Disable anonymous mode for camera ready variant of this code.
 \ifx\paperversion\paperversioncamera
-  \documentclass[\ClassReview \ClassFormat]{acmart}
+\def\ClassAnonymous{}
+\else
+\def\ClassAnonymous{anonymous,}
 \fi
+
+\documentclass[\ClassReview \ClassAnonymous \ClassFormat]{acmart}
 
 \usepackage{colortbl}
 
