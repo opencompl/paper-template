@@ -83,8 +83,6 @@ jobs:
 
     - name: Create Image (Blind)
       run: tools/create-image.py blind.pdf
-    - name: Create Image (Camera)
-      run: tools/create-image.py camera.pdf
 
     - name: Upload Image (Blind)
       id: upload-release-asset-image-blind
