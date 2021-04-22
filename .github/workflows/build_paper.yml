@@ -18,15 +18,15 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    - name: LaTeX compilation - Draft
+    - name: LaTeX compilation - Draft (with comments)
+      uses: xu-cheng/latex-action@master
+      with:
+        root_file: draft.tex
+
+    - name: LaTeX compilation - Paper
       uses: xu-cheng/latex-action@master
       with:
         root_file: paper.tex
-
-    - name: LaTeX compilation - Blind (for submission)
-      uses: xu-cheng/latex-action@master
-      with:
-        root_file: blind.tex
 
     - name: Create Release
       id: create_release
@@ -46,8 +46,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: ./paper.pdf
-        asset_name: paper.pdf
+        asset_path: ./draft.pdf
+        asset_name: draft.pdf
         asset_content_type: application/pdf
 
     - name: Upload Blind
@@ -57,8 +57,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: ./blind.pdf
-        asset_name: blind.pdf
+        asset_path: ./paper.pdf
+        asset_name: paper.pdf
         asset_content_type: application/pdf
 
     - name: Install ImageMagick
@@ -67,16 +67,16 @@ jobs:
     - name: Remove PDF restrictions
       run: sudo tools/update-image-magick.sh
 
-    - name: Create Image (Blind)
-      run: tools/create-image.py blind.pdf
+    - name: Create Image
+      run: tools/create-image.py paper.pdf
 
-    - name: Upload Image (Blind)
-      id: upload-release-asset-image-blind
+    - name: Upload Image
+      id: upload-release-asset-image
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./blind.pdf-full.png
-        asset_name: blind.png
+        asset_path: ./paper.pdf-full.png
+        asset_name: paper.png
         asset_content_type: image/png
