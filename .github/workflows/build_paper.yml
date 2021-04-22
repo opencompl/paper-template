@@ -79,7 +79,7 @@ jobs:
       run: sudo apt install imagemagick ghostscript-x ghostscript
 
     - name: Remove PDF restrictions
-      run: [ ! -f /etc/ImageMagick-6/policy.xml ] || sudo mv /etc/ImageMagick-6/policy.xml /etc/ImageMagick-6/policy.xmlout
+      run: sudo cp -f /etc/ImageMagick-6/policy.xml /etc/ImageMagick-6/policy.xmlout; sudo rm /etc/ImageMagick-6/policy.xml
 
     - name: Create Image (Blind)
       run: tools/create-image.py blind.pdf
