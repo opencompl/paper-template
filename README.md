@@ -2,7 +2,7 @@
 
 Download:
 [Draft](../../releases/latest/download/paper.pdf) |
-[Blind (for submission)](../../releases/latest/download/blind.pdf) |
+[Blind (for submission)](../../releases/latest/download/blind.pdf)
 
 ![Blind Paper](../../releases/latest/download/blind.png)
 
