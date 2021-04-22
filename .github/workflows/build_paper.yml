@@ -91,12 +91,6 @@ jobs:
         asset_name: paper-source.zip
         asset_content_type: application/zip
 
-    - name: Publish generated content to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        publish_dir: .
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Install ImageMagick
       run: sudo apt install imagemagick ghostscript-x ghostscript
 

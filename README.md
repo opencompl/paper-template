@@ -26,11 +26,3 @@ the following features:
       of room for comments
     - Pieces of text can be addressed specifically by underlining this text
     - Comments in float enviroments (e.g., figure)
-  - GitHub Pages Support
-    - The rebuilt repository will be pushed to GitHub Pages such that the PDFs are
-      also available for users without a GitHub Account. The PDFs are availble as
-      paper.pdf, grammarly.pdf, blind.pdf, and camera.pdf in the root folder of
-      the GitHub page of this respository.
-
-      WARNING: in case you use a private repository, you may need to push once manually
-      to the gh-pages branch for the rebuilds to be triggered.
