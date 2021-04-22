@@ -4,8 +4,6 @@ Download:
 [Draft (with comments)](../../releases/latest/download/draft.pdf) |
 [Paper](../../releases/latest/download/paper.pdf)
 
-![Blind Paper](../../releases/latest/download/blind.png)
-
 This repository serves as a template for writing computer science papers in LaTeX. It supports
 the following features:
 
