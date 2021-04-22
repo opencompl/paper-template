@@ -60,23 +60,3 @@ jobs:
         asset_path: ./paper.pdf
         asset_name: paper.pdf
         asset_content_type: application/pdf
-
-    - name: Install ImageMagick
-      run: sudo apt install imagemagick ghostscript-x ghostscript
-
-    - name: Remove PDF restrictions
-      run: sudo tools/update-image-magick.sh
-
-    - name: Create Image
-      run: tools/create-image.py paper.pdf
-
-    - name: Upload Image
-      id: upload-release-asset-image
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./paper.pdf-full.png
-        asset_name: paper.png
-        asset_content_type: image/png
