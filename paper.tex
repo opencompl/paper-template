@@ -1,38 +1,22 @@
 \def\paperversiondraft{draft}
-\def\paperversionblind{blind}
-\def\paperversioncamera{camera}
+\def\paperversionblind{normal}
 
-% If no special paper-version is requested, compile in draft mode
-\ifx\paperversion\paperversionblind
+% If no draft paper-version is requested, compile in 'normal' mode
+\ifx\paperversion\paperversiondraft
 \else
-  \ifx\paperversion\paperversioncamera
-  \else
-     \def\paperversion{draft}
-  \fi
+  \def\paperversion{normal}
 \fi
 
 \def\grammarlyon{on}
 
-% Enable review mode for draft and blind variants of the paper
-% but disable it for the grammarly and camera-ready versions.
+% Disable review mode for grammarly version.
 \ifx\grammarly\grammarlyon
-\def\ClassReview{}
-\else
-\ifx\paperversion\paperversioncamera
 \def\ClassReview{}
 \else
 \def\ClassReview{review,}
 \fi
-\fi
 
-% Disable anonymous mode for camera ready variant of this code.
-\ifx\paperversion\paperversioncamera
-\def\ClassAnonymous{}
-\else
-\def\ClassAnonymous{anonymous,}
-\fi
-
-\documentclass[\ClassReview \ClassAnonymous sigplan]{acmart}
+\documentclass[\ClassReview anonymous, sigplan]{acmart}
 
 \usepackage{colortbl}
 

@@ -1,8 +1,8 @@
 ![Compile paper](../../workflows/Compile%20paper/badge.svg)
 
 Download:
-[Draft](../../releases/latest/download/paper.pdf) |
-[Blind (for submission)](../../releases/latest/download/blind.pdf)
+[Draft (with comments)](../../releases/latest/download/draft.pdf) |
+[Paper](../../releases/latest/download/paper.pdf)
 
 ![Blind Paper](../../releases/latest/download/blind.png)
 
