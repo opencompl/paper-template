@@ -1,39 +1,26 @@
 \def\paperversiondraft{draft}
-\def\paperversionblind{blind}
-\def\paperversioncamera{camera}
+\def\paperversionblind{normal}
 \def\paperversioncameraIEEE{cameraIEEE}
 
-% If no special paper-version is requested, compile in draft mode
-\ifx\paperversion\paperversionblind
+% If no draft paper-version is requested, compile in 'normal' mode
+\ifx\paperversion\paperversiondraft
 \else
-  \ifx\paperversion\paperversioncamera
+  \ifx\paperversion\paperversioncameraIEEE
   \else
-    \ifx\paperversion\paperversioncameraIEEE
-    \else
-      \def\paperversion{draft}
-    \fi
+    \def\paperversion{draft}
   \fi
 \fi
 
 \def\grammarlyon{on}
 
+% Disable review mode for grammarly version.
 \ifx\grammarly\grammarlyon
-\def\review{}
+\def\ClassReview{}
 \else
-\def\review{review,}
+\def\ClassReview{review,}
 \fi
 
-\ifx\paperversion\paperversiondraft
-  \documentclass[sigplan,\review anonymous]{acmart}
-\fi
-
-\ifx\paperversion\paperversionblind
-  \documentclass[sigplan,\review anonymous]{acmart}
-\fi
-
-\ifx\paperversion\paperversioncamera
-  \documentclass[sigplan]{acmart}\settopmatter{}
-\fi
+\documentclass[\ClassReview anonymous, sigplan]{acmart}
 
 \ifx\paperversion\paperversioncameraIEEE
   \documentclass[conference]{IEEEtran}
@@ -65,7 +52,7 @@
 \usepackage[textsize=tiny]{todonotes}
 \usepackage{xparse}
 \usepackage{xifthen, xstring}
-\usepackage{ulem}
+\usepackage[normalem]{ulem}
 \usepackage{xspace}
 \usepackage{marginnote}
 \makeatletter
@@ -81,29 +68,95 @@
    {\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}}
    {\ifthenelse{\equal{##2}{}}{\colorwave[#2]{##1}\xspace}{\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}\colorwave[#2]{##1}}}}
 \expandafter\newcommand\csname #1f\endcsname[2][\tmpdefault]{
-	\marginnote{
-		\todo[inline,linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1 (Figure):} ##2}}
+	\smash{\marginnote{
+		\todo[inline,linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1 (Figure):} ##2}}}
    }
 }
-
+%
 \else
 \newcommand\createtodoauthor[2]{%
-\def\tmpdefault{emptystring}
-\expandafter\newcommand\csname #1\endcsname[2][\tmpdefault]{\def\tmp{##1}\ifthenelse{\equal{\tmp}{\tmpdefault}}
-   {}
-   {\ifthenelse{\equal{##2}{}}{##1\xspace}{##1}}}
-\expandafter\newcommand\csname #1f\endcsname[2][\tmpdefault]{
-   }
-   }
+\def\tmpdefault{emptystring}%
+\expandafter\newcommand\csname #1\endcsname[2][\tmpdefault]{}%
+\expandafter\newcommand\csname #1f\endcsname[2][\tmpdefault]{}%
+}%
 \fi
 
 % Broaden margins to make room for todo notes
+\makeatletter
+\patchcmd{\@addmarginpar}{\ifodd\c@page}{\ifodd\c@page\@tempcnta\m@ne}{}{}
+\makeatother
 \ifx\paperversion\paperversiondraft
-  \paperwidth=\dimexpr \paperwidth + 6cm\relax
-  \oddsidemargin=\dimexpr\oddsidemargin + 3cm\relax
-  \evensidemargin=\dimexpr\evensidemargin + 3cm\relax
-  \marginparwidth=\dimexpr \marginparwidth + 3cm\relax
-  \setlength{\marginparwidth}{4.6cm}
+  \makeatletter
+  \if@ACM@journal
+    \geometry{asymmetric}
+    \paperwidth=\dimexpr \paperwidth + 3.5cm\relax
+    \oddsidemargin=\dimexpr\oddsidemargin + 0cm\relax
+    \evensidemargin=\dimexpr\evensidemargin + 0cm\relax
+    \marginparwidth=\dimexpr \marginparwidth + 3cm\relax
+    \setlength{\marginparwidth}{4.6cm}
+    % This makeatletter box helps to move notes to the right
+    \makeatletter
+    \long\def\@mn@@@marginnote[#1]#2[#3]{%
+      \begingroup
+        \ifmmode\mn@strut\let\@tempa\mn@vadjust\else
+          \if@inlabel\leavevmode\fi
+          \ifhmode\mn@strut\let\@tempa\mn@vadjust\else\let\@tempa\mn@vlap\fi
+        \fi
+        \@tempa{%
+          \vbox to\z@{%
+            \vss
+            \@mn@margintest
+            \if@reversemargin\if@tempswa
+                \@tempswafalse
+              \else
+                \@tempswatrue
+            \fi\fi
+            %\if@tempswa
+              \rlap{%
+                \if@mn@verbose
+                  \PackageInfo{marginnote}{xpos seems to be \@mn@currxpos}%
+                \fi
+                \begingroup
+                  \ifx\@mn@currxpos\relax\else\ifx\@mn@currxpos\@empty\else
+                      \kern-\dimexpr\@mn@currxpos\relax
+                  \fi\fi
+                  \ifx\@mn@currpage\relax
+                    \let\@mn@currpage\@ne
+                  \fi
+                  \if@twoside\ifodd\@mn@currpage\relax
+                      \kern\oddsidemargin
+                    \else
+                      \kern\evensidemargin
+                    \fi
+                  \else
+                    \kern\oddsidemargin
+                  \fi
+                  \kern 1in
+                \endgroup
+                \kern\marginnotetextwidth\kern\marginparsep
+                \vbox to\z@{\kern\marginnotevadjust\kern #3
+                  \vbox to\z@{%
+                    \hsize\marginparwidth
+                    \linewidth\hsize
+                    \kern-\parskip
+                    \marginfont\raggedrightmarginnote\strut\hspace{\z@}%
+                    \ignorespaces#2\endgraf
+                    \vss}%
+                  \vss}%
+              }%
+          }%
+        }%
+      \endgroup
+    }
+    \makeatother
+  \else
+    \paperwidth=\dimexpr \paperwidth + 6cm\relax
+    \oddsidemargin=\dimexpr\oddsidemargin + 3cm\relax
+    \evensidemargin=\dimexpr\evensidemargin + 3cm\relax
+    \marginparwidth=\dimexpr \marginparwidth + 3cm\relax
+    \setlength{\marginparwidth}{4.6cm}
+  \fi
+  \makeatother
 \fi
 
 % We use the following color scheme
@@ -129,6 +182,33 @@
 \createtodoauthor{authorFour}{pairedFourDarkGreen}
 \createtodoauthor{authorFive}{pairedFiveLightRed}
 \createtodoauthor{authorSix}{pairedSixDarkRed}
+
+\graphicspath{{./images/}}
+
+% Define macros that are used in this paper
+%
+% We require all macros to end with a delimiter (by default {}) to enusure
+% that LaTeX adds whitespace correctly.
+\makeatletter
+\newcommand\requiredelimiter[2][########]{%
+  \ifdefined#2%
+    \def\@temp{\def#2#1}%
+    \expandafter\@temp\expandafter{#2}%
+  \else
+    \@latex@error{\noexpand#2undefined}\@ehc
+  \fi
+}
+\@onlypreamble\requiredelimiter
+\makeatother
+
+\newcommand\newdelimitedcommand[2]{
+\expandafter\newcommand\csname #1\endcsname{#2}
+\expandafter\requiredelimiter
+\csname #1 \endcsname
+}
+
+\newdelimitedcommand{toolname}{Tool}
+
 
 % Print \autoref as "Section X.Y.Z"
 \unless\ifx\paperversion\paperversioncameraIEEE
@@ -317,7 +397,11 @@
 
 % Only add ACM notes and keywords in camera ready version
 % Drop citations and footnotes in draft and blind mode.
-\ifx\paperversion\paperversioncamera
+\makeatletter
+\if@ACM@anonymous
+\settopmatter{printacmref=false} % Removes citation information below abstract
+\renewcommand\footnotetextcopyrightpermission[1]{} % removes footnote with conference information in first column
+\else
 %% 2012 ACM Computing Classification System (CSS) concepts
 %% Generate at 'http://dl.acm.org/ccs/ccs.cfm'.
 \begin{CCSXML}
@@ -348,10 +432,11 @@
 
 %% Keywords
 %% comma separated list
-\ifx\paperversion\paperversioncamera
+\ifx\paperversion\paperversionblind
   \keywords{keyword1, keyword2, keyword3} 
 \fi
- 
+\makeatother
+
 %% \maketitle
 %% Note: \maketitle command must come after title commands, author
 %% commands, abstract environment, Computing Classification System
@@ -393,13 +478,19 @@ Now we have a sequence of comments,
 \authorSix{Comment 6}
 which should not introduce overlong white space sequences.
 
+Sometimes it is also important to \emph{emphasize} text to understand if it is
+underlined or printed in italic.
+
+We sometimes use macros to state that a tool as the name \toolname{} in a
+flexible way.
+
 \lipsum[1-3]
 
 \begin{figure}
 % Link to figure
 %
 % https://docs.google.com/drawings/d/1juKp43D3rLC-luBQPwQZ_wCnDK2S_6C1k6USV0wKE0g/edit?usp=sharing
-\includegraphics[width=\columnwidth]{images/overview.pdf}
+\includegraphics[width=\columnwidth]{overview.pdf}
 \caption{Our key idea visualized}
 \grosserf{Replace this figure with your own drawing.}
 \end{figure}
@@ -518,8 +609,33 @@ Complex diagrams often benefit from labels inside the diagrams. We suggest to
 use a filled circle (e.g, in light blue) to highlight these numbers and use
 these references, e.g., \circled{1} implemented as \texttt{\textbackslash{}circled\{1\}}, in the text to refer to them.
 
-\paragraph{PlottingMatplotlib}
-For plotting we use matplotlib.
+\subsubsection{Plots} We use matplotlib to create performance
+plots such as \autoref{fig:speedup}. We use the following
+formatting guidelines:
+\begin{itemize}
+  \item Use a vertical y-label to make it easier to read.
+  \item Remove top and right frames to reduce visual noise
+	and allow the reader to focus on the data in the
+	figure.
+  \item Provide the concrete data at the top of each bar.
+\end{itemize}
+
+\noindent
+We also suggest to follow these technical remarks:
+\begin{itemize}
+  \item Create pdf plots and do not use bitmap formats (e.g., png) to
+	ensure high quality when zooming in.
+  \item Avoid Type-3 bitmap fonts by
+	setting fonttype to 42.
+\end{itemize}
+
+\begin{figure}
+\includegraphics[width=\columnwidth]{plots/speedup}
+\caption{Improved running speed after 4 weeks of training.
+}
+\label{fig:speedup}
+\end{figure}
+
 \end{draftonly}
 
 
