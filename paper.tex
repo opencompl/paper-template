@@ -7,7 +7,7 @@
 \else
   \ifx\paperversion\paperversioncameraIEEE
   \else
-    \def\paperversion{draft}
+    \def\paperversion{normal}
   \fi
 \fi
 
@@ -20,10 +20,26 @@
 \def\ClassReview{review,}
 \fi
 
-\documentclass[\ClassReview anonymous, sigplan]{acmart}
-
 \ifx\paperversion\paperversioncameraIEEE
   \documentclass[conference]{IEEEtran}
+\else
+  \documentclass[\ClassReview anonymous, sigplan]{acmart}
+\fi
+
+\def\acmversionanonymous{anonymous}
+\def\acmversionjournal{journal}
+\def\acmversionnone{none}
+
+\ifx\paperversion\paperversioncameraIEEE
+    \def\acmversion{none}
+\else
+  \makeatletter
+  \if@ACM@anonymous
+    \def\acmversion{anonymous}
+  \else
+    \def\acmversion{journal}
+  \fi
+  \makeatother
 \fi
 
 \usepackage{colortbl}
@@ -55,6 +71,8 @@
 \usepackage[normalem]{ulem}
 \usepackage{xspace}
 \usepackage{marginnote}
+\usepackage{etoolbox}
+
 \makeatletter
 \font\uwavefont=lasyb10 scaled 652
 
@@ -86,8 +104,7 @@
 \patchcmd{\@addmarginpar}{\ifodd\c@page}{\ifodd\c@page\@tempcnta\m@ne}{}{}
 \makeatother
 \ifx\paperversion\paperversiondraft
-  \makeatletter
-  \if@ACM@journal
+  \ifx\acmversion\acmversionjournal
     \geometry{asymmetric}
     \paperwidth=\dimexpr \paperwidth + 3.5cm\relax
     \oddsidemargin=\dimexpr\oddsidemargin + 0cm\relax
@@ -156,7 +173,6 @@
     \marginparwidth=\dimexpr \marginparwidth + 3cm\relax
     \setlength{\marginparwidth}{4.6cm}
   \fi
-  \makeatother
 \fi
 
 % We use the following color scheme
@@ -211,7 +227,8 @@
 
 
 % Print \autoref as "Section X.Y.Z"
-\unless\ifx\paperversion\paperversioncameraIEEE
+\ifx\paperversion\paperversioncameraIEEE
+\else
   \renewcommand*{\sectionautorefname}{Section}
   \renewcommand*{\subsectionautorefname}{Section}
   \renewcommand*{\subsubsectionautorefname}{Section}
@@ -226,8 +243,9 @@
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{
             \node[shape=circle,fill=pairedOneLightBlue,inner sep=1pt] (char) {#1};}}
 
-\unless\ifx\paperversion\paperversioncameraIEEE
-  \makeatletter\if@ACM@journal\makeatother
+\ifx\paperversion\paperversioncameraIEEE
+\else
+  \ifx\acmversion\acmversionjournal
   %% Journal information (used by PACMPL format)
   %% Supplied to authors by publisher for camera-ready submission
   \acmJournal{PACMPL}
@@ -238,7 +256,7 @@
   \acmMonth{1}
   \acmDOI{10.1145/nnnnnnn.nnnnnnn}
   \startPage{1}
-  \else\makeatother
+  \else
   %% Conference information (used by SIGPLAN proceedings format)
   %% Supplied to authors by publisher for camera-ready submission
   \acmConference[PL'17]{ACM SIGPLAN Conference on Programming Languages}{January 01--03, 2017}{New York, NY, USA}
@@ -388,8 +406,8 @@
   }
   \email{first2.last2@inst2b.org}         %% \email is recommended
 \fi
-
-\unless\ifx\paperversion\paperversioncameraIEEE
+\ifx\paperversion\paperversioncameraIEEE
+\else
   \begin{abstract}
     \input{inputs/abstract.tex}
   \end{abstract}
@@ -397,11 +415,11 @@
 
 % Only add ACM notes and keywords in camera ready version
 % Drop citations and footnotes in draft and blind mode.
-\makeatletter
-\if@ACM@anonymous
+\ifx\acmversion\acmversionanonymous
 \settopmatter{printacmref=false} % Removes citation information below abstract
 \renewcommand\footnotetextcopyrightpermission[1]{} % removes footnote with conference information in first column
-\else
+\fi
+\ifx\acmversion\acmversionjournal
 %% 2012 ACM Computing Classification System (CSS) concepts
 %% Generate at 'http://dl.acm.org/ccs/ccs.cfm'.
 \begin{CCSXML}
@@ -423,19 +441,10 @@
 \ccsdesc[300]{Social and professional topics~History of programming languages}
 %% End of generated code
 
-\else
-  \unless\ifx\paperversion\paperversioncameraIEEE
-    \settopmatter{printacmref=false} % Removes citation information below abstract
-    \renewcommand\footnotetextcopyrightpermission[1]{} % removes footnote with conference information in first column
-  \fi
-\fi
-
 %% Keywords
 %% comma separated list
-\ifx\paperversion\paperversionblind
-  \keywords{keyword1, keyword2, keyword3} 
+\keywords{keyword1, keyword2, keyword3} 
 \fi
-\makeatother
 
 %% \maketitle
 %% Note: \maketitle command must come after title commands, author
@@ -528,7 +537,8 @@ the remaining paper should be to support the claims stated here.
 \section{Conclusion}
 \lipsum[1]
 
-\unless\ifx\paperversion\paperversioncameraIEEE
+\ifx\paperversion\paperversioncameraIEEE
+\else
 %% Acknowledgments
 \begin{acks}                            %% acks environment is optional
                                         %% contents suppressed with 'anonymous'
