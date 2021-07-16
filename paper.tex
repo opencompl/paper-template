@@ -213,7 +213,7 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows}
 \usetikzlibrary{shapes}
-\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+\DeclareRobustCommand\circled[1]{\tikz[baseline=(char.base)]{
             \node[shape=circle,fill=pairedOneLightBlue,inner sep=1pt] (char) {#1};}}
 
 
