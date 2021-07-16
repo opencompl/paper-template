@@ -11,15 +11,14 @@ PDF_GRAMMARLY = grammarly.pdf
 
 IMAGES := $(wildcard images/*.jpg images/*.pdf images/*.png)
 
-# spag is a phony rule, it generates index.html
+# grammar is a phony rule, it generates index.html
 # from textidote
-.PHONY: spag
-
+.PHONY: grammar
 
 all: ${PDF_PAPER}
 
 # spelling and grammar
-spag: paper.tex
+grammar: paper.tex
 	# check that textidote exists.
 	@textidote --version
 	# allowed to fail since it throws error if we have grammar mistakes
