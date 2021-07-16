@@ -11,7 +11,21 @@ PDF_GRAMMARLY = grammarly.pdf
 
 IMAGES := $(wildcard images/*.jpg images/*.pdf images/*.png)
 
+# spag is a phony rule, it generates index.html
+# from textidote
+.PHONY: spag
+
+
 all: ${PDF_PAPER}
+
+# spelling and grammar
+spag: paper.tex
+	# check that textidote exists.
+	@textidote --version
+	# allowed to fail since it throws error if we have grammar mistakes
+	-textidote --check en --output html paper.tex > index.html
+	python3 -m http.server
+
 
 ${PDF_DRAFT}: ${TEX_MAIN_DRAFT} ${TEX_MAIN} ${IMAGES}
 	latexmk ${TEX_MAIN_DRAFT}
