@@ -207,6 +207,7 @@
 
 
 % Print \autoref as "Section X.Y.Z"
+\newcommand*{\listingautorefname}{Listing}
 \renewcommand*{\sectionautorefname}{Section}
 \renewcommand*{\subsectionautorefname}{Section}
 \renewcommand*{\subsubsectionautorefname}{Section}
@@ -217,9 +218,7 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows}
 \usetikzlibrary{shapes}
-\DeclareRobustCommand\circled[1]{\tikz[baseline=(char.base)]{
-            \node[shape=circle,fill=pairedOneLightBlue,inner sep=1pt] (char) {#1};}}
-
+\DeclareRobustCommand\circled[2][]{\ifthenelse{\isempty{#1}}{\tikz[baseline=(char.base)]{\node[shape=circle,fill=pairedOneLightBlue,inner sep=1pt] (char) {#2};}}{\autoref{#1}: \hyperref[#1]{\tikz[baseline=(char.base)]{\node[shape=circle,fill=pairedOneLightBlue,inner sep=1pt] (char) {#2};}}}}
 
 %% Note: Authors migrating a paper from traditional SIGPLAN
 %% proceedings format to PACMPL format should change 'sigplan' to
@@ -579,13 +578,13 @@ We also suggest to follow these technical remarks:
 \includegraphics[width=\columnwidth]{plots/speedup}
 \caption{Improved running speed after 4 weeks of training.
 }
-\label{fig:speedup}
+\label{lst:speedup}
 \end{figure}
 
 \subsubsection{Listings} We aim to use minted to create listings as much as
 possible, as this allows us to edit code quickly. We use syntax highlighting
 to make the parts of the code that matter most stand out. Hence, we keep
-most code black, comments gray, and highlight just the MLIR operands that
+most code black, comments (\circled[lst:example]{1}) gray, and highlight just the MLIR operands that
 we care about most.
 
 \begin{listing}
@@ -601,6 +600,7 @@ def @foo(%0 : !dialect.type)
 }
 \end{mlir}
 \caption{A simple MLIR code example}
+\label{lst:example}
 \end{listing}
 
 \end{draftonly}
