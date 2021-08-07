@@ -217,8 +217,8 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows}
 \usetikzlibrary{shapes}
-\DeclareRobustCommand\circled[1]{\tikz[baseline=(char.base)]{
-            \node[shape=circle,fill=pairedOneLightBlue,inner sep=1pt] (char) {#1};}}
+\DeclareRobustCommand\circled[2][]{\ifthenelse{\isempty{#1}}{\tikz[baseline=(char.base)]{\node[shape=circle,fill=pairedOneLightBlue,inner sep=1pt] (char) {#2};}}{\autoref{#1}: \hyperref[#1]{\tikz[baseline=(char.base)]{\node[shape=circle,fill=pairedOneLightBlue,inner sep=1pt] (char) {#2};}}}}
+
 
 
 %% Note: Authors migrating a paper from traditional SIGPLAN
@@ -597,10 +597,12 @@ we care about most.
 // This is a comment
 def @foo(%0 : !dialect.type)
 {
-  %a = dialect.op(%0) : !dialect.type // $\color{black}\circled{1}$
+  %a = dialect.op(%0) : !dialect.type // $\color{black}\circled{a}$
 }
 \end{mlir}
-\caption{A simple MLIR code example}
+\caption{A simple MLIR code example with markers. Markers can also be placed in
+	captions and refer to labels, e.g. \circled[lst:example]{a}.}
+\label{lst:example}
 \end{listing}
 
 \end{draftonly}
