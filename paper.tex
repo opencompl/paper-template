@@ -72,8 +72,8 @@
 \else
 \newcommand\createtodoauthor[2]{%
 \def\tmpdefault{emptystring}%
-\expandafter\newcommand\csname #1\endcsname[2][\tmpdefault]{}%
-\expandafter\newcommand\csname #1f\endcsname[2][\tmpdefault]{}%
+\expandafter\newcommand\csname #1\endcsname[2][\tmpdefault]{##1}%
+\expandafter\newcommand\csname #1f\endcsname[2][\tmpdefault]{##1}%
 }%
 \fi
 
