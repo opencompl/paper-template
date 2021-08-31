@@ -15,7 +15,20 @@ PDF_CAMERA_IEEE = cameraIEEE.pdf
 
 IMAGES := $(wildcard images/*.jpg images/*.pdf images/*.png)
 
+# grammar is a phony rule, it generates index.html
+# from textidote
+.PHONY: grammar
+
 all: ${PDF_DRAFT} ${PDF_GRAMMARLY} ${PDF_PAPER} ${PDF_CAMERA_IEEE}
+
+# spelling and grammar
+grammar: paper.tex
+	# check that textidote exists.
+	@textidote --version
+	# allowed to fail since it throws error if we have grammar mistakes
+	-textidote --check en --output html paper.tex > index.html
+	python3 -m http.server
+
 
 ${PDF_DRAFT}: ${TEX_MAIN_DRAFT} ${TEX_MAIN} ${IMAGES}
 	latexmk ${TEX_MAIN_DRAFT}

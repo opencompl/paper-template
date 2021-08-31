@@ -63,6 +63,10 @@
 \usepackage[T1]{fontenc}
 \usepackage{microtype}
 
+\usepackage{minted}
+\usemintedstyle{colorful}
+\newminted[mlir]{tools/MLIRLexer.py:MLIRLexerOnlyOps -x}{mathescape}
+
 \usepackage{xargs}
 \usepackage{lipsum}
 \usepackage[textsize=tiny]{todonotes}
@@ -240,8 +244,8 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows}
 \usetikzlibrary{shapes}
-\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
-            \node[shape=circle,fill=pairedOneLightBlue,inner sep=1pt] (char) {#1};}}
+\DeclareRobustCommand\circled[2][]{\ifthenelse{\isempty{#1}}{\tikz[baseline=(char.base)]{\node[shape=circle,fill=pairedOneLightBlue,inner sep=1pt] (char) {#2};}}{\autoref{#1}: \hyperref[#1]{\tikz[baseline=(char.base)]{\node[shape=circle,fill=pairedOneLightBlue,inner sep=1pt] (char) {#2};}}}}
+
 
 \ifx\paperversion\paperversioncameraIEEE
 \else
@@ -645,6 +649,29 @@ We also suggest to follow these technical remarks:
 }
 \label{fig:speedup}
 \end{figure}
+
+\subsubsection{Listings} We aim to use minted to create listings as much as
+possible, as this allows us to edit code quickly. We use syntax highlighting
+to make the parts of the code that matter most stand out. Hence, we keep
+most code black, comments gray, and highlight just the MLIR operands that
+we care about most.
+
+\begin{listing}
+% We cannot put '{' on a line after % in draftonly mode, as the hack we used to
+% not include the draft section will interpret the listing as normal
+% latex where '%' is a comment and {} need to match, which they will
+% not if only one is commented.
+\begin{mlir}
+// This is a comment
+def @foo(%0 : !dialect.type)
+{
+  %a = dialect.op(%0) : !dialect.type // $\color{black}\circled{a}$
+}
+\end{mlir}
+\caption{A simple MLIR code example with markers. Markers can also be placed in
+	captions and refer to labels, e.g. \circled[lst:example]{a}.}
+\label{lst:example}
+\end{listing}
 
 \end{draftonly}
 
