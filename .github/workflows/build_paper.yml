@@ -31,7 +31,7 @@ jobs:
         root_file: paper.tex
 
     - name: Create Release
-      if: "github.action_name == 'push'"
+      if: ${{ github.event_name == 'push' }}
       id: create_release
       uses: actions/create-release@latest
       env:
@@ -43,7 +43,7 @@ jobs:
         prerelease: false
 
     - name: Upload Draft
-      if: "github.action_name == 'push'"
+      if: ${{ github.event_name == 'push' }}
       id: upload-release-draft
       uses: actions/upload-release-asset@v1
       env:
@@ -55,7 +55,7 @@ jobs:
         asset_content_type: application/pdf
 
     - name: Upload Paper
-      if: "github.action_name == 'push'"
+      if: ${{ github.event_name == 'push' }}
       id: upload-release-asset-paper
       uses: actions/upload-release-asset@v1
       env:
