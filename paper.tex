@@ -568,13 +568,60 @@ the remaining paper should be to support the claims stated here.
 \newpage
 \appendix
 \begin{draftonly}
-\section{Formatting Guidelines}
+\section{Formatting and Writing Guidelines}
 
 These formatting guidelines aim to standardize our writing. They ensure that
 papers with multiple authors have a consistent look and that commonly occurring
 items are formatted in ways that are known to work well.
 
 \subsection{Figures}
+
+\paragraph{Referencing Figures} When referencing figures from the text we
+ensure the following:
+\begin{description}
+      \item [All figures are referenced] A paper with un-referenced figures
+	      appears incomplete.
+      \item [References to figures are brief and easy to skip]~\\
+                We minimize the number of words needed to refer to a figure. Reducing
+                the number of non-information-carrying words directly increases
+		the density of interesting content. When skipping references
+		becomes easy, reading quickly while ignoring figures remains a
+		smooth experience. The best and briefest reference to a figure
+		is a link in parenthesis that is added after the subject
+		representing the content depicted in a figure:\\
+		{\color{pairedTwoDarkBlue}\textit{Figure
+		X shows the design of A, which consists of ...}}\\
+		$\to$ {\color{pairedFourDarkGreen}
+		\textit{The design of A (Figure X) consists of ...}}
+      \item [The text is always self-contained without figures] ~\\ The reader
+                should be able to read the text without ever looking at any
+                figure. They should still understand the text and get the key
+		message of each figure directly from the text. By not forcing
+		the reader to analyze a figure while reading, we increase
+		readability as the reader can continue reading without having
+		to skip between text and figures. Such writing style also helps
+		to guide the thoughts of the reader, who can (for a moment)
+		trust our summary of the figure and does not need to develop
+		their own interpretation on-the-fly, a task which often yields
+		results that do not fit the flow of our exposition. Readers
+		typically only feel that their reading is interrupted if there
+		is no explanation of a figure at all. Hence, we do not need to
+		discuss all details of a figure, but half a sentence that explains the
+		core idea is typically sufficient for a reader to continue
+		reading.  By making
+		our text self-contained even when ignoring figures the reader
+		experiences a smooth and uninterrupted reading experience.\\
+		{\color{pairedTwoDarkBlue}
+		\textit{The speedups are presented in Figure X. < a new topic> }}\\
+		$\to$ {\color{pairedFourDarkGreen}\textit{Our approach outperforms the state of the art
+		XXX-library (Figure 3) demonstrating more than 4x speedup on
+		test case 1 and 2 and a geometric mean speedup of 1.5x over all
+		20 test cases.}}
+\end{description}
+We reference figures in text using
+\texttt{\symbol{92}autoref\{fig:speedup\}} for a figure with label
+\texttt{fig:speedup}.  The use of autoref ensures that all references
+to figures are formatted consistently, e.g. as \autoref{fig:speedup}.
 
 \paragraph{Color Scheme} 
 
