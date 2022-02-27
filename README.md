@@ -18,3 +18,4 @@ the following features:
       of room for comments
     - Pieces of text can be addressed specifically by underlining this text
     - Comments in float enviroments (e.g., figure)
+
