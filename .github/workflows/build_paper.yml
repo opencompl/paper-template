@@ -37,8 +37,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: Release ${{ github.ref }}-${{ github.run_number }}
-        tag_name: ${{ github.ref }}-release-${{ github.run_number }}
+        name: Release {{ github.run_number }}
         files: |
           paper.pdf
           draft.pdf
