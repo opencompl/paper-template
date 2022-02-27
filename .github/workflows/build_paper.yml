@@ -30,38 +30,15 @@ jobs:
       with:
         root_file: paper.tex
 
-    - name: Create Release
+    - name: Release
       if: ${{ github.event_name == 'push' }}
       id: create_release
-      uses: actions/create-release@latest
+      uses: softprops/action-gh-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
+        name: Release ${{ github.ref }}-${{ github.run_number }}
         tag_name: ${{ github.ref }}-release-${{ github.run_number }}
-        release_name: Release ${{ github.ref }}-${{ github.run_number }}
-        draft: false
-        prerelease: false
-
-    - name: Upload Draft
-      if: ${{ github.event_name == 'push' }}
-      id: upload-release-draft
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: ./draft.pdf
-        asset_name: draft.pdf
-        asset_content_type: application/pdf
-
-    - name: Upload Paper
-      if: ${{ github.event_name == 'push' }}
-      id: upload-release-asset-paper
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: ./paper.pdf
-        asset_name: paper.pdf
-        asset_content_type: application/pdf
+        files: |
+          paper.pdf
+          draft.pdf
