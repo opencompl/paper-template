@@ -42,6 +42,11 @@
   \makeatother
 \fi
 
+\ifx\grammarly\grammarlyon
+\usepackage[none]{hyphenat}
+\else
+\fi
+
 \usepackage{colortbl}
 
 % 'draftonly' environment
@@ -469,8 +474,16 @@
 %% commands, abstract environment, Computing Classification System
 %% environment and commands, and keywords command.
 \maketitle
-\ifx\grammarly\grammarlyon 
-\onecolumn 
+\ifx\grammarly\grammarlyon
+%% In grammarly mode use one-column,
+\onecolumn
+%% don't break words across lines,
+\hyphenpenalty 10000
+\exhyphenpenalty 10000
+%% and don't insert headers or footers
+\pagestyle{plain}
+%% or page numbers.
+\pagenumbering{gobble}
 \else 
 \fi
 
