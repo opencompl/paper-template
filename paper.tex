@@ -1,13 +1,17 @@
 \def\paperversiondraft{draft}
 \def\paperversionblind{normal}
 \def\paperversioncameraIEEE{cameraIEEE}
+\def\paperversioncameraACM{cameraACM}
 
 % If no draft paper-version is requested, compile in 'normal' mode
 \ifx\paperversion\paperversiondraft
 \else
   \ifx\paperversion\paperversioncameraIEEE
   \else
+    \ifx\paperversion\paperversioncameraACM
+    \else
     \def\paperversion{normal}
+    \fi
   \fi
 \fi
 
@@ -23,7 +27,11 @@
 \ifx\paperversion\paperversioncameraIEEE
   \documentclass[conference]{IEEEtran}
 \else
-  \documentclass[\ClassReview anonymous, sigplan]{acmart}
+  \ifx\paperversion\paperversioncameraACM
+    \documentclass[sigplan]{acmart}
+  \else
+    \documentclass[\ClassReview anonymous, sigplan]{acmart}
+  \fi
 \fi
 
 \def\acmversionanonymous{anonymous}
