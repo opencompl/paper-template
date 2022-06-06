@@ -2,6 +2,10 @@
 
 name: Compile paper
 
+# Provide permissions to read and write the repo, create releases.
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions
+permissions: write-all
+
 # Controls when the action will run. Triggers the workflow on push or pull request 
 # events but only for the master branch
 on: [push, pull_request]
