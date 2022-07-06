@@ -120,7 +120,8 @@
 \patchcmd{\@addmarginpar}{\ifodd\c@page}{\ifodd\c@page\@tempcnta\m@ne}{}{}
 \makeatother
 \ifx\paperversion\paperversiondraft
-  \ifx\acmversion\acmversionjournal
+  \makeatletter
+  \if@ACM@journal
     \geometry{asymmetric}
     \paperwidth=\dimexpr \paperwidth + 3.5cm\relax
     \oddsidemargin=\dimexpr\oddsidemargin + 0cm\relax
@@ -189,6 +190,7 @@
     \marginparwidth=\dimexpr \marginparwidth + 3cm\relax
     \setlength{\marginparwidth}{4.6cm}
   \fi
+  \makeatother
 \fi
 
 % We use the following color scheme
