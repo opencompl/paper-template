@@ -22,7 +22,7 @@ IMAGES := $(wildcard images/*.jpg images/*.pdf images/*.png)
 # from textidote
 .PHONY: grammar
 
-all: ${PDF_DRAFT} ${PDF_GRAMMARLY} ${PDF_PAPER} ${PDF_CAMERA_IEEE}
+all: ${PDF_DRAFT} ${PDF_PAPER}
 
 # spelling and grammar
 grammar: paper.tex
