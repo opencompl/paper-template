@@ -2,6 +2,7 @@
 TEX_MAIN = paper.tex
 
 TEX_MAIN_DRAFT = draft.tex
+TEX_MAIN_PAPER = paper.tex
 TEX_MAIN_GRAMMARLY = grammarly.tex
 TEX_MAIN_BLIND = blind.tex
 TEX_MAIN_CAMERA_IEEE = cameraIEEE.tex
