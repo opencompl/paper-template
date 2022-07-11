@@ -7,11 +7,11 @@ import sys
 import shutil
 
 def getPageNumber(name):
-    files = os.listdir(os.path.dirname(name))
-    files = filter(lambda f: f.startswith(os.path.basename(name)), files)
-    files = filter(lambda f: f.endswith('.png'), files)
-    files = list(files)
-    return len(files)
+    cmd = "pdfinfo " + name + " | grep 'Pages' | awk '{print $2}'"
+    res = os.popen(cmd).read().strip()
+    if res == "":
+        return 0
+    return int(res)
 
 def removePNGFiles(directory, tmpOnly = False):
     files = os.listdir(directory)
