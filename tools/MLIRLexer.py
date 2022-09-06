@@ -1,5 +1,25 @@
 from pygments.lexer import RegexLexer, bygroups
-from pygments.token import *
+from pygments.token import Name, Keyword, Operator, Comment, Text, Punctuation, Literal
+
+comment_rule = (r'//.*?\n', Comment)
+ssa_value_rule = (r'%[^[ )]*]*', Name.Variable)
+symbol_rule = (r'@[^(]*', Name.Function)
+basic_block_rule = (r'@[^(]*', Name.Function)
+operation_rule = (r'(=)( +)([a-z_]+)(\.)([a-z_]+)',
+                  bygroups(Operator, Text, Name.Namespace, Text,
+                           Keyword.Function))
+non_assign_operation_rule = (r'([a-z_]+)(\.)([a-z_]+)',
+                             bygroups(Name.Namespace, Text, Keyword.Function))
+type_rule = (r'(!)([a-z_]+)(\.)([a-z0-9_]+)',
+             bygroups(Operator, Name.Namespace, Text, Keyword.Type))
+abbrev_type_tule = (r'(!)([a-z0-9]+)', bygroups(Operator, Keyword.Type))
+first_attribute_rule = (r'([{\[])([a-z_]+)( = +)([a-z0-9">=]+)',
+                        bygroups(Text, Name.Attribute, Text, Name.Tag))
+following_attribute_rule = (r'(, +)([a-z_]+)( = +)([a-z0-9">=]+)',
+                            bygroups(Text, Name.Attribute, Text, Name.Tag))
+abbrev_following_attribute_rule = (r'(, +)([a-z_]+)( = +)([a-z0-9">=]+)',
+                                   bygroups(Text, Name.Attribute, Text,
+                                            Name.Tag))
 
 
 class MLIRLexer(RegexLexer):
@@ -9,24 +29,19 @@ class MLIRLexer(RegexLexer):
 
     tokens = {
         'root': [
-            (r'//.*?\n', Comment),
-            (r'%[^[ )]*]*', Name.Variable),
-            (r'@[^(]*', Name.Function),
-            (r'\^[^(:\]]*', Name.Label),
-            (r'(=)( +)([a-z_]+)(\.)([a-z_]+)',
-             bygroups(Operator, Text, Name.Namespace, Text, Keyword.Function)),
-            (r'([a-z_]+)(\.)([a-z_]+)',
-             bygroups(Name.Namespace, Text, Keyword.Function)),
-            (r'(!)([a-z_]+)(\.)([a-z0-9_]+)',
-             bygroups(Operator, Name.Namespace, Text, Keyword.Type)),
-            (r'(!)([a-z0-9]+)', bygroups(Operator, Keyword.Type)),
+            comment_rule,
+            ssa_value_rule,
+            symbol_rule,
+            basic_block_rule,
+            operation_rule,
+            non_assign_operation_rule,
+            type_rule,
+            abbrev_type_tule,
             (r'(\n|\s)+', Text),
-            (r'([{\[])([a-z_]+)( = +)([a-z0-9">=]+)',
-             bygroups(Text, Name.Attribute, Text, Name.Tag)),
+            first_attribute_rule,
             (r'(\[)([a-z]+)', bygroups(Text, Name.Variable)),
-            (r'(, +)([a-z_]+)( = +)([a-z0-9">=]+)',
-             bygroups(Text, Name.Attribute, Text, Name.Tag)),
-            (r'(, +)([a-z_]+)( = +)', bygroups(Text, Name.Attribute, Text)),
+            following_attribute_rule,
+            abbrev_following_attribute_rule,
             (r'[=<>{}:\[\]()*.,!]|x\b', Punctuation),
             (r'(...)', Text),
             (r'def', Keyword),
