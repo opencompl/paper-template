@@ -4,7 +4,7 @@ from pygments.token import Name, Keyword, Operator, Comment, Text, Punctuation, 
 comment_rule = (r'//.*?\n', Comment)
 ssa_value_rule = (r'%[^[ )]*]*', Name.Variable)
 symbol_rule = (r'@[^(]*', Name.Function)
-basic_block_rule = (r'@[^(]*', Name.Function)
+basic_block_rule = (r'\^[^(:\]]*', Name.Label)
 operation_rule = (r'(=)( +)([a-z_]+)(\.)([a-z_]+)',
                   bygroups(Operator, Text, Name.Namespace, Text,
                            Keyword.Function))
