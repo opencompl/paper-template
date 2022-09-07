@@ -13,13 +13,12 @@ non_assign_operation_rule = (r'([a-z_]+)(\.)([a-z_]+)',
 type_rule = (r'(!)([a-z_]+)(\.)([a-z0-9_]+)',
              bygroups(Operator, Name.Namespace, Text, Keyword.Type))
 abbrev_type_tule = (r'(!)([a-z0-9]+)', bygroups(Operator, Keyword.Type))
-first_attribute_rule = (r'([{\[])([a-z_]+)( = +)([a-z0-9">=]+)',
+first_attribute_rule = (r'([{\[])([a-z_A-Z]+)( = +)([@a-z0-9">=]+)',
                         bygroups(Text, Name.Attribute, Text, Name.Tag))
-following_attribute_rule = (r'(, +)([a-z_]+)( = +)([a-z0-9">=]+)',
+following_attribute_rule = (r'(, +)([a-z_]+)( = +)([a-z0-9">=@]+)',
                             bygroups(Text, Name.Attribute, Text, Name.Tag))
-abbrev_following_attribute_rule = (r'(, +)([a-z_]+)( = +)([a-z0-9">=]+)',
-                                   bygroups(Text, Name.Attribute, Text,
-                                            Name.Tag))
+abbrev_following_attribute_rule = (r'(, +)([a-z_]+)( = +)',
+                                   bygroups(Text, Name.Attribute, Text))
 
 
 class MLIRLexer(RegexLexer):

@@ -79,6 +79,7 @@
 \usepackage{minted}
 \usemintedstyle{colorful}
 \newminted[mlir]{tools/MLIRLexer.py:MLIRLexerOnlyOps -x}{mathescape}
+\newminted[xdsl]{tools/MLIRLexer.py:MLIRLexer -x}{mathescape, style=murphy}
 
 \usepackage{xargs}
 \usepackage{lipsum}
@@ -741,7 +742,7 @@ to make the parts of the code that matter most stand out. Hence, we keep
 most code black, comments gray, and highlight just the MLIR operands that
 we care about most.
 
-\begin{listing}
+\begin{listing}[H]
 % We cannot put '{' on a line after % in draftonly mode, as the hack we used to
 % not include the draft section will interpret the listing as normal
 % latex where '%' is a comment and {} need to match, which they will
@@ -757,6 +758,37 @@ def @foo(%0 : !dialect.type)
 	captions and refer to labels, e.g. \circled[lst:example]{a}.}
 \label{lst:example}
 \end{listing}
+
+The syntax highlighting also works for xDSL-like IRs. Notice that different
+minted styles can be used for different environments. The xDSL environment uses
+the murphy-style in this case, whereas the MLIR version applies the
+colorful-style.
+
+\begin{xdsl}
+func.func() [sym_name = "main", function_type = !fun<[
+              !iterators.columnar_batch<!tuple<[!i64]>>
+                 ], []>] {
+  ^bb0(%0 : !iterators.columnar_batch<!tuple<[!i64]>>):
+    %t : !iterators.stream<!llvm.struct<[!i64]>> =
+      iterators.scan_columnar_batch(%0 : ...)
+    %filtered : !iterators.stream<!llvm.struct<[!i64]>> =
+          iterators.filter(%input : …) [predicateRef = @s0]
+    iterators.sink(%filtered : !iterators.stream<!tuple<[!i64]>>)
+    func.return()
+}
+
+func.func() [sym_name = "s0", function_type = !fun<[
+    !llvm.struct<[!i64]>], [!i1]>] {
+  ^bb0(%struct : !llvm.struct<[!i64]>):
+    %id : !i64 = llvm.extractvalue(%struct : ...)
+              [position = [0 : !index]]
+    %five  : !i64 = arith.constant() [value = 5 : !i64]
+    %cmp : !i1 = arith.cmpi(%id : !i64, %five : !i64)
+              [predicate = 4 : !i64]
+    func.return(%cmp : !i1)
+}
+\end{xdsl}
+
 
 \end{draftonly}
 
