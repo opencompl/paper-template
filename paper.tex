@@ -82,7 +82,7 @@
 \makeatletter
 \font\uwavefont=lasyb10 scaled 652
 
-\newcommand\colorwave[1][blue]{\bgroup\markoverwith{\lower3\p@\hbox{\uwavefont\textcolor{#1}{\char58}}}\ULon}
+\newcommand\highlight[2]{\colorbox{#1}{#2}}
 \makeatother
 
 \ifx\paperversion\paperversiondraft
@@ -90,7 +90,7 @@
 \def\tmpdefault{emptystring}
 \expandafter\newcommand\csname #1\endcsname[2][\tmpdefault]{\def\tmp{##1}\ifthenelse{\equal{\tmp}{\tmpdefault}}
    {\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}}
-   {\ifthenelse{\equal{##2}{}}{\colorwave[#2]{##1}\xspace}{\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}\colorwave[#2]{##1}}}}
+   {\ifthenelse{\equal{##2}{}}{\highlight{#2}{##1}\xspace}{\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}\highlight{#2}{##1}}}}
 \expandafter\newcommand\csname #1f\endcsname[2][\tmpdefault]{
 	\smash{\marginnote{
 		\todo[inline,linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1 (Figure):} ##2}}}
