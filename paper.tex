@@ -11,19 +11,10 @@
   \fi
 \fi
 
-\def\grammarlyon{on}
-
-% Disable review mode for grammarly version.
-\ifx\grammarly\grammarlyon
-\def\ClassReview{}
-\else
-\def\ClassReview{review,}
-\fi
-
 \ifx\paperversion\paperversioncameraACM
   \documentclass[sigplan]{acmart}
 \else
-  \documentclass[\ClassReview anonymous, sigplan]{acmart}
+  \documentclass[review, anonymous, sigplan]{acmart}
 \fi
 
 \def\acmversionanonymous{anonymous}
@@ -37,11 +28,6 @@
   \def\acmversion{journal}
 \fi
 \makeatother
-
-\ifx\grammarly\grammarlyon
-\usepackage[none]{hyphenat}
-\else
-\fi
 
 \usepackage{colortbl}
 
@@ -409,18 +395,6 @@
 %% commands, abstract environment, Computing Classification System
 %% environment and commands, and keywords command.
 \maketitle
-\ifx\grammarly\grammarlyon
-%% In grammarly mode use one-column,
-\onecolumn
-%% don't break words across lines,
-\hyphenpenalty 10000
-\exhyphenpenalty 10000
-%% and don't insert headers or footers
-\pagestyle{plain}
-%% or page numbers.
-\pagenumbering{gobble}
-\else 
-\fi
 
 \section{Introduction}
 

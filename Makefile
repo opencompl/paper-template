@@ -3,14 +3,12 @@ TEX_MAIN = paper.tex
 
 TEX_MAIN_DRAFT = draft.tex
 TEX_MAIN_PAPER = paper.tex
-TEX_MAIN_GRAMMARLY = grammarly.tex
 TEX_MAIN_BLIND = blind.tex
 TEX_MAIN_CAMERA_ACM = cameraACM.tex
 
 # Generate PDF files
 PDF_DRAFT = draft.pdf
 PDF_PAPER = paper.pdf
-PDF_GRAMMARLY = grammarly.pdf
 PDF_BLIND = blind.pdf
 PDF_CAMERA_ACM = cameraACM.pdf
 
@@ -34,9 +32,6 @@ grammar: paper.tex
 ${PDF_DRAFT}: ${TEX_MAIN_DRAFT} ${TEX_MAIN} ${IMAGES}
 	latexmk ${TEX_MAIN_DRAFT}
 
-${PDF_GRAMMARLY}: ${TEX_MAIN_GRAMMARLY} ${TEX_MAIN} ${IMAGES}
-	latexmk ${TEX_MAIN_GRAMMARLY}
-
 ${PDF_PAPER}: ${TEX_MAIN_PAPER} ${TEX_MAIN} ${IMAGES}
 	latexmk ${TEX_MAIN_PAPER}
 
@@ -47,17 +42,12 @@ draft: ${PDF_DRAFT}
 
 blind: ${PDF_BLIND}
 
-grammarly: ${PDF_GRAMMARLY}
-
 paper: ${PDF_PAPER}
 
 cameraACM: ${PDF_CAMERA_ACM}
 
 view-draft: ${TEX_MAIN_DRAFT} ${TEX_MAIN} ${IMAGES}
 	latexmk -pvc ${TEX_MAIN_DRAFT}
-
-view-grammarly: ${TEX_MAIN_BLIND} ${TEX_MAIN} ${IMAGES}
-	latexmk -pvc ${TEX_MAIN_GRAMMARLY}
 
 view-paper: ${TEX_MAIN_PAPER} ${TEX_MAIN} ${IMAGES}
 	latexmk -pvc ${TEX_MAIN_PAPER}
