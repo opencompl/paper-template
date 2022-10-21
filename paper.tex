@@ -65,10 +65,12 @@
 \usepackage{marginnote}
 \usepackage{etoolbox}
 
+
 \makeatletter
 \font\uwavefont=lasyb10 scaled 652
+\newcommand\colorwave[1][blue]{\bgroup\markoverwith{\lower3\p@\hbox{\uwavefont\textcolor{#1}{\char58}}}\ULon}
 
-\newcommand\highlight[2]{\colorbox{#1}{#2}}
+\newcommand\highlight[2]{{\color{#1}{\colorwave[#1]{#2}}}}
 \makeatother
 
 \ifx\paperversion\paperversiondraft
@@ -404,7 +406,7 @@ Of this super cool article \ldots
 If there is \authorTwo[some text we want to refer to specifically]{this looks
 particularly interesting} we can refer to this text from within our comments.
 
-And here we only underline \authorTwo[Text]{} that is interesting, but do not
+And here we only mark \authorTwo[text]{} that is interesting, but do not
 actually comment.
 
 Now we have a sequence of comments,
