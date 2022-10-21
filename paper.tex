@@ -220,6 +220,8 @@
 
 \newdelimitedcommand{toolname}{Tool}
 
+\usepackage{booktabs}
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
 
 % \circled command to print a colored circle.
 % \circled{1} pretty-prints "(1)"
@@ -621,6 +623,33 @@ We also suggest to follow these technical remarks:
 }
 \label{fig:speedup}
 \end{figure}
+
+\subsubsection{Tables} We optimize our tables for readability by removing as
+much clutter as possible, while highlighting the key structure. Markus Püschel
+(see doc/paper-writing/guide-tables.pdf) wrote a nice guide on how to make nice
+tables. \autoref{tab:simple_table} illustrates this with a simple
+table.
+
+\begin{table}
+\ra{1.2}
+\centering
+\begin{tabular}{l l l r}
+  \toprule
+  \textbf{Animal} & \textbf{Size} & \textbf{Biotope} & \textbf{Age}\\
+  \midrule
+  Dog & Medium & Ground & 20\\
+  Cat & Medium & Ground &20 \\
+  Ant & Small & Ground & 30 \\
+  Elephant & Large & Ground & 70\\
+  Whale & Large & Water & 100\\
+  Salmon & Medium & Water & 13 \\
+  Eagle & Large & Air & 35 \\
+  \bottomrule
+\end{tabular}
+\vspace{1em}
+\caption{A table with heigh lines and emphasized header.}
+\label{tab:simple_table}
+\end{table}
 
 \subsubsection{Listings} We aim to use minted to create listings as much as
 possible, as this allows us to edit code quickly. We use syntax highlighting
