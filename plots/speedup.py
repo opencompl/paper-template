@@ -72,5 +72,9 @@ autolabel(rects2)
 fig.tight_layout()
 
 filename = os.path.basename(__file__).replace(".py", ".pdf")
-fig.savefig(filename)
 
+# Do not emit a creation date. This will make the content of
+# the pdfs we generate more deterministic.
+metadata = {'CreationDate' : None }
+
+fig.savefig(filename, metadata = metadata)
