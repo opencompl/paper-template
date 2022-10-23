@@ -73,22 +73,36 @@
 \newcommand\highlight[2]{{\color{#1}{\colorwave[#1]{#2}}}}
 \makeatother
 
+\makeatletter
+\newcommand\InFloat[2]{\ifnum\@floatpenalty<0\relax#1\else#2\fi}
+\makeatother
+
 \ifx\paperversion\paperversiondraft
-\newcommand\createtodoauthor[2]{%
-\def\tmpdefault{emptystring}
-\expandafter\newcommand\csname #1\endcsname[2][\tmpdefault]{\def\tmp{##1}\ifthenelse{\equal{\tmp}{\tmpdefault}}
-   {\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}}
-   {\ifthenelse{\equal{##2}{}}{\highlight{#2}{##1}\xspace}{\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}\highlight{#2}{##1}}}}
-\expandafter\newcommand\csname #1f\endcsname[2][\tmpdefault]{
-	\smash{\marginnote{
-		\todo[inline,linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1 (Figure):} ##2}}}
-   }
+\newcommand\createtodoauthor[2]{
+  \def\tmpdefault{emptystring}
+  \expandafter\newcommand\csname #1\endcsname[2][\tmpdefault]{% comment to avoid spurious whitespace
+    \def\tmp{##1}% comment to avoid spurious whitespace
+    \InFloat{
+        \smash{
+	  \marginnote{
+	    \todo[inline,linecolor=#2,backgroundcolor=#2,bordercolor=#2]
+	      {\textbf{#1 (Figure):} ##2}
+          }
+        }
+    }{\ifthenelse{\equal{\tmp}{\tmpdefault}} % Is there text to highlight?
+      {\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}}
+      {\ifthenelse{\equal{##2}{}} % Is there a note?
+        {\highlight{#2}{##1}\xspace}
+        {\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]
+	  {\textbf{#1:} ##2}\highlight{#2}{##1}% comment to avoid spurious whitespace
+	}% comment to avoid spurious whitespace
+      }% comment to avoid spurious whitespace
+    }% comment to avoid spurious whitespace
+  }
 }
-%
 \else
 \newcommand\createtodoauthor[2]{%
 \expandafter\newcommand\csname #1\endcsname[2][]{##1}%
-\expandafter\newcommand\csname #1f\endcsname[2][]{##1}%
 }%
 \fi
 
@@ -281,7 +295,6 @@
                             %% rendered as [2,3,4] rather than [2-4].
 
 
-
 \begin{document}
 
 %% Title information
@@ -408,7 +421,7 @@ Of this super cool article \ldots
 If there is \authorTwo[some text we want to refer to specifically]{this looks
 particularly interesting} we can refer to this text from within our comments.
 
-And here we only mark \authorTwo[text]{} that is interesting, but do not
+And here we only mark \authorTwo[text]{} that is \authorTwo[interesting]{}, but do not
 actually comment.
 
 Now we have a sequence of comments,
@@ -432,7 +445,7 @@ flexible way.
 % https://docs.google.com/drawings/d/1juKp43D3rLC-luBQPwQZ_wCnDK2S_6C1k6USV0wKE0g/edit?usp=sharing
 \includegraphics[width=\columnwidth]{overview.pdf}
 \caption{Our key idea visualized}
-\grosserf{Replace this figure with your own drawing.}
+\grosser{Replace this figure with your own drawing.}
 \end{figure}
 
 \vspace{.5em}
