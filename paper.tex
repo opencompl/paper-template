@@ -90,11 +90,11 @@
           }
         }
     }{\ifthenelse{\equal{\tmp}{\tmpdefault}} % Is there text to highlight?
-      {\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}}
+      {\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}\ignorespaces}
       {\ifthenelse{\equal{##2}{}} % Is there a note?
-        {\highlight{#2}{##1}\xspace}
-        {\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]
-	  {\textbf{#1:} ##2}\highlight{#2}{##1}% comment to avoid spurious whitespace
+        {\highlight{#2}{##1}}
+        {\highlight{#2}{##1}\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]
+	  {\textbf{#1:} ##2}% comment to avoid spurious whitespace
 	}% comment to avoid spurious whitespace
       }% comment to avoid spurious whitespace
     }% comment to avoid spurious whitespace
