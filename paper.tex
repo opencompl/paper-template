@@ -78,6 +78,13 @@
 \makeatother
 
 \ifx\paperversion\paperversiondraft
+  \usepackage{draftwatermark}
+  \SetWatermarkText{do not share}
+  \SetWatermarkScale{.8}
+  \SetWatermarkColor[gray]{0.95}
+\fi
+
+\ifx\paperversion\paperversiondraft
 \newcommand\createtodoauthor[2]{
   \def\tmpdefault{emptystring}
   \expandafter\newcommand\csname #1\endcsname[2][\tmpdefault]{% comment to avoid spurious whitespace
