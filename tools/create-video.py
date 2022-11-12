@@ -137,8 +137,8 @@ def plotStatistics(commit, filename, branch, count):
 
     histogram = [0] * (delta.days+1)
 
-    for commit in commits:
-      commit_date = date.fromtimestamp(commit.committed_date)
+    for c in commits:
+      commit_date = date.fromtimestamp(c.committed_date)
       histogram[(commit_date - start).days] += 1
 
     fig, ax = plt.subplots(figsize=(7, 3))
