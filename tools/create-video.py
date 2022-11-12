@@ -141,7 +141,7 @@ def plotStatistics(commit, filename, branch, count):
       commit_date = date.fromtimestamp(commit.committed_date)
       histogram[(commit_date - start).days] += 1
 
-    fig, ax = plt.subplots(figsize=(5, 3))
+    fig, ax = plt.subplots(figsize=(7, 3))
 
     ax.bar(date_ticks, histogram, align='center', alpha=0.5)
 
@@ -160,6 +160,9 @@ def plotStatistics(commit, filename, branch, count):
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%b'))
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
+    ax.set_title(commit.hexsha[:12], loc='left')
+    ax.set_title(commit.author.name, loc='center')
+    ax.set_title(time.strftime("%a, %d %b %H:%M", time.gmtime(commit.committed_date)), loc='right')
     plt.savefig(filename, dpi=300, transparent=True)
 
 def createImage(data):
