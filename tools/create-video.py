@@ -19,7 +19,7 @@ def getPageNumber(name):
 def getPDFSize(name):
     cmd = "pdfinfo " + name + " | grep 'Page size'"
     res = os.popen(cmd).read().strip().split(" ")
-    return (int(res[8]), int(res[10]))
+    return (int(round(float(res[8]),0)), int(round(float(res[10]),0)))
 
 def removePNGFiles(directory, tmpOnly = False):
     files = os.listdir(directory)
