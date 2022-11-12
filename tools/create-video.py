@@ -147,14 +147,16 @@ def plotStatistics(commit, filename, branch, count):
       commit_date = date.fromtimestamp(commit.committed_date)
       histogram[(commit_date - start).days] += 1
 
-    plt.bar(date_ticks, histogram, align='center', alpha=0.5)
+    fig, ax = plt.subplots(figsize=(5, 3))
+
+    ax.bar(date_ticks, histogram, align='center', alpha=0.5)
 
     commit_date = date.fromtimestamp(commit.committed_date)
     delta = end - commit_date
     histogram_highlight = [0] * (delta.days+1)
     histogram_highlight[delta.days] = histogram[delta.days]
 
-    plt.bar(date_ticks, histogram_highlight, align='center', alpha=0.5, color='red')
+    ax.bar(date_ticks, histogram_highlight, align='center', alpha=0.5, color='red')
     ax = plt.gca()
 
     ax.set_yscale('log')
@@ -164,7 +166,7 @@ def plotStatistics(commit, filename, branch, count):
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%b'))
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
-    plt.savefig(filename)
+    plt.savefig(filename, dpi=300, transparent=True)
 
 def createImage(data, branch, count):
     print(data)
@@ -183,6 +185,9 @@ def createImage(data, branch, count):
     run(['make', '-C', dirname, "paper.pdf"], stdout=DEVNULL, stderr=STDOUT)
     createImageOfPaper(dirname + "/paper.pdf")
     plotStatistics(commit,  dirname + "/statistics.png", branch, count)
+    run(['convert', '-gravity', 'SouthEast', dirname + '/paper.pdf-full.png',
+        dirname + '/statistics.png', '-composite', dirname +
+        '/paper.pdf-full.png'])
 
 def createImages(branch, count):
     repo = Repo(".")
