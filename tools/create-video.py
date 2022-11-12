@@ -17,6 +17,7 @@ from datetime import date, timedelta
 from matplotlib.ticker import ScalarFormatter
 import matplotlib.dates as mdates
 from multiprocessing import Pool
+import tqdm
 
 
 def getPageNumber(name):
@@ -192,10 +193,11 @@ def createImages(branch, count):
     repo = Repo(".")
     commits = list(reversed(list(repo.iter_commits(branch, max_count=count))))
     commits = list(map(lambda x: x.hexsha, commits))
-    items = zip(range(len(commits)), commits, [branch] * len(commits), [count] * len(commits))
+    items = list(zip(range(len(commits)), commits, [branch] * len(commits), [count] * len(commits)))
 
-    with Pool(16) as p:
-        p.map(createImage, items)
+    p = Pool(16)
+    for _ in tqdm.tqdm(p.imap_unordered(createImage, items), total=len(items)):
+        pass
 
 def getGrid(pages):
     import itertools
