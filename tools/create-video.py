@@ -196,8 +196,8 @@ def createImage(data):
 
     shutil.copyfile("Makefile", dirname + "/Makefile")
     shutil.copyfile(".latexmkrc", dirname + "/.latexmkrc")
-    #run(['make', '-C', dirname, "paper.pdf"], stdout=DEVNULL, stderr=STDOUT)
-    #createImageOfPaper(dirname + "/paper.pdf")
+    run(['make', '-C', dirname, "paper.pdf"], stdout=DEVNULL, stderr=STDOUT)
+    createImageOfPaper(dirname + "/paper.pdf")
     plotStatistics(commit,  dirname + "/statistics.png", branch, count)
     run(['convert', dirname + '/paper.pdf-full.png', '-resize', '3840x2160',
         '-background', 'white', '-gravity', 'center', '-extent', '3840x2160',
