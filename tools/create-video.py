@@ -10,6 +10,13 @@ import zipfile
 from subprocess import DEVNULL, STDOUT, run
 import concurrent.futures
 import argparse
+import numpy as np
+import matplotlib.pyplot as plt
+import time
+from datetime import date, timedelta
+from matplotlib.ticker import ScalarFormatter
+import matplotlib.dates as mdates
+
 
 def getPageNumber(name):
     cmd = "pdfinfo " + name + " | grep 'Pages' | awk '{print $2}'"
@@ -33,7 +40,6 @@ def removePNGFiles(directory, tmpOnly = False):
       os.remove(directory + '/' + f)
 
 def createImageOfPaper(path, width = 7, pages = 21):
-    print(path)
     removePNGFiles(os.path.dirname(path))
 
     name = path
@@ -122,7 +128,46 @@ def createVideo(path = ""):
     run(cmd)
     print(path + 'video.mp4')
 
-def createImage(data):
+def plotStatistics(commit, filename, branch, count):
+    repo = Repo(".")
+    commit_number = 0
+    commits = list(repo.iter_commits(branch))
+    end = date.fromtimestamp(commits[0].committed_date)
+    start = date.fromtimestamp(commits[-1].committed_date)
+    delta = end - start
+
+    date_ticks = []
+    for offset in range(delta.days+1):
+        current = start + timedelta(days=offset)
+        date_ticks.append(current)
+
+    histogram = [0] * (delta.days+1)
+
+    for commit in commits:
+      commit_date = date.fromtimestamp(commit.committed_date)
+      histogram[(commit_date - start).days] += 1
+
+    plt.bar(date_ticks, histogram, align='center', alpha=0.5)
+
+    commit_date = date.fromtimestamp(commit.committed_date)
+    delta = end - commit_date
+    histogram_highlight = [0] * (delta.days+1)
+    histogram_highlight[delta.days] = histogram[delta.days]
+
+    plt.bar(date_ticks, histogram_highlight, align='center', alpha=0.5, color='red')
+    ax = plt.gca()
+
+    ax.set_yscale('log')
+    sf = ScalarFormatter()
+    sf.set_scientific(False)
+    ax.yaxis.set_major_formatter(sf)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%b'))
+    ax.spines["right"].set_visible(False)
+    ax.spines["top"].set_visible(False)
+    plt.savefig(filename)
+
+def createImage(data, branch, count):
+    print(data)
     repo = Repo(".")
     commit_number = data[0]
     commit = data[1]
@@ -137,14 +182,18 @@ def createImage(data):
     shutil.copyfile(".latexmkrc", dirname + "/.latexmkrc")
     run(['make', '-C', dirname, "paper.pdf"], stdout=DEVNULL, stderr=STDOUT)
     createImageOfPaper(dirname + "/paper.pdf")
+    plotStatistics(commit,  dirname + "/statistics.png", branch, count)
 
 def createImages(branch, count):
     repo = Repo(".")
     commits = list(reversed(list(repo.iter_commits(branch, max_count=count))))
     items = zip(range(len(commits)), commits)
 
+    def f(data):
+        createImage(data, branch, count)
+
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        executor.map(createImage, items)
+        executor.map(f, items)
 
 def getGrid(pages):
     import itertools
