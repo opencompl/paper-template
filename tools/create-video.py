@@ -8,6 +8,7 @@ import shutil
 from git import Repo
 import zipfile
 from subprocess import DEVNULL, STDOUT, run
+import concurrent.futures
 
 def getPageNumber(name):
     cmd = "pdfinfo " + name + " | grep 'Pages' | awk '{print $2}'"
@@ -120,22 +121,29 @@ def createVideo(path = ""):
     run(cmd)
     print(path + 'video.mp4')
 
+def createImage(data):
+    repo = Repo(".")
+    commit_number = data[0]
+    commit = data[1]
+    filename = str(commit_number) + ".zip"
+    dirname =  str(commit_number).zfill(5) + "-files"
+
+    repo.git.archive(commit, '-o', filename)
+    with zipfile.ZipFile(filename, 'r') as zip_ref:
+        zip_ref.extractall(dirname)
+
+    shutil.copyfile("Makefile", dirname + "/Makefile")
+    shutil.copyfile(".latexmkrc", dirname + "/.latexmkrc")
+    run(['make', '-C', dirname, "paper.pdf"], stdout=DEVNULL, stderr=STDOUT)
+    createImageOfPaper(dirname + "/paper.pdf")
+
 def createImages():
     repo = Repo(".")
-    commit_number = 0
-    for commit in reversed(list(repo.iter_commits('master'))):
-        filename = str(commit_number) + ".zip"
-        dirname =  str(commit_number).zfill(5) + "-files"
-        commit_number += 1
+    commits = list(reversed(list(repo.iter_commits('master'))))
+    items = zip(range(len(commits)), commits)
 
-        repo.git.archive(commit, '-o', filename)
-        with zipfile.ZipFile(filename, 'r') as zip_ref:
-            zip_ref.extractall(dirname)
-
-        shutil.copyfile("Makefile", dirname + "/Makefile")
-        shutil.copyfile(".latexmkrc", dirname + "/.latexmkrc")
-        run(['make', '-C', dirname, "paper.pdf"], stdout=DEVNULL, stderr=STDOUT)
-        createImageOfPaper(dirname + "/paper.pdf")
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        executor.map(createImage, items)
 
 def getGrid(pages):
     import itertools
@@ -167,5 +175,4 @@ def testImages():
         testImageSize(i)
 
 createImages()
-moveImages(imagePath)
-createVideo()
+#createVideo()
