@@ -146,11 +146,11 @@ def plotStatistics(commit, filename, branch, count):
     ax.bar(date_ticks, histogram, align='center', alpha=0.5)
 
     commit_date = date.fromtimestamp(commit.committed_date)
-    delta = end - commit_date
-    histogram_highlight = [0] * (delta.days+1)
+    delta = commit_date - start
+    histogram_highlight = [0] * len(histogram)
     histogram_highlight[delta.days] = histogram[delta.days]
 
-    ax.bar(date_ticks, histogram_highlight, align='center', alpha=0.5, color='red')
+    ax.bar(date_ticks, histogram_highlight, align='center', alpha=1, color='red')
     ax = plt.gca()
 
     ax.set_yscale('log')
@@ -160,9 +160,9 @@ def plotStatistics(commit, filename, branch, count):
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%b'))
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
-    ax.set_title(commit.hexsha[:12], loc='left')
+    ax.set_title(time.strftime("%a, %d %b %H:%M", time.gmtime(commit.committed_date)), loc='left')
     ax.set_title(commit.author.name, loc='center')
-    ax.set_title(time.strftime("%a, %d %b %H:%M", time.gmtime(commit.committed_date)), loc='right')
+    ax.set_title(commit.hexsha[:12], loc='right')
     plt.savefig(filename, dpi=300, transparent=True)
 
 def createImage(data):
