@@ -140,7 +140,7 @@ def plotStatistics(commit, filename, branch, count):
 
     commit_pos = 0
     seen = False
-    for c in commits:
+    for c in reverse(commits):
       if not seen:
           commit_pos += 1
           if c == commit:
