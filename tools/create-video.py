@@ -119,7 +119,6 @@ def moveImages(path):
 def createVideo(path = ""):
     run(['rm', path + 'video.mp4'])
     cmd = ['ffmpeg', '-r', '2', '-pattern_type', 'glob', '-i', path + '*-files/paper.pdf-full.png', '-vcodec', 'libx264', '-crf', '25', '-pix_fmt', 'yuv420p', '-vf', 'scale=3840:2160:force_original_aspect_ratio=1,pad=3840:2160:(ow-iw)/2:(oh-ih)/2:white,format=rgb24', path + 'video.mp4']
-    print(" ".join(cmd))
     run(cmd)
     print(path + 'video.mp4')
 
@@ -167,7 +166,6 @@ def plotStatistics(commit, filename, branch, count):
     plt.savefig(filename, dpi=300, transparent=True)
 
 def createImage(data):
-    print(data)
     repo = Repo(".")
     commit_number = data[0]
     commit = repo.commit(data[1])
