@@ -175,7 +175,7 @@ def plotStatistics(commit, filename, branch, count):
     ax.yaxis.tick_right()
     title.text(0, 0, time.strftime("%a, %d %b %H:%M", time.gmtime(commit.committed_date)), horizontalalignment="left", verticalalignment="top")
     title.text(0.5, 0, commit.author.name, horizontalalignment="center", verticalalignment="top")
-    title.text(1, 0, str(commit_pos) + "/" + str(count) + "         ", horizontalalignment="right", verticalalignment="top")
+    title.text(1, 0, str(commit_pos) + "/" + str(min(count, len(commits))) + "         ", horizontalalignment="right", verticalalignment="top")
     title.get_xaxis().set_visible(False)
     title.get_yaxis().set_visible(False)
     plt.tight_layout()
