@@ -118,7 +118,7 @@ def moveImages(path):
 
 def createVideo(path = ""):
     run(['rm', path + 'video.mp4'])
-    cmd = ['ffmpeg', '-r', '2', '-pattern_type', 'glob', '-i', path + '*-files/paper.pdf-full.png', '-vcodec', 'libx264', '-crf', '25', '-pix_fmt', 'yuv420p', '-vf', 'scale=3840:2160:force_original_aspect_ratio=1,pad=3840:2160:(ow-iw)/2:(oh-ih)/2:white,format=rgb24', path + 'video.mp4']
+    cmd = ['ffmpeg', '-r', '2', '-pattern_type', 'glob', '-i', path + '*-files/paper.pdf-overlay.png', '-vcodec', 'libx264', '-crf', '25', '-pix_fmt', 'yuv420p', '-vf', 'scale=3840:2160:force_original_aspect_ratio=1,pad=3840:2160:(ow-iw)/2:(oh-ih)/2:white,format=rgb24', path + 'video.mp4']
     run(cmd)
     print(path + 'video.mp4')
 
@@ -137,11 +137,19 @@ def plotStatistics(commit, filename, branch, count):
 
     histogram = [0] * (delta.days+1)
 
+
+    commit_pos = 0
+    seen = False
     for c in commits:
+      if not seen:
+          commit_pos += 1
+          if c == commit:
+              seen = True
+      
       commit_date = date.fromtimestamp(c.committed_date)
       histogram[(commit_date - start).days] += 1
 
-    fig, ax = plt.subplots(figsize=(7, 3))
+    fig, (title, ax) = plt.subplots(1, 2, figsize=(10, 1.5))
 
     ax.bar(date_ticks, histogram, align='center', alpha=0.5)
 
@@ -158,11 +166,19 @@ def plotStatistics(commit, filename, branch, count):
     sf.set_scientific(False)
     ax.yaxis.set_major_formatter(sf)
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%b'))
-    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(False)
     ax.spines["top"].set_visible(False)
-    ax.set_title(time.strftime("%a, %d %b %H:%M", time.gmtime(commit.committed_date)), loc='left')
-    ax.set_title(commit.author.name, loc='center')
-    ax.set_title(commit.hexsha[:12], loc='right')
+    title.spines["left"].set_visible(False)
+    title.spines["top"].set_visible(False)
+    title.spines["bottom"].set_visible(False)
+    title.spines["right"].set_visible(False)
+    ax.yaxis.tick_right()
+    title.text(0, 0, time.strftime("%a, %d %b %H:%M", time.gmtime(commit.committed_date)), horizontalalignment="left", verticalalignment="top")
+    title.text(0.5, 0, commit.author.name, horizontalalignment="center", verticalalignment="top")
+    title.text(1, 0, str(commit_pos) + "/" + str(count) + "         ", horizontalalignment="right", verticalalignment="top")
+    title.get_xaxis().set_visible(False)
+    title.get_yaxis().set_visible(False)
+    plt.tight_layout()
     plt.savefig(filename, dpi=300, transparent=True)
 
 def createImage(data):
@@ -180,12 +196,15 @@ def createImage(data):
 
     shutil.copyfile("Makefile", dirname + "/Makefile")
     shutil.copyfile(".latexmkrc", dirname + "/.latexmkrc")
-    run(['make', '-C', dirname, "paper.pdf"], stdout=DEVNULL, stderr=STDOUT)
-    createImageOfPaper(dirname + "/paper.pdf")
+    #run(['make', '-C', dirname, "paper.pdf"], stdout=DEVNULL, stderr=STDOUT)
+    #createImageOfPaper(dirname + "/paper.pdf")
     plotStatistics(commit,  dirname + "/statistics.png", branch, count)
-    run(['convert', '-gravity', 'SouthEast', dirname + '/paper.pdf-full.png',
+    run(['convert', dirname + '/paper.pdf-full.png', '-resize', '3840x2160',
+        '-background', 'white', '-gravity', 'center', '-extent', '3840x2160',
+        dirname + '/paper.pdf-expanded.png'])
+    run(['convert', '-gravity', 'SouthEast', dirname + '/paper.pdf-expanded.png',
         dirname + '/statistics.png', '-composite', dirname +
-        '/paper.pdf-full.png'])
+        '/paper.pdf-overlay.png'])
 
 def createImages(branch, count):
     repo = Repo(".")
