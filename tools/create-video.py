@@ -9,6 +9,7 @@ from git import Repo
 import zipfile
 from subprocess import DEVNULL, STDOUT, run
 import concurrent.futures
+import argparse
 
 def getPageNumber(name):
     cmd = "pdfinfo " + name + " | grep 'Pages' | awk '{print $2}'"
@@ -137,9 +138,9 @@ def createImage(data):
     run(['make', '-C', dirname, "paper.pdf"], stdout=DEVNULL, stderr=STDOUT)
     createImageOfPaper(dirname + "/paper.pdf")
 
-def createImages():
+def createImages(branch, count):
     repo = Repo(".")
-    commits = list(reversed(list(repo.iter_commits('master'))))
+    commits = list(reversed(list(repo.iter_commits(branch, max_count=count))))
     items = zip(range(len(commits)), commits)
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -174,5 +175,14 @@ def testImages():
     for i in range(1, 27):
         testImageSize(i)
 
-createImages()
-#createVideo()
+parser = argparse.ArgumentParser(
+    prog = 'ltxrepo2mpg',
+    description = 'Translate a git paper repository into a video')
+parser.add_argument('-c', '--count', default=10000)
+parser.add_argument('-b', '--branch', default='main')
+
+args = parser.parse_args()
+
+
+createImages(args.branch, args.count)
+createVideo()
