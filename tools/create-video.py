@@ -17,20 +17,19 @@ from datetime import date, timedelta
 from matplotlib.ticker import ScalarFormatter
 import matplotlib.dates as mdates
 from multiprocessing import Pool
+import PyPDF2
 import tqdm
 
 
-def getPageNumber(name):
-    cmd = "pdfinfo " + name + " | grep 'Pages' | awk '{print $2}'"
-    res = os.popen(cmd).read().strip()
-    if res == "":
-        return 0
-    return int(res)
-
 def getPDFSize(name):
-    cmd = "pdfinfo " + name + " | grep 'Page size'"
-    res = os.popen(cmd).read().strip().split(" ")
-    return (int(round(float(res[8]),0)), int(round(float(res[10]),0)))
+    with open(name, 'rb') as f:
+        pdf = PyPDF2.PdfFileReader(f)
+        return (pdf.pages[0].mediabox.width,pdf.pages[0].mediabox.height)
+
+def getPageNumber(name):
+    with open(name, 'rb') as f:
+        pdf = PyPDF2.PdfFileReader(f)
+        return pdf.numPages
 
 def removePNGFiles(directory, tmpOnly = False):
     files = os.listdir(directory)
@@ -45,6 +44,8 @@ def createImageOfPaper(path, width = 7, pages = 21):
     removePNGFiles(os.path.dirname(path))
 
     name = path
+    if not os.path.exists(path):
+        return
 
     pageNumber = getPageNumber(path);
 
@@ -116,9 +117,9 @@ def moveImages(path):
         shutil.copyfile(release, path + ("still-%05d.png" % idx))
         idx = idx + 1
 
-def createVideo(path = ""):
+def createVideo(path = "", basename = "paper"):
     run(['rm', path + 'video.mp4'])
-    cmd = ['ffmpeg', '-r', '2', '-pattern_type', 'glob', '-i', path + '*-files/paper.pdf-overlay.png', '-vcodec', 'libx264', '-crf', '25', '-pix_fmt', 'yuv420p', '-vf', 'scale=3840:2160:force_original_aspect_ratio=1,pad=3840:2160:(ow-iw)/2:(oh-ih)/2:white,format=rgb24', path + 'video.mp4']
+    cmd = ['ffmpeg', '-r', '2', '-pattern_type', 'glob', '-i', path + f"*-files/{basename}.pdf-overlay.png", '-vcodec', 'libx264', '-crf', '25', '-pix_fmt', 'yuv420p', '-vf', 'scale=3840:2160:force_original_aspect_ratio=1,pad=3840:2160:(ow-iw)/2:(oh-ih)/2:white,format=rgb24', path + 'video.mp4']
     run(cmd)
     print(path + 'video.mp4')
 
@@ -190,6 +191,7 @@ def createImage(data):
     commit = repo.commit(data[1])
     branch = data[2]
     count = data[3]
+    base_filename = data[4]
     filename = str(commit_number) + ".zip"
     dirname =  str(commit_number).zfill(5) + "-files"
 
@@ -199,23 +201,23 @@ def createImage(data):
 
     shutil.copyfile("Makefile", dirname + "/Makefile")
     shutil.copyfile(".latexmkrc", dirname + "/.latexmkrc")
-    run(['make', '-C', dirname, "paper.pdf"], stdout=DEVNULL, stderr=STDOUT)
-    createImageOfPaper(dirname + "/paper.pdf")
+    run(['make', '-C', dirname, f"{base_filename}.pdf"], stdout=DEVNULL, stderr=STDOUT)
+    createImageOfPaper(dirname + f"/{base_filename}.pdf")
     plotStatistics(commit,  dirname + "/statistics.png", branch, count)
-    run(['convert', dirname + '/paper.pdf-full.png', '-resize', '3840x2160',
+    run(['convert', dirname + f"/{base_filename}.pdf-full.png", '-resize', '3840x2160',
         '-background', 'white', '-gravity', 'center', '-extent', '3840x2160',
-        dirname + '/paper.pdf-expanded.png'])
-    run(['convert', '-gravity', 'SouthEast', dirname + '/paper.pdf-expanded.png',
+        dirname + f"/{base_filename}.pdf-expanded.png"])
+    run(['convert', '-gravity', 'SouthEast', dirname + f"/{base_filename}.pdf-expanded.png",
         dirname + '/statistics.png', '-composite', dirname +
-        '/paper.pdf-overlay.png'])
+        f"/{base_filename}.pdf-overlay.png"])
 
-def createImages(branch, count):
+def createImages(branch, count, filename, procs):
     repo = Repo(".")
     commits = list(reversed(list(repo.iter_commits(branch, max_count=count))))
     commits = list(map(lambda x: x.hexsha, commits))
-    items = list(zip(range(len(commits)), commits, [branch] * len(commits), [count] * len(commits)))
+    items = list(zip(range(len(commits)), commits, [branch] * len(commits), [count] * len(commits), [filename] * len(commits)))
 
-    p = Pool(16)
+    p = Pool(procs)
     for _ in tqdm.tqdm(p.imap_unordered(createImage, items), total=len(items)):
         pass
 
@@ -253,10 +255,12 @@ if __name__ == "__main__":
         prog = 'ltxrepo2mpg',
         description = 'Translate a git paper repository into a video')
     parser.add_argument('-c', '--count', default=10000)
+    parser.add_argument('-p', '--procs', default=16)
     parser.add_argument('-b', '--branch', default='main')
+    parser.add_argument('-f', '--filename', default='paper')
 
     args = parser.parse_args()
 
 
-    createImages(args.branch, args.count)
-    createVideo()
+    createImages(args.branch, args.count, args.filename, int(args.procs))
+    createVideo(basename = args.filename)
