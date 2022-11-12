@@ -16,6 +16,7 @@ import time
 from datetime import date, timedelta
 from matplotlib.ticker import ScalarFormatter
 import matplotlib.dates as mdates
+from multiprocessing import Pool
 
 
 def getPageNumber(name):
@@ -104,14 +105,6 @@ def getReleases(path):
     releases = list(releases)
     return list(releases)
 
-from multiprocessing import Pool
-
-def createImages(path):
-    releases = getReleases(path)
-
-    with Pool(4) as p:
-        p.map(createImageOfPaper, releases)
-
 def moveImages(path):
     removePNGFiles(path)
     releases = getReleases(path)
@@ -125,6 +118,7 @@ def moveImages(path):
 def createVideo(path = ""):
     run(['rm', path + 'video.mp4'])
     cmd = ['ffmpeg', '-r', '2', '-pattern_type', 'glob', '-i', path + '*-files/paper.pdf-full.png', '-vcodec', 'libx264', '-crf', '25', '-pix_fmt', 'yuv420p', '-vf', 'scale=3840:2160:force_original_aspect_ratio=1,pad=3840:2160:(ow-iw)/2:(oh-ih)/2:white,format=rgb24', path + 'video.mp4']
+    print(" ".join(cmd))
     run(cmd)
     print(path + 'video.mp4')
 
@@ -168,11 +162,13 @@ def plotStatistics(commit, filename, branch, count):
     ax.spines["top"].set_visible(False)
     plt.savefig(filename, dpi=300, transparent=True)
 
-def createImage(data, branch, count):
+def createImage(data):
     print(data)
     repo = Repo(".")
     commit_number = data[0]
-    commit = data[1]
+    commit = repo.commit(data[1])
+    branch = data[2]
+    count = data[3]
     filename = str(commit_number) + ".zip"
     dirname =  str(commit_number).zfill(5) + "-files"
 
@@ -192,13 +188,11 @@ def createImage(data, branch, count):
 def createImages(branch, count):
     repo = Repo(".")
     commits = list(reversed(list(repo.iter_commits(branch, max_count=count))))
-    items = zip(range(len(commits)), commits)
+    commits = list(map(lambda x: x.hexsha, commits))
+    items = zip(range(len(commits)), commits, [branch] * len(commits), [count] * len(commits))
 
-    def f(data):
-        createImage(data, branch, count)
-
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        executor.map(f, items)
+    with Pool(16) as p:
+        p.map(createImage, items)
 
 def getGrid(pages):
     import itertools
@@ -229,14 +223,15 @@ def testImages():
     for i in range(1, 27):
         testImageSize(i)
 
-parser = argparse.ArgumentParser(
-    prog = 'ltxrepo2mpg',
-    description = 'Translate a git paper repository into a video')
-parser.add_argument('-c', '--count', default=10000)
-parser.add_argument('-b', '--branch', default='main')
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        prog = 'ltxrepo2mpg',
+        description = 'Translate a git paper repository into a video')
+    parser.add_argument('-c', '--count', default=10000)
+    parser.add_argument('-b', '--branch', default='main')
 
-args = parser.parse_args()
+    args = parser.parse_args()
 
 
-createImages(args.branch, args.count)
-createVideo()
+    createImages(args.branch, args.count)
+    createVideo()
