@@ -17,6 +17,11 @@ def setGlobalDefaults():
     matplotlib.rcParams['pdf.fonttype'] = 42
     matplotlib.rcParams['ps.fonttype'] = 42
 
+    ## Enable tight_layout by default
+    #
+    # This ensures the plot has always sufficient space for legends, ...
+    # Without this sometimes parts of the figure would be cut off.
+    matplotlib.rcParams['figure.autolayout'] = True
 
 matplotlib.rcParams['figure.figsize'] = 5, 2
 
@@ -105,8 +110,6 @@ def plot_speedup():
 
     autolabel(rects1)
     autolabel(rects2)
-
-    fig.tight_layout()
 
     save(fig, 'speedup.pdf')
 
