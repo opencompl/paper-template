@@ -5,6 +5,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 def setGlobalDefaults():
     ## Use TrueType fonts instead of Type 3 fonts
     #
@@ -13,6 +14,7 @@ def setGlobalDefaults():
     # This follows: https://www.conference-publishing.com/Help.php
     matplotlib.rcParams['pdf.fonttype'] = 42
     matplotlib.rcParams['ps.fonttype'] = 42
+
 
 setGlobalDefaults()
 
@@ -36,20 +38,30 @@ x = np.arange(len(labels))  # the label locations
 width = 0.35  # the width of the bars
 
 fig, ax = plt.subplots()
-rects1 = ax.bar(x - width/2, men_means, width, label='Men', color = light_blue)
-rects2 = ax.bar(x + width/2, women_means, width, label='Women', color = dark_blue)
+rects1 = ax.bar(x - width / 2, men_means, width, label='Men', color=light_blue)
+rects2 = ax.bar(x + width / 2,
+                women_means,
+                width,
+                label='Women',
+                color=dark_blue)
 
 # Y-Axis Label
 #
 # Use a horizontal label for improved readability.
-ax.set_ylabel('Speedup', rotation='horizontal', position = (1, 1.05),
-    horizontalalignment='left', verticalalignment='bottom')
+ax.set_ylabel('Speedup',
+              rotation='horizontal',
+              position=(1, 1.05),
+              horizontalalignment='left',
+              verticalalignment='bottom')
 
 # Add some text for labels, title and custom x-axis tick labels, etc.
 ax.set_xticks(x)
 ax.set_xticklabels(labels)
 
-ax.legend(ncol=100, frameon=False, loc='lower right', bbox_to_anchor=(0, 1, 1, 0))
+ax.legend(ncol=100,
+          frameon=False,
+          loc='lower right',
+          bbox_to_anchor=(0, 1, 1, 0))
 
 # Hide the right and top spines
 #
@@ -60,16 +72,20 @@ ax.legend(ncol=100, frameon=False, loc='lower right', bbox_to_anchor=(0, 1, 1, 0
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
 
+
 def autolabel(rects):
     """Attach a text label above each bar in *rects*, displaying its height."""
     for rect in rects:
         height = rect.get_height()
-        ax.annotate('{}'.format(height),
-                    xy=(rect.get_x() + rect.get_width() / 2, height),
-                    xytext=(0, 1),  # 1 points vertical offset
-                    textcoords="offset points",
-                    fontsize="smaller",
-                    ha='center', va='bottom')
+        ax.annotate(
+            '{}'.format(height),
+            xy=(rect.get_x() + rect.get_width() / 2, height),
+            xytext=(0, 1),  # 1 points vertical offset
+            textcoords="offset points",
+            fontsize="smaller",
+            ha='center',
+            va='bottom')
+
 
 autolabel(rects1)
 autolabel(rects2)
@@ -80,6 +96,6 @@ filename = os.path.basename(__file__).replace(".py", ".pdf")
 
 # Do not emit a creation date. This will make the content of
 # the pdfs we generate more deterministic.
-metadata = {'CreationDate' : None }
+metadata = {'CreationDate': None}
 
-fig.savefig(filename, metadata = metadata)
+fig.savefig(filename, metadata=metadata)
