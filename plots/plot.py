@@ -23,6 +23,10 @@ def setGlobalDefaults():
     # Without this sometimes parts of the figure would be cut off.
     matplotlib.rcParams['figure.autolayout'] = True
 
+    ## Legend defaults
+    matplotlib.rcParams['legend.frameon'] = False
+
+
 matplotlib.rcParams['figure.figsize'] = 5, 2
 
 # Color palette
@@ -82,7 +86,6 @@ def plot_speedup():
     ax.set_xticklabels(labels)
 
     ax.legend(ncol=100,
-              frameon=False,
               loc='lower right',
               bbox_to_anchor=(0, 1, 1, 0))
 
