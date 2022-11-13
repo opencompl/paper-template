@@ -5,11 +5,16 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Use TrueType fonts instead of Type 3 fonts
-# Type 3 fonts embed bitmaps and are not allowed in camera-ready submissions
-# for many conferences. TrueType fonts look better and are accepted.
-matplotlib.rcParams['pdf.fonttype'] = 42
-matplotlib.rcParams['ps.fonttype'] = 42
+def setGlobalDefaults():
+    ## Use TrueType fonts instead of Type 3 fonts
+    #
+    # Type 3 fonts embed bitmaps and are not allowed in camera-ready submissions
+    # for many conferences. TrueType fonts look better and are accepted.
+    # This follows: https://www.conference-publishing.com/Help.php
+    matplotlib.rcParams['pdf.fonttype'] = 42
+    matplotlib.rcParams['ps.fonttype'] = 42
+
+setGlobalDefaults()
 
 matplotlib.rcParams['figure.figsize'] = 5, 2
 
