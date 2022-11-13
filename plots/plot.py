@@ -30,6 +30,18 @@ dark_green = "#33a02c"
 light_red = "#fb9a99"
 dark_red = "#e31a1c"
 
+
+def save(figure, name):
+    # Do not emit a creation date, creator name, or producer. This will make the
+    # content of the pdfs we generate more deterministic.
+    metadata = {'CreationDate': None, 'Creator': None, 'Producer': None}
+
+    figure.savefig(name, metadata=metadata)
+
+    # Close figure to avoid warning about too many open figures.
+    plt.close(figure)
+
+
 # Plot an example speedup plot
 def plot_speedup():
     labels = ['G1', 'G2', 'G3', 'G4', 'G5']
@@ -96,12 +108,7 @@ def plot_speedup():
 
     fig.tight_layout()
 
-
-    # Do not emit a creation date. This will make the content of
-    # the pdfs we generate more deterministic.
-    metadata = {'CreationDate': None}
-
-    fig.savefig("speedup.pdf", metadata=metadata)
+    save(fig, 'speedup.pdf')
 
 
 def main():
