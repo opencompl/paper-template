@@ -78,3 +78,50 @@
   \fi
   \makeatother
 \fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Add \createtodoauthor command
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[textsize=tiny]{todonotes}
+\usepackage[normalem]{ulem}
+
+\makeatletter
+\font\uwavefont=lasyb10 scaled 652
+\newcommand\colorwave[1][blue]{\bgroup\markoverwith{\lower3\p@\hbox{\uwavefont\textcolor{#1}{\char58}}}\ULon}
+
+\newcommand\highlight[2]{{\color{#1}{\colorwave[#1]{#2}}}}
+\makeatother
+
+\makeatletter
+\newcommand\InFloat[2]{\ifnum\@floatpenalty<0\relax#1\else#2\fi}
+\makeatother
+
+\ifx\paperversion\paperversiondraft
+\newcommand\createtodoauthor[2]{
+  \def\tmpdefault{emptystring}
+  \expandafter\newcommand\csname #1\endcsname[2][\tmpdefault]{% comment to avoid spurious whitespace
+    \def\tmp{##1}% comment to avoid spurious whitespace
+    \InFloat{
+        \smash{
+	  \marginnote{
+	    \todo[inline,linecolor=#2,backgroundcolor=#2,bordercolor=#2]
+	      {\textbf{#1 (Figure):} ##2}
+          }
+        }
+    }{\ifthenelse{\equal{\tmp}{\tmpdefault}} % Is there text to highlight?
+      {\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}\ignorespaces}
+      {\ifthenelse{\equal{##2}{}} % Is there a note?
+        {\highlight{#2}{##1}}
+        {\highlight{#2}{##1}\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]
+	  {\textbf{#1:} ##2}% comment to avoid spurious whitespace
+	}% comment to avoid spurious whitespace
+      }% comment to avoid spurious whitespace
+    }% comment to avoid spurious whitespace
+  }
+}
+\else
+\newcommand\createtodoauthor[2]{%
+\expandafter\newcommand\csname #1\endcsname[2][]{##1}%
+}%
+\fi
