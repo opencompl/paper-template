@@ -127,6 +127,8 @@
 \usetikzlibrary{shapes}
 \DeclareRobustCommand\circled[2][]{\ifthenelse{\isempty{#1}}{\tikz[baseline=(char.base)]{\node[shape=circle,fill=pairedOneLightBlue,inner sep=1pt] (char) {#2};}}{\autoref{#1}: \hyperref[#1]{\tikz[baseline=(char.base)]{\node[shape=circle,fill=pairedOneLightBlue,inner sep=1pt] (char) {#2};}}}}
 
+% listings don't write "Listing" in autoref without this.
+\providecommand*{\listingautorefname}{Listing}
 
 \begin{document}
 
