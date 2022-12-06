@@ -59,6 +59,19 @@ def save(figure, name):
     plt.close(figure)
     
     print(f'written to {name}')
+    
+def autolabel(ax, rects):
+    """Attach a text label above each bar in *rects*, displaying its height."""
+    for rect in rects:
+        height = rect.get_height()
+        ax.annotate(
+            '{}'.format(height),
+            xy=(rect.get_x() + rect.get_width() / 2, height),
+            xytext=(0, 1),  # 1 points vertical offset
+            textcoords="offset points",
+            fontsize="smaller",
+            ha='center',
+            va='bottom')
 
 # Plot an example speedup plot
 def plot_speedup():
@@ -98,21 +111,8 @@ def plot_speedup():
               loc='lower right',
               bbox_to_anchor=(0, 1, 1, 0))
 
-    def autolabel(rects):
-        """Attach a text label above each bar in *rects*, displaying its height."""
-        for rect in rects:
-            height = rect.get_height()
-            ax.annotate(
-                '{}'.format(height),
-                xy=(rect.get_x() + rect.get_width() / 2, height),
-                xytext=(0, 1),  # 1 points vertical offset
-                textcoords="offset points",
-                fontsize="smaller",
-                ha='center',
-                va='bottom')
-
-    autolabel(rects1)
-    autolabel(rects2)
+    autolabel(ax, rects1)
+    autolabel(ax, rects2)
 
     save(fig, 'speedup.pdf')
 
