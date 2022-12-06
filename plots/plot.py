@@ -24,7 +24,15 @@ def setGlobalDefaults():
 
     ## Legend defaults
     matplotlib.rcParams['legend.frameon'] = False
-
+    
+    # Hide the right and top spines
+    #
+    # This reduces the number of lines in the plot. Lines typically catch
+    # a readers attention and distract the reader from the actual content.
+    # By removing unnecessary spines, we help the reader to focus on
+    # the figures in the graph.
+    matplotlib.rcParams['axes.spines.right'] = False
+    matplotlib.rcParams['axes.spines.top'] = False
 
 matplotlib.rcParams['figure.figsize'] = 5, 2
 
@@ -89,15 +97,6 @@ def plot_speedup():
     ax.legend(ncol=100,
               loc='lower right',
               bbox_to_anchor=(0, 1, 1, 0))
-
-    # Hide the right and top spines
-    #
-    # This reduces the number of lines in the plot. Lines typically catch
-    # a readers attention and distract the reader from the actual content.
-    # By removing unnecessary spines, we help the reader to focus on
-    # the figures in the graph.
-    ax.spines['right'].set_visible(False)
-    ax.spines['top'].set_visible(False)
 
     def autolabel(rects):
         """Attach a text label above each bar in *rects*, displaying its height."""
