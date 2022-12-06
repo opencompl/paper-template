@@ -60,18 +60,25 @@ def save(figure, name):
     
     print(f'written to {name}')
     
-def autolabel(ax, rects):
-    """Attach a text label above each bar in *rects*, displaying its height."""
+# Attach a text label above each bar in *rects*, displaying its height
+def autolabel(ax, rects, xoffset=0, yoffset=1, **kwargs):
+    # kwargs is directly passed to ax.annotate and overrides defaults below
+    assert 'xytext' not in kwargs, "use xoffset and yoffset instead of xytext"
+    default_kwargs = dict(
+        xytext=(xoffset, yoffset),
+        fontsize="smaller",
+        rotation=0,
+        ha='center',
+        va='bottom',
+        textcoords='offset points')
+
     for rect in rects:
         height = rect.get_height()
         ax.annotate(
             '{}'.format(height),
             xy=(rect.get_x() + rect.get_width() / 2, height),
-            xytext=(0, 1),  # 1 points vertical offset
-            textcoords="offset points",
-            fontsize="smaller",
-            ha='center',
-            va='bottom')
+            **(default_kwargs | kwargs),
+        )
 
 # Plot an example speedup plot
 def plot_speedup():
