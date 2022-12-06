@@ -5,7 +5,9 @@ import argparse
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
+import math
 
+from typing import Callable
 
 def setGlobalDefaults():
     ## Use TrueType fonts instead of Type 3 fonts
@@ -106,7 +108,7 @@ def str_from_float(x: float, digits: int = 3, suffix: str = '') -> str:
   return result[:digits + 1]
 
 # Attach a text label above each bar in *rects*, displaying its height
-def autolabel(ax, rects, label_from_height=str_from_float, xoffset=0, yoffset=1, **kwargs):
+def autolabel(ax, rects, label_from_height: Callable[[float], str] =str_from_float, xoffset=0, yoffset=1, **kwargs):
     # kwargs is directly passed to ax.annotate and overrides defaults below
     assert 'xytext' not in kwargs, "use xoffset and yoffset instead of xytext"
     default_kwargs = dict(
@@ -124,6 +126,36 @@ def autolabel(ax, rects, label_from_height=str_from_float, xoffset=0, yoffset=1,
             xy=(rect.get_x() + rect.get_width() / 2, height),
             **(default_kwargs | kwargs),
         )
+
+# utility to print times as 1h4m, 1d15h, 143.2ms, 10.3s etc.
+def str_from_ms(ms):
+  def maybe_val_with_unit(val, unit):
+    return f'{val}{unit}' if val != 0 else ''
+
+  if ms < 1000:
+    return f'{ms:.3g}ms'
+
+  s = ms / 1000
+  ms = 0
+  if s < 60:
+    return f'{s:.3g}s'
+
+  m = int(s // 60)
+  s -= 60*m
+  if m < 60:
+    return f'{m}m{maybe_val_with_unit(math.floor(s), "s")}'
+
+  h = int(m // 60)
+  m -= 60*h;
+  if h < 24:
+    return f'{h}h{maybe_val_with_unit(m, "m")}'
+
+  d = int(h // 24)
+  h -= 24*d
+  return f'{d}d{maybe_val_with_unit(h, "h")}'
+
+def autolabel_ms(ax, rects, **kwargs):
+  autolabel(ax, rects, label_from_height=str_from_ms, **kwargs)
 
 # Plot an example speedup plot
 def plot_speedup():
