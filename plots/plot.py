@@ -59,9 +59,54 @@ def save(figure, name):
     plt.close(figure)
     
     print(f'written to {name}')
-    
+
+# helper for str_from_float.
+# format float in scientific with at most *digits* digits.
+#
+# precision of the mantissa will be reduced as necessary,
+# as much as possible to get it within *digits*, but this
+# can't be guaranteed for very large numbers.
+def get_scientific(x: float, digits: int):
+    # get scientific without leading zeros or + in exp
+    def get(x: float, prec: int) -> str:
+      result = f'{x:.{prec}e}'
+      result = result.replace('e+', 'e')
+      while 'e0' in result:
+        result = result.replace('e0', 'e')
+      while 'e-0' in result:
+        result = result.replace('e-0', 'e-')
+      return result
+
+    result = get(x, digits)
+    len_after_e = len(result.split('e')[1])
+    prec = max(0, digits - len_after_e - 2)
+    return get(x, prec)
+
+# format float with at most *digits* digits.
+# if the number is too small or too big,
+# it will be formatted in scientific notation,
+# optionally a suffix can be passed for the unit.
+#
+# note: this displays different numbers with different
+# precision depending on their length, as much as can fit.
+def str_from_float(x: float, digits: int = 3, suffix: str = '') -> str:
+  result = f'{x:.{digits}f}'
+  before_decimal = result.split('.')[0]
+  if len(before_decimal) == digits:
+    return before_decimal
+  if len(before_decimal) > digits:
+    # we can't even fit the integral part
+    return get_scientific(x, digits)
+
+  result = result[:digits + 1] # plus 1 for the decimal point
+  if float(result) == 0:
+    # we can't even get one significant figure
+    return get_scientific(x, digits)
+
+  return result[:digits + 1]
+
 # Attach a text label above each bar in *rects*, displaying its height
-def autolabel(ax, rects, xoffset=0, yoffset=1, **kwargs):
+def autolabel(ax, rects, label_from_height=str_from_float, xoffset=0, yoffset=1, **kwargs):
     # kwargs is directly passed to ax.annotate and overrides defaults below
     assert 'xytext' not in kwargs, "use xoffset and yoffset instead of xytext"
     default_kwargs = dict(
@@ -75,7 +120,7 @@ def autolabel(ax, rects, xoffset=0, yoffset=1, **kwargs):
     for rect in rects:
         height = rect.get_height()
         ax.annotate(
-            '{}'.format(height),
+            label_from_height(height),
             xy=(rect.get_x() + rect.get_width() / 2, height),
             **(default_kwargs | kwargs),
         )
