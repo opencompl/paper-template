@@ -37,7 +37,8 @@ light_green = "#b2df8a"
 dark_green = "#33a02c"
 light_red = "#fb9a99"
 dark_red = "#e31a1c"
-
+black = "#000000"
+white = "#ffffff"
 
 def save(figure, name):
     # Do not emit a creation date, creator name, or producer. This will make the
