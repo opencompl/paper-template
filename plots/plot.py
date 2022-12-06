@@ -49,7 +49,8 @@ def save(figure, name):
 
     # Close figure to avoid warning about too many open figures.
     plt.close(figure)
-
+    
+    print(f'written to {name}')
 
 # Plot an example speedup plot
 def plot_speedup():
