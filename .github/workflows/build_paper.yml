@@ -37,16 +37,6 @@ jobs:
       with:
         args: --style pep8 --recursive --in-place .
 
-    - name: LaTeX compilation - Draft (with comments)
-      uses: xu-cheng/latex-action@master
-      with:
-        root_file: draft.tex
-
-    - name: LaTeX compilation - Paper
-      uses: xu-cheng/latex-action@master
-      with:
-        root_file: paper.tex
-
     - name: Release
       if: ${{ github.event_name == 'push' }}
       id: create_release
