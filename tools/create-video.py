@@ -192,6 +192,7 @@ def createImage(data):
     branch = data[2]
     count = data[3]
     base_filename = data[4]
+    make = data[5]
     filename = str(commit_number) + ".zip"
     dirname =  str(commit_number).zfill(5) + "-files"
 
@@ -201,7 +202,8 @@ def createImage(data):
 
     shutil.copyfile("Makefile", dirname + "/Makefile")
     shutil.copyfile(".latexmkrc", dirname + "/.latexmkrc")
-    run(['make', '-C', dirname, f"{base_filename}.pdf"], stdout=DEVNULL, stderr=STDOUT)
+    cmd = f"{make} -C {dirname} {base_filename}.pdf"
+    run(cmd, shell=True, stdout=DEVNULL, stderr=STDOUT)
     createImageOfPaper(dirname + f"/{base_filename}.pdf")
     plotStatistics(commit,  dirname + "/statistics.png", branch, count)
     run(['convert', dirname + f"/{base_filename}.pdf-full.png", '-resize', '3840x2160',
@@ -211,11 +213,11 @@ def createImage(data):
         dirname + '/statistics.png', '-composite', dirname +
         f"/{base_filename}.pdf-overlay.png"])
 
-def createImages(branch, count, filename, procs):
+def createImages(branch, count, filename, procs, make):
     repo = Repo(".")
     commits = list(reversed(list(repo.iter_commits(branch, max_count=count))))
     commits = list(map(lambda x: x.hexsha, commits))
-    items = list(zip(range(len(commits)), commits, [branch] * len(commits), [count] * len(commits), [filename] * len(commits)))
+    items = list(zip(range(len(commits)), commits, [branch] * len(commits), [count] * len(commits), [filename] * len(commits), [make] * len(commits)))
 
     p = Pool(procs)
     for _ in tqdm.tqdm(p.imap_unordered(createImage, items), total=len(items)):
@@ -258,9 +260,10 @@ if __name__ == "__main__":
     parser.add_argument('-p', '--procs', default=16)
     parser.add_argument('-b', '--branch', default='main')
     parser.add_argument('-f', '--filename', default='paper')
+    parser.add_argument('-m', '--make', default='make')
 
     args = parser.parse_args()
 
 
-    createImages(args.branch, args.count, args.filename, int(args.procs))
+    createImages(args.branch, args.count, args.filename, int(args.procs), args.make)
     createVideo(basename = args.filename)
