@@ -62,10 +62,10 @@ def createImageOfPaper(path, width = 7, pages = 21):
     targetPage = (3840, 2160)
 
     targetPdf = (targetPage[0] / grid[0], targetPage[1] / grid[1])
-    densityWidth = 100 / pdfSize[0] * (targetPage[0] / grid[0]) / 100 * 72
-    densityHeight = 100 / pdfSize[1] * (targetPage[1] / grid[1]) / 100 * 72
+    densityWidth = 100 / float(pdfSize[0]) * (targetPage[0] / grid[0]) / 100 * 72
+    densityHeight = 100 / float(pdfSize[1]) * (targetPage[1] / grid[1]) / 100 * 72
 
-    density = min(densityWidth, densityHeight)
+    density = int(min(densityWidth, densityHeight))
     rows = grid[1]
 
     cmd = ['convert', '-quality', '100', '-density', str(density), path, '-background', 'white', '-alpha', 'remove', '-alpha', 'off', name + "-tmp.png"]
