@@ -50,11 +50,6 @@
 \usepackage[T1]{fontenc}
 \usepackage{microtype}
 
-\usepackage{minted}
-\usemintedstyle{colorful}
-\newminted[mlir]{tools/MLIRLexer.py:MLIRLexerOnlyOps -x}{mathescape}
-\newminted[xdsl]{tools/MLIRLexer.py:MLIRLexer -x}{mathescape, style=murphy}
-
 \usepackage{xargs}
 \usepackage{lipsum}
 \usepackage{xparse}
@@ -65,6 +60,22 @@
 
 \input{tex/setup.tex}
 \input{tex/acm.tex}
+
+\usemintedstyle{colorful}
+
+% Newer versions of minted require the 'customlexer' argument for custom lexers
+% whereas older versions require the '-x' to be passed via the command line.
+\makeatletter
+\ifcsdef{minted@optlistcl@quote}
+{
+\newminted[mlir]{tools/MLIRLexer.py:MLIRLexerOnlyOps}{customlexer, mathescape}
+\newminted[xdsl]{tools/MLIRLexer.py:MLIRLexer}{customlexer, mathescape, style=murphy}
+}
+{
+\newminted[mlir]{tools/MLIRLexer.py:MLIRLexerOnlyOps -x}{mathescape}
+\newminted[xdsl]{tools/MLIRLexer.py:MLIRLexer -x}{mathescape, style=murphy}
+}
+\makeatother
 
 % We use the following color scheme
 % 
