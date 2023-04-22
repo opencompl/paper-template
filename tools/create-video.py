@@ -205,8 +205,15 @@ def createImage(data):
     cmd = f"{make} -C {dirname} {base_filename}.pdf"
     run(cmd, shell=True, stdout=DEVNULL, stderr=STDOUT)
     createImageOfPaper(dirname + f"/{base_filename}.pdf")
+
+    fullpng = dirname + f"/{base_filename}.pdf-full.png"
+
+    if not os.path.exists(fullpng):
+        print(f"Could not build commit {commit_number} with hash {commit}.")
+        return
+
     plotStatistics(commit,  dirname + "/statistics.png", branch, count)
-    run(['convert', dirname + f"/{base_filename}.pdf-full.png", '-resize', '3840x2160',
+    run(['convert', fullpng, '-resize', '3840x2160',
         '-background', 'white', '-gravity', 'center', '-extent', '3840x2160',
         dirname + f"/{base_filename}.pdf-expanded.png"])
     run(['convert', '-gravity', 'SouthEast', dirname + f"/{base_filename}.pdf-expanded.png",
