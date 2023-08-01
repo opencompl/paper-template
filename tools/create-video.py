@@ -62,10 +62,10 @@ def createImageOfPaper(path, width = 7, pages = 21):
     targetPage = (3840, 2160)
 
     targetPdf = (targetPage[0] / grid[0], targetPage[1] / grid[1])
-    densityWidth = 100 / pdfSize[0] * (targetPage[0] / grid[0]) / 100 * 72
-    densityHeight = 100 / pdfSize[1] * (targetPage[1] / grid[1]) / 100 * 72
+    densityWidth = 100 / float(pdfSize[0]) * (targetPage[0] / grid[0]) / 100 * 72
+    densityHeight = 100 / float(pdfSize[1]) * (targetPage[1] / grid[1]) / 100 * 72
 
-    density = min(densityWidth, densityHeight)
+    density = int(min(densityWidth, densityHeight))
     rows = grid[1]
 
     cmd = ['convert', '-quality', '100', '-density', str(density), path, '-background', 'white', '-alpha', 'remove', '-alpha', 'off', name + "-tmp.png"]
@@ -192,6 +192,7 @@ def createImage(data):
     branch = data[2]
     count = data[3]
     base_filename = data[4]
+    make = data[5]
     filename = str(commit_number) + ".zip"
     dirname =  str(commit_number).zfill(5) + "-files"
 
@@ -201,23 +202,29 @@ def createImage(data):
 
     shutil.copyfile("Makefile", dirname + "/Makefile")
     shutil.copyfile(".latexmkrc", dirname + "/.latexmkrc")
-    cmd = ['make', '-C', dirname, f"{base_filename}.pdf"]
-    print(" ".join(cmd))
-    #run(['make', '-C', dirname, f"{base_filename}.pdf"], stdout=STDOUT, stderr=STDOUT)
+    cmd = f"{make} -C {dirname} {base_filename}.pdf"
+    run(cmd, shell=True, stdout=DEVNULL, stderr=STDOUT)
     createImageOfPaper(dirname + f"/{base_filename}.pdf")
+
+    fullpng = dirname + f"/{base_filename}.pdf-full.png"
+
+    if not os.path.exists(fullpng):
+        print(f"Could not build commit {commit_number} with hash {commit}.")
+        return
+
     plotStatistics(commit,  dirname + "/statistics.png", branch, count)
-    run(['convert', dirname + f"/{base_filename}.pdf-full.png", '-resize', '3840x2160',
+    run(['convert', fullpng, '-resize', '3840x2160',
         '-background', 'white', '-gravity', 'center', '-extent', '3840x2160',
         dirname + f"/{base_filename}.pdf-expanded.png"])
     run(['convert', '-gravity', 'SouthEast', dirname + f"/{base_filename}.pdf-expanded.png",
         dirname + '/statistics.png', '-composite', dirname +
         f"/{base_filename}.pdf-overlay.png"])
 
-def createImages(branch, count, filename, procs):
+def createImages(branch, count, filename, procs, make):
     repo = Repo(".")
     commits = list(reversed(list(repo.iter_commits(branch, max_count=count))))
     commits = list(map(lambda x: x.hexsha, commits))
-    items = list(zip(range(len(commits)), commits, [branch] * len(commits), [count] * len(commits), [filename] * len(commits)))
+    items = list(zip(range(len(commits)), commits, [branch] * len(commits), [count] * len(commits), [filename] * len(commits), [make] * len(commits)))
 
     p = Pool(procs)
     for _ in tqdm.tqdm(p.imap_unordered(createImage, items), total=len(items)):
@@ -260,9 +267,10 @@ if __name__ == "__main__":
     parser.add_argument('-p', '--procs', default=16)
     parser.add_argument('-b', '--branch', default='main')
     parser.add_argument('-f', '--filename', default='paper')
+    parser.add_argument('-m', '--make', default='make')
 
     args = parser.parse_args()
 
 
-    createImages(args.branch, args.count, args.filename, int(args.procs))
+    createImages(args.branch, args.count, args.filename, int(args.procs), args.make)
     createVideo(basename = args.filename)
