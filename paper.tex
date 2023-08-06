@@ -559,6 +559,33 @@ func.func() [sym_name = "s0", function_type = !fun<[
 }
 \end{xdsl}
 
+\section{Writing}
+
+A couple of hints with respect to how we write text.
+
+\subsection{Citations}
+
+\subsubsection{Do not use numerical citations as nouns}
+Especially when working with numerical citations (e.g., [1]) the use of
+citations as nouns reduces readability. Hence, we do not use numerical citations
+as nouns and instead expand these citations with \texttt{\textbackslash{}citet} to the
+authornames.
+\\
+{\color{pairedTwoDarkBlue}
+\textit{[1] showed that .. $\dots$}}\\
+$\to$ {\color{pairedFourDarkGreen}\textit{Author et al. [1] showed}}
+
+\subsubsection{Prefer meaningful text over citations as textual content}
+While acknowledging authors of work is important, maximizing the amount of technical
+content (outside of a historic perspective) typically makes text more direct and
+concrete. Hence, we avoid the discussion of who did what in text if the
+historic context does not add meaning or empty words can be replaced by an immediate
+citation. E.g, in the following the words `introduced in` are not carrying
+information and can be dropped.\\
+{\color{pairedTwoDarkBlue}
+\textit{we extend PreviousIdea introduced in [1] $\dots$ by}}\\
+$\to$ {\color{pairedFourDarkGreen}\textit{we extend PreviousIdea [1] by}}
+
 
 \end{draftonly}
 
