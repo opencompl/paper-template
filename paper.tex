@@ -457,38 +457,33 @@ these references, e.g., \circled{1} implemented as \texttt{\textbackslash{}circl
 \label{appendix:captions}
 
 Each figure should have a caption that makes a clear statement about this
-figure, as such a statement makes it easier for the reader to (in)validate
-the figure as evidence for the claim we make. Traditionally, figures often
-have a caption indicating its content:\\
-{\color{pairedTwoDarkBlue}
-\textit{$\cdot$ Speedup of approach A vs approach B on system X}}\\
-{\color{pairedTwoDarkBlue}
-\textit{$\cdot$ Architecture diagram of our solution}}\\
-While these statements clearly state the content of a figure at the meta-level,
-they often lack information about the precise content and the claim a figure is
-meant to evidence. While knowing that a figure is an architecture diagram is
-useful for the reader, when looking at the figure the reader automatically asks
-two questions: (a) what properties set this architecture apart and (b) does its
-implementation deliver the claimed properties. Or, in more general
-terms, what claims do we aim to evidence with this figure and does the figure
-provide the needed evidence to support our claims. In theory, this information
-could be contained in the text of the paper, but to optimize for readers who
-skim the figures first, we want to offer them as part of the caption. Nevertheless,
-it makes often sense to word the caption strategically to still document the
-meta-level content of a figure.\\
-$\to$ {\color{pairedFourDarkGreen}
-\textit{$\cdot$ Approach A is consistently faster than approach B, except for inputs that
-are not used in practice}}\\
-$\to$ {\color{pairedFourDarkGreen}
-\textit{$\cdot$ The architecture of our design increases reusability by making components A, B, \& C
-independent of the core.}}
-For example, after reading the last caption the reader can validate if the
-architecture design indeed enables the promised independence, and we
-can double-check while drafting the paper that our figure is visualized to
-facilitate checking if it works as evidence. ! This does not mean we should
-mislead with our figure but rather make things easy to check. If our figure or
-data would not support our claim, it should be similarly easy to invalidate our
-claim!
+figure, as such a statement makes it easier for the reader to (in)validate the
+figure as evidence for the claim we make. Traditionally, figures often have a
+caption indicating its content:\\ {\color{pairedTwoDarkBlue} \textit{$\cdot$
+Speedup of approach A vs approach B on system X}}\\ {\color{pairedTwoDarkBlue}
+\textit{$\cdot$ Architecture diagram of our solution}}\\ While these statements
+clearly state the content of a figure at the meta-level, they often lack
+information about the precise content and the claim a figure is meant to
+evidence. While knowing that a figure is an architecture diagram is useful for
+the reader, when looking at the figure the reader automatically asks two
+questions: (a) what properties set this architecture apart and (b) does its
+implementation deliver the claimed properties. Or, in more general terms, what
+claims do we aim to evidence with this figure and does the figure provide the
+needed evidence to support our claims. In theory, this information could be
+contained in the text of the paper, but to optimize for readers who skim the
+figures first, we want to offer them as part of the caption. Nevertheless, it
+makes often sense to word the caption strategically to still document the
+meta-level content of a figure.\\ $\to$ {\color{pairedFourDarkGreen}
+\textit{$\cdot$ Approach A is consistently faster than approach B, except for
+inputs that are not used in practice}}\\ $\to$ {\color{pairedFourDarkGreen}
+\textit{$\cdot$ The architecture of our design increases reusability by making
+components A, B, \& C independent of the core.}} For example, after reading the
+last caption the reader can validate if the architecture design indeed enables
+the promised independence, and we can double-check while drafting the paper that
+our figure is visualized to facilitate checking if it works as evidence. ! This
+does not mean we should mislead with our figure but rather make things easy to
+check. If our figure or data would not support our claim, it should be similarly
+easy to invalidate our claim!
 
 \subsubsection{Plots} We use matplotlib to create performance
 plots such as \autoref{fig:speedup}. We use the following
