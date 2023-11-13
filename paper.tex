@@ -70,10 +70,12 @@
 {
 \newminted[mlir]{tools/MLIRLexer.py:MLIRLexerOnlyOps}{customlexer, mathescape}
 \newminted[xdsl]{tools/MLIRLexer.py:MLIRLexer}{customlexer, mathescape, style=murphy}
+\newminted[lean4]{tools/Lean4Lexer.py:Lean4Lexer}{customlexer, mathescape}
 }
 {
 \newminted[mlir]{tools/MLIRLexer.py:MLIRLexerOnlyOps -x}{mathescape}
 \newminted[xdsl]{tools/MLIRLexer.py:MLIRLexer -x}{mathescape, style=murphy}
+\newminted[lean4]{tools/Lean4Lexer.py:Lean4Lexer -x}{mathescape}
 }
 \makeatother
 
@@ -129,6 +131,14 @@
 
 \usepackage{booktabs}
 \newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
+
+\usepackage[verbose]{newunicodechar}
+\newunicodechar{₁}{\ensuremath{_1}}
+\newunicodechar{₂}{\ensuremath{_2}}
+\newunicodechar{∀}{\ensuremath{\forall}}
+\newunicodechar{α}{\ensuremath{\alpha}}
+\newunicodechar{β}{\ensuremath{\beta}}
+
 
 % \circled command to print a colored circle.
 % \circled{1} pretty-prints "(1)"
@@ -560,6 +570,20 @@ def @foo(%0 : !dialect.type)
 \caption{A simple MLIR code example with markers. Markers can also be placed in
 	captions and refer to labels, e.g. \circled[lst:example]{a}.}
 \label{lst:example}
+\end{listing}
+
+\begin{listing}[H]
+\begin{lean4}
+theorem funext {f₁ f₂ : ∀ (x : α), β x}
+  (h : ∀ x, f₁ x = f₂ x) : f₁ = f₂ := by
+  show extfunApp (Quotient.mk' f₁) = 
+       extfunApp (Quotient.mk' f₂)
+  apply congrArg
+  apply Quotient.sound
+  exact h
+\end{lean4}
+\caption{A simple Lean4 code example, taken from
+  \url{https://lean-lang.org/lean4/doc/syntax\_highlight\_in\_latex.html\#example-with-minted}.}
 \end{listing}
 
 The syntax highlighting also works for xDSL-like IRs. Notice that different
