@@ -154,9 +154,12 @@
 \begin{document}
 
 %% Title information
-\title{Fast \& Correct Performance Programming in Lean4}       %% [Short Title] is optional;
+\title[Short Title]{Full Title}       %% [Short Title] is optional;
                                       %% when present, will be used in
                                       %% header instead of Full Title.
+\subtitle{Subtitle}                   %% \subtitle is optional
+
+
 %% Author information
 %% Contents and number of authors suppressed with 'anonymous'.
 %% Each author should be introduced by \author, followed by
@@ -166,7 +169,7 @@
 %% appropriate command.
 %% Many elements are not rendered, but should be provided for metadata
 %% extraction tools.
-\author{Siddharth Bhat}
+\author{First1 Last1}
 \authornote{with author1 note}          %% \authornote is optional;
                                       %% can be repeated if necessary
 \orcid{nnnn-nnnn-nnnn-nnnn}             %% \orcid is optional
@@ -182,7 +185,7 @@
 }
 \email{first1.last1@inst1.edu}          %% \email is recommended
 
-\author{Henrik Boving}
+\author{First2 Last2}
 \authornote{with author2 note}          %% \authornote is optional;
                                       %% can be repeated if necessary
 \orcid{nnnn-nnnn-nnnn-nnnn}             %% \orcid is optional
@@ -208,53 +211,19 @@
   \country{Country2b}
 }
 \email{first2.last2@inst2b.org}         %% \email is recommended
-
-\author{Tobias Grosser}
-\authornote{with author2 note}          %% \authornote is optional;
-                                      %% can be repeated if necessary
-\orcid{nnnn-nnnn-nnnn-nnnn}             %% \orcid is optional
-\affiliation{
-  \position{Position2a}
-  \department{Department2a}             %% \department is recommended
-  \institution{Institution2a}           %% \institution is required
-  \streetaddress{Street2a Address2a}
-  \city{City2a}
-  \state{State2a}
-  \postcode{Post-Code2a}
-  \country{Country2a}
-}
-\email{first2.last2@inst2a.com}         %% \email is recommended
-\affiliation{
-  \position{Position2b}
-  \department{Department2b}             %% \department is recommended
-  \institution{Institution2b}           %% \institution is required
-  \streetaddress{Street3b Address2b}
-  \city{City2b}
-  \state{State2b}
-  \postcode{Post-Code2b}
-  \country{Country2b}
-}
-\email{first2.last2@inst2b.org}         %% \email is recommended
-
 
 \begin{abstract}
+% An abstract should consist of six main sentences:
+%  1. Introduction. In one sentence, what’s the topic?
+%  2. State the problem you tackle.
+%  3. Summarize (in one sentence) why nobody else has adequately answered the research question yet.
+%  4. Explain, in one sentence, how you tackled the research question.
+%  5. In one sentence, how did you go about doing the research that follows from your big idea.
+%  6. As a single sentence, what’s the key impact of your research?
 
- Software bugs and security vulnerabilities pose enormous costs and risks in today’s highly interconnected world.
- Exceptionally critical programs are today already written together with formal proofs of their correctness.
- However, code that is easy to reason about and to prove correct often runs unacceptably slowly, while code that runs fast is very hard to reason about.
- As a result, formal proofs are not used for performance-critical code.
- With the increased use of high-performance computations in critical cyber-physical systems (e.g., deep neural networks for autonomous driving),
- having to choose between fast and provably correct software is not acceptable any more.
- By designing novel techniques for the development of trustworthy high-performance software, we will bridge this gap and eliminate the need to trade-off between fast and correct.
+% (http://www.easterbrook.ca/steve/2010/01/how-to-write-a-scientific-abstract-in-six-easy-steps/)
 
-
-We plan to present a platform for building such high assurance and performance programming,
-by retooling the Lean 4 proof assistant for verified code generation.
-We have already deeply embedded support for performant code generation by embedding the LLVM backend in Lean4.
-We are currently working towards exposing the LLVM backend to be user-facing. 
-This enables end-users to control the code generation in a proof assistant more finely than has been possible before.
-We believe that our work sets the foundation to enable programmers to write programs that are both fast and correctness.
-
+\lipsum[1]
 \end{abstract}
 
 % Only add ACM notes and keywords in camera ready version
@@ -295,6 +264,388 @@ We believe that our work sets the foundation to enable programmers to write prog
 %% commands, abstract environment, Computing Classification System
 %% environment and commands, and keywords command.
 \maketitle
+
+\section{Introduction}
+
+Of this super cool article \ldots
+\grosser{A simple comment refering to a particular location}
+
+If there is \authorTwo[some text we want to refer to specifically]{this looks
+particularly interesting} we can refer to this text from within our comments.
+
+And here we only mark \authorTwo[text]{} that is \authorTwo[interesting]{}, but do not
+actually comment.
+
+Now we have a sequence of comments,
+\authorThree{Comment 3}
+\authorFour{Comment 4}
+\authorFive{Comment 5}
+\authorSix{Comment 6}
+which should not introduce overlong white space sequences.
+
+Sometimes it is also important to \emph{emphasize} text to understand if it is
+underlined or printed in italic.
+
+We sometimes use macros to state that a tool as the name \toolname{} in a
+flexible way.
+
+\lipsum[1-3]
+
+\begin{figure}
+% Link to figure
+%
+% https://docs.google.com/drawings/d/1juKp43D3rLC-luBQPwQZ_wCnDK2S_6C1k6USV0wKE0g/edit?usp=sharing
+\includegraphics[width=\columnwidth]{overview.pdf}
+\caption{Our key idea visualized}
+\grosser{Replace this figure with your own drawing.}
+\end{figure}
+
+\vspace{.5em}
+\noindent
+Our contributions are:
+\grosser{Always state your contributions explicitly: (A) this makes it
+easy for the reader to understand what novelty is presented, and (B)
+these contributions help you to focus. In particular, the objective of
+the remaining paper should be to support the claims stated here.
+}
+\begin{itemize}
+	\item Contribution 1
+	\item Contribution 2
+	\item Contribution 3
+	\item Contribution 4
+\end{itemize}
+
+\section{Our New Idea}
+
+\lipsum[1-3]
+
+\section{Implementation}
+
+\section{Related Work}
+
+\lipsum[1-3]
+
+\grosser{Related work should always be at the end of the document,
+         as it otherwise becomes an obstacle your reader must
+	 overcome before reaching your idea. For details see:
+	 \url{https://www.microsoft.com/en-us/research/academic-program/write-great-research-paper/}
+}
+
+\section{Conclusion}
+\lipsum[1]
+
+%% Acknowledgments
+\begin{acks}                            %% acks environment is optional
+                                        %% contents suppressed with 'anonymous'
+  %% Commands \grantsponsor{<sponsorID>}{<name>}{<url>} and
+  %% \grantnum[<url>]{<sponsorID>}{<number>} should be used to
+  %% acknowledge financial support and will be used by metadata
+  %% extraction tools.
+  This material is based upon work supported by the
+  \grantsponsor{GS100000001}{National Science
+    Foundation}{http://dx.doi.org/10.13039/100000001} under Grant
+  No.~\grantnum{GS100000001}{nnnnnnn} and Grant
+  No.~\grantnum{GS100000001}{mmmmmmm}.  Any opinions, findings, and
+  conclusions or recommendations expressed in this material are those
+  of the author and do not necessarily reflect the views of the
+  National Science Foundation.
+\end{acks}
+
+%% Bibliography
+\bibliography{references}
+
+
+%% Appendix
+% Move \cleardouble and \appendix out of `draftonly` if you are using the
+% appendix
+\begin{draftonly}
+\cleardoublepage
+\appendix
+\section{Formatting and Writing Guidelines}
+
+These formatting guidelines aim to standardize our writing. They ensure that
+papers with multiple authors have a consistent look and that commonly occurring
+items are formatted in ways that are known to work well.
+
+\subsection{Figures}
+\label{appendix:figures}
+
+\paragraph{Referencing Figures} When referencing figures from the text we
+ensure the following:
+\begin{description}
+      \item [All figures are referenced] A paper with un-referenced figures
+	      appears incomplete.
+      \item [References to figures are brief and easy to skip]~\\
+                We minimize the number of words needed to refer to a figure. Reducing
+                the number of non-information-carrying words directly increases
+		the density of interesting content. When skipping references
+		becomes easy, reading quickly while ignoring figures remains a
+		smooth experience. The best and briefest reference to a figure
+		is a link in parenthesis that is added after the subject
+		representing the content depicted in a figure:\\
+		{\color{pairedTwoDarkBlue}\textit{Figure
+		X shows the design of A, which consists of ...}}\\
+		$\to$ {\color{pairedFourDarkGreen}
+		\textit{The design of A (Figure X) consists of ...}}
+      \item [The text is always self-contained without figures] ~\\ The reader
+                should be able to read the text without ever looking at any
+                figure. They should still understand the text and get the key
+		message of each figure directly from the text. By not forcing
+		the reader to analyze a figure while reading, we increase
+		readability as the reader can continue reading without having
+		to skip between text and figures. Such writing style also helps
+		to guide the thoughts of the reader, who can (for a moment)
+		trust our summary of the figure and does not need to develop
+		their own interpretation on-the-fly, a task which often yields
+		results that do not fit the flow of our exposition. Readers
+		typically only feel that their reading is interrupted if there
+		is no explanation of a figure at all. Hence, we do not need to
+		discuss all details of a figure, but half a sentence that explains the
+		core idea is typically sufficient for a reader to continue
+		reading.  By making
+		our text self-contained even when ignoring figures the reader
+		experiences a smooth and uninterrupted reading experience.\\
+		{\color{pairedTwoDarkBlue}
+		\textit{The speedups are presented in Figure X. < a new topic> }}\\
+		$\to$ {\color{pairedFourDarkGreen}\textit{Our approach outperforms the state of the art
+		XXX-library (Figure 3) demonstrating more than 4x speedup on
+		test case 1 and 2 and a geometric mean speedup of 1.5x over all
+		20 test cases.}}
+\end{description}
+We reference figures in text using
+\texttt{\symbol{92}autoref\{fig:speedup\}} for a figure with label
+\texttt{fig:speedup}.  The use of autoref ensures that all references
+to figures are formatted consistently, e.g. as \autoref{fig:speedup}.
+
+\paragraph{Color Scheme} 
+
+In Figures we use a color scheme that is print-friendly and also visible
+with red-green blindness. The following colors are all print-friendly
+and red-green save when only using Color 1-4:
+
+\medskip
+{
+	\small
+\newcolumntype{a}{>{\columncolor{pairedOneLightBlue}}c}
+\newcolumntype{b}{>{\columncolor{pairedTwoDarkBlue}}c}
+\newcolumntype{d}{>{\columncolor{pairedThreeLightGreen}}c}
+\newcolumntype{e}{>{\columncolor{pairedFourDarkGreen}}c}
+\newcolumntype{f}{>{\columncolor{pairedFiveLightRed}}c}
+\newcolumntype{g}{>{\columncolor{pairedSixDarkRed}}c}
+
+\begin{tabular}{a b d e f g}
+Color 1 & Color 2 & Color 3 & Color 4 & Color 5 & Color 6\\
+\#a6cee3 & \#1f78b4 & \#b2df8a & \#33a02c & \#fb9a99 & \#e31a1c
+\end{tabular}
+}
+
+We de-emphasize components in figures by using additionally two shades of gray.
+Especially in complex figures, it is often helpful to de-emphasize visual
+elements that we want to represent but that should not be the focus of a
+reader's attention.
+
+\medskip
+{
+	\small
+\newcolumntype{h}{>{\columncolor{pairedNegOneLightGray}}c}
+\newcolumntype{i}{>{\columncolor{pairedNegTwoDarkGray}}c}
+
+\begin{tabular}{h i}
+Color -1 & Color -2\\
+\#cacaca & \#827b7b\\
+\end{tabular}
+}
+
+Single-color graphs are plotted in Color 1 - Light Blue.
+
+\paragraph{Labels in Figures}
+Complex diagrams often benefit from labels inside the diagrams. We suggest to
+use a filled circle (e.g, in light blue) to highlight these numbers and use
+these references, e.g., \circled{1} implemented as \texttt{\textbackslash{}circled\{1\}}, in the text to refer to them.
+
+\paragraph{Captions and Core Message}
+\label{appendix:captions}
+
+Each figure should have a caption that makes a clear statement about this
+figure, as such a statement makes it easier for the reader to (in)validate the
+figure as evidence for the claim we make. Traditionally, figures often have a
+caption indicating its content:\\ {\color{pairedTwoDarkBlue} \textit{$\cdot$
+Speedup of approach A vs approach B on system X}}\\ {\color{pairedTwoDarkBlue}
+\textit{$\cdot$ Architecture diagram of our solution}}\\ While these statements
+clearly state the content of a figure at the meta-level, they often lack
+information about the precise content and the claim a figure is meant to
+evidence. While knowing that a figure is an architecture diagram is useful for
+the reader when looking at the figure the reader automatically asks two
+questions: (a) what properties set this architecture apart and (b) does its
+implementation deliver the claimed properties? Or, in more general terms, what
+claims do we aim to evidence with this figure and does the figure provide the
+needed evidence to support our claims? In theory, this information could be
+contained in the text of the paper, but to optimize for readers who skim the
+figures first, we want to offer them as part of the caption. Nevertheless, it
+makes often sense to word the caption strategically to still document the
+meta-level content of a figure.\\ $\to$ {\color{pairedFourDarkGreen}
+\textit{$\cdot$ Approach A is consistently faster than approach B, except for
+inputs that are not used in practice}}\\ $\to$ {\color{pairedFourDarkGreen}
+\textit{$\cdot$ The architecture of our design increases reusability by making
+components A, B, \& C independent of the core.}} For example, after reading the
+last caption the reader can validate if the architecture design indeed enables
+the promised independence, and we can double-check while drafting the paper that
+our figure is visualized to facilitate checking if it works as evidence. ! This
+does not mean we should mislead with our figure but rather make things easy to
+check. If our figure or data would not support our claim, it should be similarly
+easy to invalidate our claim!
+
+\subsubsection{Plots} We use matplotlib to create performance
+plots such as \autoref{fig:speedup}. We use the following
+formatting guidelines:
+\begin{itemize}
+  \item Use a vertical y-label to make it easier to read.
+  \item Remove top and right frames to reduce visual noise
+	and allow the reader to focus on the data in the
+	figure.
+  \item Provide the concrete data at the top of each bar.
+\end{itemize}
+
+\noindent
+We also suggest to follow these technical remarks:
+\begin{itemize}
+  \item Create pdf plots and do not use bitmap formats (e.g., png) to
+	ensure high quality when zooming in.
+  \item Avoid Type-3 bitmap fonts by
+	setting fonttype to 42.
+\end{itemize}
+
+\begin{figure}
+\includegraphics[width=\columnwidth]{plots/speedup}
+\caption{Improved running speed after 4 weeks of training.
+}
+\label{fig:speedup}
+\end{figure}
+
+\subsubsection{Tables} We optimize our tables for readability by removing as
+much clutter as possible, while highlighting the key structure. Markus Püschel
+(see doc/paper-writing/guide-tables.pdf) wrote a nice guide on how to make nice
+tables. \autoref{tab:simple_table} illustrates this with a simple
+table.
+
+\begin{table}
+\ra{1.2}
+\centering
+\begin{tabular}{l l l r}
+  \toprule
+  \textbf{Animal} & \textbf{Size} & \textbf{Biotope} & \textbf{Age}\\
+  \midrule
+  Dog & Medium & Ground & 20\\
+  Cat & Medium & Ground &20 \\
+  Ant & Small & Ground & 30 \\
+  Elephant & Large & Ground & 70\\
+  Whale & Large & Water & 100\\
+  Salmon & Medium & Water & 13 \\
+  Eagle & Large & Air & 35 \\
+  \bottomrule
+\end{tabular}
+\vspace{1em}
+\caption{A table with heigh lines and emphasized header.}
+\label{tab:simple_table}
+\end{table}
+
+\subsubsection{Listings} We aim to use minted to create listings as much as
+possible, as this allows us to edit code quickly. We use syntax highlighting
+to make the parts of the code that matter most stand out. Hence, we keep
+most code black, comments gray, and highlight just the MLIR operands that
+we care about most.
+
+\begin{listing}[H]
+% We cannot put '{' on a line after % in draftonly mode, as the hack we used to
+% not include the draft section will interpret the listing as normal
+% latex where '%' is a comment and {} need to match, which they will
+% not if only one is commented.
+\begin{mlir}
+// This is a comment
+def @foo(%0 : !dialect.type)
+{
+  %a = dialect.op(%0) : !dialect.type // $\color{black}\circled{a}$
+}
+\end{mlir}
+\caption{A simple MLIR code example with markers. Markers can also be placed in
+	captions and refer to labels, e.g. \circled[lst:example]{a}.}
+\label{lst:example}
+\end{listing}
+
+\begin{listing}[H]
+\begin{lean4}
+theorem funext {f₁ f₂ : ∀ (x : α), β x}
+  (h : ∀ x, f₁ x = f₂ x) : f₁ = f₂ := by
+  show extfunApp (Quotient.mk' f₁) = 
+       extfunApp (Quotient.mk' f₂)
+  apply congrArg
+  apply Quotient.sound
+  exact h
+\end{lean4}
+\caption{A simple Lean4 code example, taken from
+  \url{https://lean-lang.org/lean4/doc/syntax\_highlight\_in\_latex.html\#example-with-minted}.}
+\end{listing}
+
+The syntax highlighting also works for xDSL-like IRs. Notice that different
+minted styles can be used for different environments. The xDSL environment uses
+the murphy-style in this case, whereas the MLIR version applies the
+colorful-style.
+
+\begin{xdsl}
+func.func() [sym_name = "main", function_type = !fun<[
+              !iterators.columnar_batch<!tuple<[!i64]>>
+                 ], []>] {
+  ^bb0(%0 : !iterators.columnar_batch<!tuple<[!i64]>>):
+    %t : !iterators.stream<!llvm.struct<[!i64]>> =
+      iterators.scan_columnar_batch(%0 : ...)
+    %filtered : !iterators.stream<!llvm.struct<[!i64]>> =
+          iterators.filter(%input : …) [predicateRef = @s0]
+    iterators.sink(%filtered : !iterators.stream<!tuple<[!i64]>>)
+    func.return()
+}
+
+func.func() [sym_name = "s0", function_type = !fun<[
+    !llvm.struct<[!i64]>], [!i1]>] {
+  ^bb0(%struct : !llvm.struct<[!i64]>):
+    %id : !i64 = llvm.extractvalue(%struct : ...)
+              [position = [0 : !index]]
+    %five  : !i64 = arith.constant() [value = 5 : !i64]
+    %cmp : !i1 = arith.cmpi(%id : !i64, %five : !i64)
+              [predicate = 4 : !i64]
+    func.return(%cmp : !i1)
+}
+\end{xdsl}
+
+\section{Writing}
+
+A couple of hints with respect to how we write text.
+
+\subsection{Citations}
+\label{appendix:citations}
+
+\subsubsection{Do not use numerical citations as nouns}
+Especially when working with numerical citations (e.g., [1]) the use of
+citations as nouns reduces readability. Hence, we do not use numerical citations
+as nouns and instead expand these citations with \texttt{\textbackslash{}citet} to the
+authornames.
+\\
+{\color{pairedTwoDarkBlue}
+\textit{[1] showed that .. $\dots$}}\\
+$\to$ {\color{pairedFourDarkGreen}\textit{Author et al. [1] showed}}
+
+\subsubsection{Prefer meaningful text over citations as textual content}
+While acknowledging authors of work is important, maximizing the amount of technical
+content (outside of a historic perspective) typically makes text more direct and
+concrete. Hence, we avoid the discussion of who did what in text if the
+historic context does not add meaning or empty words can be replaced by an immediate
+citation. E.g, in the following the words `introduced in` are not carrying
+information and can be dropped.\\
+{\color{pairedTwoDarkBlue}
+\textit{we extend PreviousIdea introduced in [1] $\dots$ by}}\\
+$\to$ {\color{pairedFourDarkGreen}\textit{we extend PreviousIdea [1] by}}
+
+
+\end{draftonly}
 
 
 \end{document}
