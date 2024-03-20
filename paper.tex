@@ -146,7 +146,20 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows}
 \usetikzlibrary{shapes}
-\DeclareRobustCommand\circled[2][]{\ifthenelse{\isempty{#1}}{\tikz[baseline=(char.base)]{\node[shape=circle,fill=pairedOneLightBlue,inner sep=1pt] (char) {#2};}}{\autoref{#1}: \hyperref[#1]{\tikz[baseline=(char.base)]{\node[shape=circle,fill=pairedOneLightBlue,inner sep=1pt] (char) {#2};}}}}
+
+% Define base style for circled nodes
+\tikzset{
+  circledbase/.style={
+    shape=circle,
+    fill=pairedOneLightBlue,
+    font=\tt\small,
+        inner sep=0pt,
+        outer sep=0pt,
+        minimum size=1.2em
+    }
+}
+
+\DeclareRobustCommand\circled[2][]{\ifthenelse{\isempty{#1}}{\tikz[baseline=(char.base)]{\node[circledbase] (char) {#2\strut};}}{\autoref{#1}: \hyperref[#1]{\tikz[baseline=(char.base)]{\node[circledbase] (char) {#2\strut};}}}}
 
 % listings don't write "Listing" in autoref without this.
 \providecommand*{\listingautorefname}{Listing}
