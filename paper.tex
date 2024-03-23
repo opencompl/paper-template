@@ -1,21 +1,14 @@
 \def\paperversiondraft{draft}
-\def\paperversionblind{normal}
-\def\paperversioncameraACM{cameraACM}
+\def\paperversionnormal{normal}
 
-% If no draft paper-version is requested, compile in 'normal' mode
-\ifx\paperversion\paperversiondraft
+% If the paper version is set to 'normal' mode keep it,
+% otherwise set it to 'draft' mode.
+\ifx\paperversion\paperversionnormal
 \else
-  \ifx\paperversion\paperversioncameraACM
-  \else
-  \def\paperversion{normal}
-  \fi
+  \def\paperversion{draft}
 \fi
 
-\ifx\paperversion\paperversioncameraACM
-  \documentclass[sigplan]{acmart}
-\else
-  \documentclass[review, anonymous, sigplan]{acmart}
-\fi
+\documentclass[review, anonymous, sigplan]{acmart}
 
 \def\acmversionanonymous{anonymous}
 \def\acmversionjournal{journal}
