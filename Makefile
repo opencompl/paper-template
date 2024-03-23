@@ -1,16 +1,10 @@
 # Source Latex files
-TEX_MAIN = paper.tex
-
-TEX_MAIN_DRAFT = draft.tex
 TEX_MAIN_PAPER = paper.tex
-TEX_MAIN_BLIND = blind.tex
-TEX_MAIN_CAMERA_ACM = cameraACM.tex
+TEX_MAIN_SUBMISSION = submission.tex
 
 # Generate PDF files
-PDF_DRAFT = draft.pdf
 PDF_PAPER = paper.pdf
-PDF_BLIND = blind.pdf
-PDF_CAMERA_ACM = cameraACM.pdf
+PDF_SUBMISSION = submission.pdf
 
 IMAGES := $(wildcard images/*.jpg images/*.pdf images/*.png)
 
@@ -18,7 +12,7 @@ IMAGES := $(wildcard images/*.jpg images/*.pdf images/*.png)
 # from textidote
 .PHONY: grammar
 
-all: ${PDF_DRAFT} ${PDF_PAPER}
+all: ${PDF_SUBMISSION} ${PDF_PAPER}
 
 # spelling and grammar
 grammar: paper.tex
@@ -28,32 +22,21 @@ grammar: paper.tex
 	-textidote --check en --output html paper.tex > index.html
 	python3 -m http.server
 
-
-${PDF_DRAFT}: ${TEX_MAIN_DRAFT} ${TEX_MAIN} ${IMAGES}
-	latexmk ${TEX_MAIN_DRAFT}
-
-${PDF_PAPER}: ${TEX_MAIN_PAPER} ${TEX_MAIN} ${IMAGES}
+${PDF_PAPER}: ${TEX_MAIN_PAPER} ${IMAGES}
 	latexmk ${TEX_MAIN_PAPER}
 
-${PDF_CAMERA_ACM}: ${TEX_MAIN_CAMERA_ACM} ${TEX_MAIN} ${IMAGES}
-	latexmk ${TEX_MAIN_CAMERA_ACM}
-
-draft: ${PDF_DRAFT}
-
-blind: ${PDF_BLIND}
+${PDF_SUBMISSION}: ${TEX_MAIN_SUBMISSION} ${IMAGES}
+	latexmk ${TEX_MAIN_SUBMISSION}
 
 paper: ${PDF_PAPER}
 
-cameraACM: ${PDF_CAMERA_ACM}
+submission: ${PDF_SUBMISSION}
 
-view-draft: ${TEX_MAIN_DRAFT} ${TEX_MAIN} ${IMAGES}
-	latexmk -pvc ${TEX_MAIN_DRAFT}
-
-view-paper: ${TEX_MAIN_PAPER} ${TEX_MAIN} ${IMAGES}
+view-paper: ${TEX_MAIN_PAPER} ${IMAGES}
 	latexmk -pvc ${TEX_MAIN_PAPER}
 
-view-camera-acm: ${TEX_MAIN_CAMERA_ACM} ${TEX_MAIN} ${IMAGES}
-	latexmk -pvc ${TEX_MAIN_CAMERA_ACM}
+view-submission: ${TEX_MAIN_SUBMISSION} ${IMAGES}
+	latexmk -pvc ${TEX_MAIN_SUBMISSION}
 
 clean:
 	latexmk -C
