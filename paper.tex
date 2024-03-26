@@ -150,6 +150,9 @@
 
 % listings don't write "Listing" in autoref without this.
 \providecommand*{\listingautorefname}{Listing}
+\renewcommand{\sectionautorefname}{Section}
+\renewcommand{\subsectionautorefname}{Section}
+\renewcommand{\subsubsectionautorefname}{Section}
 
 \begin{document}
 
@@ -309,7 +312,7 @@ these contributions help you to focus. In particular, the objective of
 the remaining paper should be to support the claims stated here.
 }
 \begin{itemize}
-	\item Contribution 1
+	\item Contribution 1 (\autoref{sec:implementation})
 	\item Contribution 2
 	\item Contribution 3
 	\item Contribution 4
@@ -320,6 +323,7 @@ the remaining paper should be to support the claims stated here.
 \lipsum[1-3]
 
 \section{Implementation}
+\label{sec:implementation}
 
 \section{Related Work}
 
