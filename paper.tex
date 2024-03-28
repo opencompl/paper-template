@@ -160,14 +160,16 @@
   }
 }
 
-\DeclareRobustCommand{\circledbase}[2][]{%
-  \tikz[baseline=(char.base)]{\node[circledstyle, #1] (char) {#2\strut};}%
+\DeclareRobustCommand{\circledbase}[3][]{%
+    \ifthenelse{\isempty{#1}}%
+        {\tikz[baseline=(char.base)]{\node[circledstyle, fill=#2] (char) {#3\strut};}}%
+        {\tikz[baseline=(char.base)]{\node[circledstyle, fill=#2, #1] (char) {#3\strut};}}%
 }
 
 \DeclareRobustCommand{\circled}[2][]{%
     \ifthenelse{\isempty{#1}}%
-        {\circledbase[fill=pairedOneLightBlue]{#2}}%
-        {\autoref{#1}: \hyperref[#1]{\circledbase[fill=pairedOneLightBlue]{#2}}}%
+        {\circledbase{pairedOneLightBlue}{#2}}%
+        {\autoref{#1}: \hyperref[#1]{\circledbase{pairedOneLightBlue}{#2}}}%
 }
 
 % listings don't write "Listing" in autoref without this.
