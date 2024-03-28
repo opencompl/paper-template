@@ -149,17 +149,26 @@
 
 % Define base style for circled nodes
 \tikzset{
-  circledbase/.style={
+  circledstyle/.style={
     shape=circle,
-    fill=pairedOneLightBlue,
+    #1,
     font=\tt\small,
-        inner sep=0pt,
-        outer sep=0pt,
-        minimum size=1.2em
-    }
+    inner sep=0pt,
+    outer sep=0pt,
+    minimum size=1.2em,
+    text=black
+  }
 }
 
-\DeclareRobustCommand\circled[2][]{\ifthenelse{\isempty{#1}}{\tikz[baseline=(char.base)]{\node[circledbase] (char) {#2\strut};}}{\autoref{#1}: \hyperref[#1]{\tikz[baseline=(char.base)]{\node[circledbase] (char) {#2\strut};}}}}
+\DeclareRobustCommand{\circledbase}[2][]{%
+  \tikz[baseline=(char.base)]{\node[circledstyle, #1] (char) {#2\strut};}%
+}
+
+\DeclareRobustCommand{\circled}[2][]{%
+    \ifthenelse{\isempty{#1}}%
+        {\circledbase[fill=pairedOneLightBlue]{#2}}%
+        {\autoref{#1}: \hyperref[#1]{\circledbase[fill=pairedOneLightBlue]{#2}}}%
+}
 
 % listings don't write "Listing" in autoref without this.
 \providecommand*{\listingautorefname}{Listing}
