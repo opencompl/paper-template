@@ -139,31 +139,9 @@
 \newunicodechar{α}{\ensuremath{\alpha}}
 \newunicodechar{β}{\ensuremath{\beta}}
 
-
 % \circled command to print a colored circle.
 % \circled{1} pretty-prints "(1)"
 % This is useful to refer to labels that are embedded within figures.
-\usepackage{tikz}
-\usetikzlibrary{arrows}
-\usetikzlibrary{shapes}
-
-% Define base style for circled nodes
-\tikzset{
-  circledstyle/.style={
-    shape=circle,
-    #1,
-    font=\tt\small,
-    inner sep=0pt,
-    outer sep=0pt,
-    minimum size=1.2em,
-    text=black
-  }
-}
-
-\DeclareRobustCommand{\circledbase}[3][]{%
-    \tikz[baseline=(char.base)]{\node[circledstyle, fill=#2] (char) {#3\strut};}%
-}
-
 \DeclareRobustCommand{\circled}[2][]{%
     \ifthenelse{\isempty{#1}}%
         {\circledbase{pairedOneLightBlue}{#2}}%

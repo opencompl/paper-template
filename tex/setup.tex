@@ -171,3 +171,26 @@
 {
 }
 \makeatother
+
+% base style and command for \circled to print a colored circle.
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+
+% Define base style for circled nodes
+\tikzset{
+  circledstyle/.style={
+    shape=circle,
+    #1,
+    font=\tt\small,
+    inner sep=0pt,
+    outer sep=0pt,
+    minimum size=1.2em,
+    text=black
+  }
+}
+
+\DeclareRobustCommand{\circledbase}[3][]{%
+    \tikz[baseline=(char.base)]{\node[circledstyle, fill=#2] (char) {#3\strut};}%
+}
+
