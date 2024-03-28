@@ -161,9 +161,7 @@
 }
 
 \DeclareRobustCommand{\circledbase}[3][]{%
-    \ifthenelse{\isempty{#1}}%
-        {\tikz[baseline=(char.base)]{\node[circledstyle, fill=#2] (char) {#3\strut};}}%
-        {\tikz[baseline=(char.base)]{\node[circledstyle, fill=#2, #1] (char) {#3\strut};}}%
+    \tikz[baseline=(char.base)]{\node[circledstyle, fill=#2] (char) {#3\strut};}%
 }
 
 \DeclareRobustCommand{\circled}[2][]{%
