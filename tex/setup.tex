@@ -200,7 +200,6 @@
 }
 
 % define a base tikz node for circled commands accepting a fill colour and the node text as arguments
-% 
 \DeclareRobustCommand{\circledbase}[3][]{%
     \tikz[baseline=(char.base)]{\node[circledstyle, fill=#2] (char) {#3\strut};}%
 }
