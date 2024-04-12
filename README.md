@@ -1,8 +1,8 @@
 ![Compile paper](../../workflows/Compile%20paper/badge.svg)
 
 Download:
-[Draft (with comments)](../../releases/latest/download/draft.pdf) |
-[Paper](../../releases/latest/download/paper.pdf)
+[Paper (with comments)](../../releases/latest/download/paper.pdf)
+[Submission (without comments)](../../releases/latest/download/submission.pdf) |
 
 This repository serves as a template for writing computer science papers in LaTeX. It supports
 the following features:
