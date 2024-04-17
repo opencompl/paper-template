@@ -135,14 +135,14 @@
 \newunicodechar{α}{\ensuremath{\alpha}}
 \newunicodechar{β}{\ensuremath{\beta}}
 
-
 % \circled command to print a colored circle.
 % \circled{1} pretty-prints "(1)"
 % This is useful to refer to labels that are embedded within figures.
-\usepackage{tikz}
-\usetikzlibrary{arrows}
-\usetikzlibrary{shapes}
-\DeclareRobustCommand\circled[2][]{\ifthenelse{\isempty{#1}}{\tikz[baseline=(char.base)]{\node[shape=circle,fill=pairedOneLightBlue,inner sep=1pt] (char) {#2};}}{\autoref{#1}: \hyperref[#1]{\tikz[baseline=(char.base)]{\node[shape=circle,fill=pairedOneLightBlue,inner sep=1pt] (char) {#2};}}}}
+\DeclareRobustCommand{\circled}[2][]{%
+    \ifthenelse{\isempty{#1}}%
+        {\circledbase{pairedOneLightBlue}{#2}}%
+        {\autoref{#1}: \hyperref[#1]{\circledbase{pairedOneLightBlue}{#2}}}%
+}
 
 % listings don't write "Listing" in autoref without this.
 \providecommand*{\listingautorefname}{Listing}

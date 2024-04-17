@@ -127,7 +127,7 @@
 \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Add minted and support costum lexers
+% Add minted and support custom lexers
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{minted}
 \usepackage{etoolbox}
@@ -171,3 +171,36 @@
 {
 }
 \makeatother
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Base style and command for \circled to print a colored circle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Width is assured to be the same across all characters using the typewriter font which is monospaced
+% Zeroing out the inner separator removes padding between content and node (inner sep).
+% Zeroing out the outer separator removes space between the node border and its anchors (e.g., east).
+% Minimum size was derived on experimentation and it may need adjustment when changing font style/size.
+%
+% There is no guarantee for the letter ascenders/descenders to baseline when set to char.base, hence adding \strut.
+% which is an invisible vertical rule with the height and depth of the parentheses ( and ).
+% It ensures that the line height in a line of text is at least as large as if it contained parentheses. 
+\tikzset{
+  circledstyle/.style={
+    shape=circle,
+    #1,
+    font=\tt\small,
+    inner sep=0pt,
+    outer sep=0pt,
+    minimum size=1.2em,
+    text=black
+  }
+}
+
+% define a base tikz node for circled commands accepting a fill colour and the node text as arguments
+\DeclareRobustCommand{\circledbase}[3][]{%
+    \tikz[baseline=(char.base)]{\node[circledstyle, fill=#2] (char) {#3\strut};}%
+}
+
