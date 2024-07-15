@@ -97,10 +97,18 @@
 \newcommand\InFloat[2]{\ifnum\@floatpenalty<0\relax#1\else#2\fi}
 \makeatother
 
+\newboolean{inComment}
+\setboolean{inComment}{false}
+
 \ifx\paperversion\paperversiondraft
 \newcommand\createtodoauthor[2]{
   \def\tmpdefault{emptystring}
   \expandafter\newcommand\csname #1\endcsname[2][\tmpdefault]{% comment to avoid spurious whitespace
+    \ifthenelse{\boolean{inComment}}{
+      \PackageError{paper-template}{Comments in comments not supported}{}
+    }{}
+    \setboolean{inComment}{true}
+
     \def\tmp{##1}% comment to avoid spurious whitespace
     \InFloat{
         \smash{
@@ -118,6 +126,7 @@
 	}% comment to avoid spurious whitespace
       }% comment to avoid spurious whitespace
     }% comment to avoid spurious whitespace
+    \setboolean{inComment}{false}
   }
 }
 \else
