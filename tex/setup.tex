@@ -104,11 +104,9 @@
 \newcommand\createtodoauthor[2]{
   \def\tmpdefault{emptystring}
   \expandafter\newcommand\csname #1\endcsname[2][\tmpdefault]{% comment to avoid spurious whitespace
-    \ifthenelse{\boolean{inComment}}{
-      \PackageError{paper-template}{Comments in comments not supported}{}
-    }{}
-    \setboolean{inComment}{true}
-
+    \ifthenelse{\boolean{inComment}}{% comment to avoid spurious whitespace
+      \PackageError{paper-template}{Comments in comments not supported}{}% comment to avoid spurious whitespace
+    }{}\setboolean{inComment}{true}% comment to avoid spurious whitespace
     \def\tmp{##1}% comment to avoid spurious whitespace
     \InFloat{
         \smash{
@@ -126,7 +124,7 @@
 	}% comment to avoid spurious whitespace
       }% comment to avoid spurious whitespace
     }% comment to avoid spurious whitespace
-    \setboolean{inComment}{false}
+    \setboolean{inComment}{false}% comment to avoid spurious whitespace
   }
 }
 \else
