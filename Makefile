@@ -22,6 +22,9 @@ grammar: paper.tex
 	-textidote --check en --output html paper.tex > index.html
 	python3 -m http.server
 
+refcheck: paper.log
+	@grep -e 'refcheck.*Unused' paper.log
+
 ${PDF_PAPER}: ${TEX_MAIN_PAPER} ${IMAGES}
 	latexmk ${TEX_MAIN_PAPER}
 
