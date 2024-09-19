@@ -9,9 +9,7 @@ PDF_SUBMISSION = submission.pdf
 # Resources
 IMAGES := $(wildcard images/*.jpg images/*.pdf images/*.png)
 
-# grammar is a phony rule, it generates index.html
-# from textidote
-.PHONY: grammar
+.PHONY: all grammar paper submission view-paper view-submission clean
 
 all: ${PDF_SUBMISSION} ${PDF_PAPER}
 
