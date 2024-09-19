@@ -3,8 +3,8 @@ TEX_MAIN_PAPER = paper.tex
 TEX_MAIN_SUBMISSION = submission.tex
 
 # Generated PDF files
-PDF_PAPER = paper.pdf
-PDF_SUBMISSION = submission.pdf
+PDF_PAPER := $(TEX_MAIN_PAPER:.tex=.pdf)
+PDF_SUBMISSION := $(TEX_MAIN_SUBMISSION:.tex=.pdf)
 
 # Resources
 IMAGES := $(wildcard images/*.jpg images/*.pdf images/*.png)
@@ -14,11 +14,11 @@ IMAGES := $(wildcard images/*.jpg images/*.pdf images/*.png)
 all: ${PDF_SUBMISSION} ${PDF_PAPER}
 
 # spelling and grammar
-grammar: paper.tex
+grammar: $(TEX_MAIN_PAPER)
 	# check that textidote exists.
 	@textidote --version
 	# allowed to fail since it throws error if we have grammar mistakes
-	-textidote --check en --output html paper.tex > index.html
+	-textidote --check en --output html $< > index.html
 	python3 -m http.server
 
 ${PDF_PAPER}: ${TEX_MAIN_PAPER} ${IMAGES}
