@@ -1,4 +1,4 @@
-# Source LaTex files
+# Source LaTeX files
 TEX_MAIN_PAPER = paper.tex
 TEX_MAIN_SUBMISSION = submission.tex
 
