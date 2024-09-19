@@ -15,11 +15,11 @@ IMAGES := $(wildcard images/*.jpg images/*.pdf images/*.png)
 all: ${PDF_SUBMISSION} ${PDF_PAPER}
 
 # spelling and grammar
-grammar: paper.tex
+grammar: $(TEX_MAIN_PAPER)
 	# check that textidote exists.
 	@textidote --version
 	# allowed to fail since it throws error if we have grammar mistakes
-	-textidote --check en --output html paper.tex > index.html
+	-textidote --check en --output html $<  > index.html
 	python3 -m http.server
 
 refcheck: paper
