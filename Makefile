@@ -1,11 +1,12 @@
-# Source Latex files
+# Source LaTex files
 TEX_MAIN_PAPER = paper.tex
 TEX_MAIN_SUBMISSION = submission.tex
 
-# Generate PDF files
+# Generated PDF files
 PDF_PAPER = paper.pdf
 PDF_SUBMISSION = submission.pdf
 
+# Resources
 IMAGES := $(wildcard images/*.jpg images/*.pdf images/*.png)
 
 # grammar is a phony rule, it generates index.html
