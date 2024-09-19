@@ -30,6 +30,11 @@ ${PDF_PAPER}: ${TEX_MAIN_PAPER} ${IMAGES}
 ${PDF_SUBMISSION}: ${TEX_MAIN_SUBMISSION} ${IMAGES}
 	latexmk ${TEX_MAIN_SUBMISSION}
 
+abstract: ${TEX_MAIN_PAPER}
+	# check that pandoc exists
+	@pandoc --version
+	sed -n '/\\begin{abstract}/,/\\end{abstract}/p' $< | sed '/\\begin{abstract}/d; /\\end{abstract}/d' | pandoc -f latex -t gfm -o $@.md
+
 paper: ${PDF_PAPER}
 
 submission: ${PDF_SUBMISSION}
