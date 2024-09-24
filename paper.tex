@@ -55,6 +55,7 @@
 \usepackage{thmtools} % required for autoref to lemmas
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
+\usepackage{xfp}
 
 \input{tex/setup.tex}
 \input{tex/acm.tex}
@@ -128,6 +129,47 @@
 }
 
 \newdelimitedcommand{toolname}{Tool}
+
+% helper macro to fully expand dimension expressions
+\newcommand{\expanddim}[1]{\the\dimexpr#1\relax}
+
+% Define the conversion function from any length to inches
+\makeatletter
+\newcommand{\convertToInches}[2]{%
+  \edef\@temp{\expandafter\expandafter\expandafter\strip@pt\expandafter\dimexpr#1\relax}%
+  \edef#2{\fpeval{round(\@temp / 72.27, 2)}}%
+}
+\makeatother
+
+% create a new file for output
+\newwrite\myfile
+\immediate\openout\myfile=\jobname-layout.json
+
+% write widths to file
+\makeatletter
+% https://latex.org/forum/viewtopic.php?t=5180
+\begingroup
+  \catcode`\[ = 1\relax
+  \catcode`\] = 2\relax
+  \catcode`\{ = 12\relax
+  \catcode`\} = 12 \relax 
+  \gdef\OpenBrace[{]
+  \gdef\CloseBrace[}]
+\endgroup
+\newcommand{\writePageWidths}{
+  \newcommand{\mylen}{}
+  \immediate\write\myfile{\OpenBrace}%
+  \convertToInches{\columnwidth}{\mylen}
+  \immediate\write\myfile{"columnwidth": \mylen,}%
+  \convertToInches{\textwidth}{\mylen}
+  \immediate\write\myfile{"textwidth": \mylen}%
+  \immediate\write\myfile{\CloseBrace}%
+}
+\makeatother
+
+\AtEndDocument{
+  \writePageWidths
+}
 
 \usepackage{booktabs}
 \newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
