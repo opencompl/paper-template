@@ -6,8 +6,10 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import math
+import csv
 
 from typing import Callable
+
 
 def setGlobalDefaults():
     ## Use TrueType fonts instead of Type 3 fonts
@@ -26,7 +28,7 @@ def setGlobalDefaults():
 
     ## Legend defaults
     matplotlib.rcParams['legend.frameon'] = False
-    
+
     # Hide the right and top spines
     #
     # This reduces the number of lines in the plot. Lines typically catch
@@ -36,7 +38,6 @@ def setGlobalDefaults():
     matplotlib.rcParams['axes.spines.right'] = False
     matplotlib.rcParams['axes.spines.top'] = False
 
-matplotlib.rcParams['figure.figsize'] = 5, 2
 
 # Color palette
 light_gray = "#cacaca"
@@ -50,6 +51,7 @@ dark_red = "#e31a1c"
 black = "#000000"
 white = "#ffffff"
 
+
 def save(figure, name):
     # Do not emit a creation date, creator name, or producer. This will make the
     # content of the pdfs we generate more deterministic.
@@ -59,8 +61,9 @@ def save(figure, name):
 
     # Close figure to avoid warning about too many open figures.
     plt.close(figure)
-    
+
     print(f'written to {name}')
+
 
 # helper for str_from_float.
 # format float in scientific with at most *digits* digits.
@@ -71,18 +74,19 @@ def save(figure, name):
 def get_scientific(x: float, digits: int):
     # get scientific without leading zeros or + in exp
     def get(x: float, prec: int) -> str:
-      result = f'{x:.{prec}e}'
-      result = result.replace('e+', 'e')
-      while 'e0' in result:
-        result = result.replace('e0', 'e')
-      while 'e-0' in result:
-        result = result.replace('e-0', 'e-')
-      return result
+        result = f'{x:.{prec}e}'
+        result = result.replace('e+', 'e')
+        while 'e0' in result:
+            result = result.replace('e0', 'e')
+        while 'e-0' in result:
+            result = result.replace('e-0', 'e-')
+        return result
 
     result = get(x, digits)
     len_after_e = len(result.split('e')[1])
     prec = max(0, digits - len_after_e - 2)
     return get(x, prec)
+
 
 # format float with at most *digits* digits.
 # if the number is too small or too big,
@@ -91,33 +95,42 @@ def get_scientific(x: float, digits: int):
 #
 # note: this displays different numbers with different
 # precision depending on their length, as much as can fit.
-def str_from_float(x: float, digits: int = 3, suffix: str = '') -> str:
-  result = f'{x:.{digits}f}'
-  before_decimal = result.split('.')[0]
-  if len(before_decimal) == digits:
-    return before_decimal
-  if len(before_decimal) > digits:
-    # we can't even fit the integral part
-    return get_scientific(x, digits)
+def str_from_float(x: float, digits: int = 2, suffix: str = '') -> str:
+    result = f'{x:.{digits}f}'
+    before_decimal = result.split('.')[0]
+    if len(before_decimal) == digits:
+        return before_decimal
+    if len(before_decimal) > digits:
+        # we can't even fit the integral part
+        return get_scientific(x, digits)
 
-  result = result[:digits + 1] # plus 1 for the decimal point
-  if float(result) == 0:
-    # we can't even get one significant figure
-    return get_scientific(x, digits)
+    result = result[: digits + 1]  # plus 1 for the decimal point
+    if float(result) == 0:
+        # we can't even get one significant figure
+        return get_scientific(x, digits)
 
-  return result[:digits + 1]
+    return result[: digits + 1]
+
 
 # Attach a text label above each bar in *rects*, displaying its height
-def autolabel(ax, rects, label_from_height: Callable[[float], str] =str_from_float, xoffset=0, yoffset=1, **kwargs):
+def autolabel(
+    ax,
+    rects,
+    label_from_height: Callable[[float], str] = str_from_float,
+    xoffset=0,
+    yoffset=1,
+    **kwargs,
+):
     # kwargs is directly passed to ax.annotate and overrides defaults below
     assert 'xytext' not in kwargs, "use xoffset and yoffset instead of xytext"
     default_kwargs = dict(
         xytext=(xoffset, yoffset),
-        fontsize="smaller",
+        fontsize="7",
         rotation=0,
         ha='center',
         va='bottom',
-        textcoords='offset points')
+        textcoords='offset points',
+    )
 
     for rect in rects:
         height = rect.get_height()
@@ -127,35 +140,38 @@ def autolabel(ax, rects, label_from_height: Callable[[float], str] =str_from_flo
             **(default_kwargs | kwargs),
         )
 
+
 # utility to print times as 1h4m, 1d15h, 143.2ms, 10.3s etc.
 def str_from_ms(ms):
-  def maybe_val_with_unit(val, unit):
-    return f'{val}{unit}' if val != 0 else ''
+    def maybe_val_with_unit(val, unit):
+        return f'{val}{unit}' if val != 0 else ''
 
-  if ms < 1000:
-    return f'{ms:.3g}ms'
+    if ms < 1000:
+        return f'{ms:.3g}ms'
 
-  s = ms / 1000
-  ms = 0
-  if s < 60:
-    return f'{s:.3g}s'
+    s = ms / 1000
+    ms = 0
+    if s < 60:
+        return f'{s:.3g}s'
 
-  m = int(s // 60)
-  s -= 60*m
-  if m < 60:
-    return f'{m}m{maybe_val_with_unit(math.floor(s), "s")}'
+    m = int(s // 60)
+    s -= 60 * m
+    if m < 60:
+        return f'{m}m{maybe_val_with_unit(math.floor(s), "s")}'
 
-  h = int(m // 60)
-  m -= 60*h;
-  if h < 24:
-    return f'{h}h{maybe_val_with_unit(m, "m")}'
+    h = int(m // 60)
+    m -= 60 * h
+    if h < 24:
+        return f'{h}h{maybe_val_with_unit(m, "m")}'
 
-  d = int(h // 24)
-  h -= 24*d
-  return f'{d}d{maybe_val_with_unit(h, "h")}'
+    d = int(h // 24)
+    h -= 24 * d
+    return f'{d}d{maybe_val_with_unit(h, "h")}'
+
 
 def autolabel_ms(ax, rects, **kwargs):
-  autolabel(ax, rects, label_from_height=str_from_ms, **kwargs)
+    autolabel(ax, rects, label_from_height=str_from_ms, **kwargs)
+
 
 # Plot an example speedup plot
 def plot_speedup():
@@ -164,41 +180,42 @@ def plot_speedup():
     women_means = [1.8, 1.5, 1.1, 1.3, 0.9]
 
     x = np.arange(len(labels))  # the label locations
-    width = 0.35  # the width of the bars
+    width = 0.4  # the width of the bars
 
     fig, ax = plt.subplots()
-    rects1 = ax.bar(x - width / 2,
-                    men_means,
-                    width,
-                    label='Men',
-                    color=light_blue)
-    rects2 = ax.bar(x + width / 2,
-                    women_means,
-                    width,
-                    label='Women',
-                    color=dark_blue)
+    rects1 = ax.bar(x - width / 2, men_means, width, label='Men', color=light_blue)
+    rects2 = ax.bar(x + width / 2, women_means, width, label='Women', color=dark_blue)
 
     # Y-Axis Label
     #
     # Use a horizontal label for improved readability.
-    ax.set_ylabel('Speedup',
-                  rotation='horizontal',
-                  position=(1, 1.05),
-                  horizontalalignment='left',
-                  verticalalignment='bottom')
+    ax.set_ylabel(
+        'Speedup',
+        rotation='horizontal',
+        position=(1, 1.05),
+        horizontalalignment='left',
+        verticalalignment='bottom',
+    )
 
     # Add some text for labels, title and custom x-axis tick labels, etc.
     ax.set_xticks(x)
     ax.set_xticklabels(labels)
 
-    ax.legend(ncol=100,
-              loc='lower right',
-              bbox_to_anchor=(0, 1, 1, 0))
+    ax.legend(ncol=100, loc='lower right', bbox_to_anchor=(0, 1, 1, 0))
 
     autolabel(ax, rects1)
     autolabel(ax, rects2)
 
     save(fig, 'speedup.pdf')
+
+
+def csv_to_dict(file):
+    data = {}
+
+    if file is not None:
+        data = dict(csv.reader(file))
+
+    return data
 
 
 def main():
@@ -207,14 +224,19 @@ def main():
         description='Plot the figures for this paper',
     )
     parser.add_argument('names', nargs='+', choices=['all', 'speedup'])
+    parser.add_argument('--layout', type=argparse.FileType('r'))
     args = parser.parse_args()
 
     setGlobalDefaults()
+    layout = csv_to_dict(args.layout)
 
     plotAll = 'all' in args.names
 
     if 'speedup' in args.names or plotAll:
-        plot_speedup()
+        with matplotlib.rc_context(
+            {'figure.figsize': (layout.get('columnwidth', 3), 2)}
+        ):
+            plot_speedup()
 
 
 if __name__ == "__main__":

@@ -55,6 +55,7 @@
 \usepackage{thmtools} % required for autoref to lemmas
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
+\usepackage{xfp}
 
 \input{tex/setup.tex}
 \input{tex/acm.tex}
@@ -128,6 +129,44 @@
 }
 
 \newdelimitedcommand{toolname}{Tool}
+
+% helper macro to fully expand dimension expressions
+\newcommand{\expanddim}[1]{\the\dimexpr#1\relax}
+
+% Define the conversion function from any length to inches
+\makeatletter
+\newcommand{\convertToInches}[2]{%
+  \edef\@temp{\expandafter\expandafter\expandafter\strip@pt\expandafter\dimexpr#1\relax}%
+  \edef#2{\fpeval{round(\@temp / 72.27, 2)}}%
+}
+\makeatother
+
+% create a new file for output
+\newwrite\myfile
+\immediate\openout\myfile=\jobname-layout.csv
+
+% write widths to file
+\makeatletter
+\newcommand{\writePageWidths}{
+  \newcommand{\mylen}{}%
+  \convertToInches{\columnwidth}{\mylen}%
+  \immediate\write\myfile{columnwidth, \mylen}%
+  \convertToInches{\textwidth}{\mylen}%
+  \immediate\write\myfile{textwidth, \mylen}%
+  \convertToInches{\columnsep}{\mylen}%
+  \immediate\write\myfile{columnsep, \mylen}%
+  \convertToInches{\textheight}{\mylen}%
+  \immediate\write\myfile{textheight, \mylen}%
+  \convertToInches{\paperwidth}{\mylen}%
+  \immediate\write\myfile{paperwidth, \mylen}%
+  \convertToInches{\paperheight}{\mylen}%
+  \immediate\write\myfile{paperheight, \mylen}%
+}
+\makeatother
+
+\AtEndDocument{
+  \writePageWidths
+}
 
 \usepackage{booktabs}
 \newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
@@ -520,8 +559,12 @@ We also suggest to follow these technical remarks:
 	setting fonttype to 42.
 \end{itemize}
 
+We recommend considering the relevant layout lengths (e.g., the column width) when choosing figure sizes for plots and other figures, to avoid unnecessary scaling when imported with \texttt{\textbackslash{}includegraphics}.
+We export layout lengths (in inches) to \texttt{paper-layout.csv}.
+The \texttt{plot.py} script shows how to use this information for \autoref{fig:speedup}.
+
 \begin{figure}
-\includegraphics[width=\columnwidth]{plots/speedup}
+\includegraphics{plots/speedup}
 \caption{Improved running speed after 4 weeks of training.
 }
 \label{fig:speedup}
@@ -662,6 +705,7 @@ For example, assume we have defined an acronym with \texttt{\textbackslash{}newa
   \item To force contraction (e.g., to save space for a figure caption), we use \texttt{\textbackslash{}acs\{ir\}} which gives: \acs{ir}.
   \item To obtain plural form, we use \texttt{\textbackslash{}acp\{ir\}} giving: \acp{ir}.
 \end{itemize}
+
 
 \end{draftonly}
 

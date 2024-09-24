@@ -22,10 +22,3 @@ the following features:
     - The [ACMart fonts](https://github.com/opencompl/paper-template/blob/master/acmart.cls#L720-L728)
       use [Inconsolata](https://ctan.org/pkg/inconsolata?lang=en) for monospace, 
       [Libertine](https://ctan.org/pkg/libertine?lang=en) for serif, and [newtx](https://ctan.org/pkg/newtx?lang=en) for math.
-    - The Libertine `ttf` can be obtained as "linux libertine" on distros, and Inconsolata `ttf` as "Inconsolata".
-    - The default font size of the body is `11pt`.
-  - Figures
-    - The paper is of A4 size, which in *physical units* is `210 x 297 mm`.
-    - Choose figure size in *physical units* (`mm`/`inch`) based on how much of A4 it occupies and export to PDF.
-    - Import figure PDF into paper using `\includegraphics{path/to/figure}`. This occupies the desired space in the paper; there is need to use
-      `\includegraphics[width=<insert-width-here>]{path/to/figure}`. 
