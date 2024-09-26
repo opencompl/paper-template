@@ -559,6 +559,10 @@ We also suggest to follow these technical remarks:
 	setting fonttype to 42.
 \end{itemize}
 
+We recommend considering the relevant layout lengths (e.g., the column width) when choosing figure sizes for plots and other figures, to avoid unnecessary scaling when imported with \texttt{\textbackslash{}includegraphics}.
+We export layout lengths (in inches) to \texttt{paper-layout.csv}.
+The \texttt{plot.py} script shows how to use this information for \autoref{fig:speedup}.
+
 \begin{figure}
 \includegraphics{plots/speedup}
 \caption{Improved running speed after 4 weeks of training.
@@ -701,8 +705,6 @@ For example, assume we have defined an acronym with \texttt{\textbackslash{}newa
   \item To force contraction (e.g., to save space for a figure caption), we use \texttt{\textbackslash{}acs\{ir\}} which gives: \acs{ir}.
   \item To obtain plural form, we use \texttt{\textbackslash{}acp\{ir\}} giving: \acp{ir}.
 \end{itemize}
-
-The column width is: \the\columnwidth
 
 
 \end{draftonly}
