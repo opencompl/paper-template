@@ -22,4 +22,3 @@ the following features:
     - The [ACMart fonts](https://github.com/opencompl/paper-template/blob/master/acmart.cls#L720-L728)
       use [Inconsolata](https://ctan.org/pkg/inconsolata?lang=en) for monospace, 
       [Libertine](https://ctan.org/pkg/libertine?lang=en) for serif, and [newtx](https://ctan.org/pkg/newtx?lang=en) for math.
-    - The Libertine `ttf` can be obtained as "linux libertine" on distros, and Inconsolata `ttf` as "Inconsolata".
