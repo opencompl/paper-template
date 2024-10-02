@@ -377,8 +377,9 @@ items are formatted in ways that are known to work well.
 \paragraph{Referencing Figures} When referencing figures from the text we
 ensure the following:
 \begin{description}
-      \item [All figures are referenced] A paper with un-referenced figures
-	      appears incomplete.
+      \item [All figures are referenced] A paper with un-referenced figures appears incomplete.
+        We can check this using the \texttt{refcheck} package.
+        Issuing \texttt{make refcheck} on the commandline lists all \emph{labeled} elements that are not referenced in the text.
       \item [References to figures are brief and easy to skip]~\\
                 We minimize the number of words needed to refer to a figure. Reducing
                 the number of non-information-carrying words directly increases

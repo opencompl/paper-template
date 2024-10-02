@@ -211,3 +211,22 @@
     \tikz[baseline=(char.base)]{\node[circledstyle, fill=#2] (char) {#3\strut};}%
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Add refcheck support
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[norefs,nocites]{refcheck}
+
+% make refcheck work with autoref
+% based on: https://tex.stackexchange.com/questions/87610/making-refcheck-work-with-cleveref
+\makeatletter
+\newcommand{\refcheckize}[1]{%
+  \expandafter\let\csname @@\string#1\endcsname#1%
+  \expandafter\DeclareRobustCommand\csname relax\string#1\endcsname[1]{%
+    \csname @@\string#1\endcsname{##1}\wrtusdrf{##1}}%
+  \expandafter\let\expandafter#1\csname relax\string#1\endcsname
+}
+\makeatother
+
+%%% add the reference commands we want refcheck to be aware of
+\refcheckize{\autoref}
+
