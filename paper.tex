@@ -653,12 +653,14 @@ $\to$ {\color{pairedFourDarkGreen}\textit{we extend PreviousIdea [1] by}}
 \subsubsection{Managing acronyms automatically}
 Managing acronyms manually can lead to situations where the specific term is not properly expanded upon first use or when it is introduced.
 The \texttt{acronym} package is useful to avoid such situations and provides full control over acronyms.
-For example, assume we have defined an acronym with \texttt{\textbackslash{}newacronym\{ir\}\{IR\}\{Intermediate Representation\}}:
+The expanded form of an abbreviation should be in lowercase, unless its parts are also capitalized (e.g., United Kingdom for UK).
+For example, assume we have defined an acronym with \texttt{\textbackslash{}newacronym\{ir\}\{IR\}\{intermediate representation\}}:
 \begin{itemize}
   \item Upon first use of \texttt{\textbackslash{}ac\{ir\}} we get: \ac{ir}.
   \item On the second reference: \ac{ir}.
-  \item If we need to force expansion for a figure or a background section where the term is first described, we can use \texttt{\textbackslash{}acf\{ir\}} which gives: \acf{ir}.
-  \item We can obtain plural form using \texttt{\textbackslash{}acp\{ir\}} giving: \acp{ir}.
+  \item To force expansion (e.g., for the background section where the term is first described), we use \texttt{\textbackslash{}acf\{ir\}} which gives: \acf{ir}.
+  \item To force contraction (e.g., to save space for a figure caption), we use \texttt{\textbackslash{}acs\{ir\}} which gives: \acs{ir}.
+  \item To obtain plural form, we use \texttt{\textbackslash{}acp\{ir\}} giving: \acp{ir}.
 \end{itemize}
 
 \end{draftonly}
