@@ -16,9 +16,9 @@ all: ${PDF_SUBMISSION} ${PDF_PAPER}
 # spelling and grammar
 grammar: $(TEX_MAIN_PAPER)
 	# check that textidote exists.
-  @textidote --version
+	@textidote --version
 	# allowed to fail since it throws error if we have grammar mistakes
-  -textidote --check en --output html $< > index.html
+	-textidote --check en --output html $< > index.html
 	python3 -m http.server
 
 refcheck: paper
