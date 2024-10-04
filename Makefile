@@ -9,7 +9,7 @@ PDF_SUBMISSION := $(TEX_MAIN_SUBMISSION:.tex=.pdf)
 # Resources
 IMAGES := $(wildcard images/*.jpg images/*.pdf images/*.png)
 
-.PHONY: all grammar paper submission view-paper view-submission clean
+.PHONY: all grammar paper submission view-paper view-submission clean abstract
 
 all: ${PDF_SUBMISSION} ${PDF_PAPER}
 
@@ -31,9 +31,7 @@ ${PDF_SUBMISSION}: ${TEX_MAIN_SUBMISSION} ${IMAGES}
 	latexmk ${TEX_MAIN_SUBMISSION}
 
 abstract: ${TEX_MAIN_PAPER}
-	# check that pandoc exists
-	@pandoc --version
-	sed -n '/\\begin{abstract}/,/\\end{abstract}/p' $< | sed '/\\begin{abstract}/d; /\\end{abstract}/d' | pandoc -f latex -t gfm -o $@.md
+	./tools/extract-abstract.py -i $< -o $@.md
 
 paper: ${PDF_PAPER}
 
