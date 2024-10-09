@@ -596,7 +596,7 @@ minted styles can be used for different environments. The xDSL environment uses
 the murphy-style in this case, whereas the MLIR version applies the
 colorful-style.
 
-\begin{xdsl}
+\begin{xdsl*}{fontsize=\scriptsize}
 func.func() [sym_name = "main", function_type = !fun<[
               !iterators.columnar_batch<!tuple<[!i64]>>
                  ], []>] {
@@ -619,7 +619,7 @@ func.func() [sym_name = "s0", function_type = !fun<[
               [predicate = 4 : !i64]
     func.return(%cmp : !i1)
 }
-\end{xdsl}
+\end{xdsl*}
 
 \section{Writing}
 
