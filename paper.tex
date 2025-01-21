@@ -55,6 +55,8 @@
 \usepackage{thmtools} % required for autoref to lemmas
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
+\usepackage{hyphenat}
+\usepackage[shortcuts]{extdash}
 
 \input{tex/setup.tex}
 \input{tex/acm.tex}
@@ -662,6 +664,13 @@ For example, assume we have defined an acronym with \texttt{\textbackslash{}newa
   \item To force contraction (e.g., to save space for a figure caption), we use \texttt{\textbackslash{}acs\{ir\}} which gives: \acs{ir}.
   \item To obtain plural form, we use \texttt{\textbackslash{}acp\{ir\}} giving: \acp{ir}.
 \end{itemize}
+
+\subsubsection{Adding hyphenation rules}
+While \LaTeX\ handles word breaks automatically, and packages like \texttt{microtype} aim to minimize word splitting, there are instances where either new words lack hyphenation rules, or the suggested hyphenation for a word is undesirable.
+The \texttt{hyphenat} package allows adding hyphenation rules using the \texttt{\textbackslash{}hyphenation} macro, e.g., \texttt{\textbackslash{}hyphenation\{Alex-Net\}} for AlexNet.
+
+Allowing hyphenation of compound words, we can use \texttt{\textbackslash{}-/} from the \texttt{extdash} package, for example \texttt{high\-/level} can be written as \texttt{high\textbackslash{}-/level}.
+Disallowing a line break at the compound word hyphen, we can use \texttt{\textbackslash{}=/}, as \texttt{RISC\textbackslash{}=/V} for \texttt{RISC\=/V}.
 
 \end{draftonly}
 
