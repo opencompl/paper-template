@@ -1,79 +1,47 @@
-# Source Latex files
-TEX_MAIN = paper.tex
-
-TEX_MAIN_DRAFT = draft.tex
+# Source LaTeX files
 TEX_MAIN_PAPER = paper.tex
-TEX_MAIN_GRAMMARLY = grammarly.tex
-TEX_MAIN_BLIND = blind.tex
-TEX_MAIN_CAMERA_IEEE = cameraIEEE.tex
-TEX_MAIN_CAMERA_ACM = cameraACM.tex
+TEX_MAIN_SUBMISSION = submission.tex
 
-# Generate PDF files
-PDF_DRAFT = draft.pdf
-PDF_PAPER = paper.pdf
-PDF_GRAMMARLY = grammarly.pdf
-PDF_BLIND = blind.pdf
-PDF_CAMERA_IEEE = cameraIEEE.pdf
-PDF_CAMERA_ACM = cameraACM.pdf
+# Generated PDF files
+PDF_PAPER := $(TEX_MAIN_PAPER:.tex=.pdf)
+PDF_SUBMISSION := $(TEX_MAIN_SUBMISSION:.tex=.pdf)
 
+# Resources
 IMAGES := $(wildcard images/*.jpg images/*.pdf images/*.png)
 
-# grammar is a phony rule, it generates index.html
-# from textidote
-.PHONY: grammar
+.PHONY: all grammar paper submission view-paper view-submission clean abstract
 
-all: ${PDF_DRAFT} ${PDF_PAPER}
+all: ${PDF_SUBMISSION} ${PDF_PAPER}
 
 # spelling and grammar
-grammar: paper.tex
+grammar: $(TEX_MAIN_PAPER)
 	# check that textidote exists.
 	@textidote --version
 	# allowed to fail since it throws error if we have grammar mistakes
-	-textidote --check en --output html paper.tex > index.html
+	-textidote --check en --output html $< > index.html
 	python3 -m http.server
 
+refcheck: paper
+	@grep -e 'refcheck.*Unused' paper.log
 
-${PDF_DRAFT}: ${TEX_MAIN_DRAFT} ${TEX_MAIN} ${IMAGES}
-	latexmk ${TEX_MAIN_DRAFT}
-
-${PDF_GRAMMARLY}: ${TEX_MAIN_GRAMMARLY} ${TEX_MAIN} ${IMAGES}
-	latexmk ${TEX_MAIN_GRAMMARLY}
-
-${PDF_PAPER}: ${TEX_MAIN_PAPER} ${TEX_MAIN} ${IMAGES}
+${PDF_PAPER}: ${TEX_MAIN_PAPER} ${IMAGES}
 	latexmk ${TEX_MAIN_PAPER}
 
-${PDF_CAMERA_IEEE}: ${TEX_MAIN_CAMERA_IEEE} ${TEX_MAIN} ${IMAGES}
-	latexmk ${TEX_MAIN_CAMERA_IEEE}
+${PDF_SUBMISSION}: ${TEX_MAIN_SUBMISSION} ${IMAGES}
+	latexmk ${TEX_MAIN_SUBMISSION}
 
-${PDF_CAMERA_ACM}: ${TEX_MAIN_CAMERA_ACM} ${TEX_MAIN} ${IMAGES}
-	latexmk ${TEX_MAIN_CAMERA_ACM}
-
-draft: ${PDF_DRAFT}
-
-blind: ${PDF_BLIND}
-
-grammarly: ${PDF_GRAMMARLY}
+abstract: ${TEX_MAIN_PAPER}
+	./tools/extract-abstract.py -i $< -o $@.md
 
 paper: ${PDF_PAPER}
 
-cameraIEEE: ${PDF_CAMERA_IEEE}
+submission: ${PDF_SUBMISSION}
 
-cameraACM: ${PDF_CAMERA_ACM}
-
-view-draft: ${TEX_MAIN_DRAFT} ${TEX_MAIN} ${IMAGES}
-	latexmk -pvc ${TEX_MAIN_DRAFT}
-
-view-grammarly: ${TEX_MAIN_BLIND} ${TEX_MAIN} ${IMAGES}
-	latexmk -pvc ${TEX_MAIN_GRAMMARLY}
-
-view-paper: ${TEX_MAIN_PAPER} ${TEX_MAIN} ${IMAGES}
+view-paper: ${TEX_MAIN_PAPER} ${IMAGES}
 	latexmk -pvc ${TEX_MAIN_PAPER}
 
-view-camera-ieee: ${TEX_MAIN_CAMERA_IEEE} ${TEX_MAIN} ${IMAGES}
-	latexmk -pvc ${TEX_MAIN_CAMERA_IEEE}
-
-view-camera-acm: ${TEX_MAIN_CAMERA_ACM} ${TEX_MAIN} ${IMAGES}
-	latexmk -pvc ${TEX_MAIN_CAMERA_ACM}
+view-submission: ${TEX_MAIN_SUBMISSION} ${IMAGES}
+	latexmk -pvc ${TEX_MAIN_SUBMISSION}
 
 clean:
 	latexmk -C

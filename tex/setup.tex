@@ -1,0 +1,232 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Broaden margins to make room for todo notes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeatletter
+\patchcmd{\@addmarginpar}{\ifodd\c@page}{\ifodd\c@page\@tempcnta\m@ne}{}{}
+\makeatother
+\ifx\paperversion\paperversiondraft
+  \makeatletter
+  \if@ACM@journal
+    \geometry{asymmetric}
+    \paperwidth=\dimexpr \paperwidth + 3.5cm\relax
+    \oddsidemargin=\dimexpr\oddsidemargin + 0cm\relax
+    \evensidemargin=\dimexpr\evensidemargin + 0cm\relax
+    \marginparwidth=\dimexpr \marginparwidth + 3cm\relax
+    \setlength{\marginparwidth}{4.6cm}
+    % This makeatletter box helps to move notes to the right
+    \makeatletter
+    \long\def\@mn@@@marginnote[#1]#2[#3]{%
+      \begingroup
+        \ifmmode\mn@strut\let\@tempa\mn@vadjust\else
+          \if@inlabel\leavevmode\fi
+          \ifhmode\mn@strut\let\@tempa\mn@vadjust\else\let\@tempa\mn@vlap\fi
+        \fi
+        \@tempa{%
+          \vbox to\z@{%
+            \vss
+            \@mn@margintest
+            \if@reversemargin\if@tempswa
+                \@tempswafalse
+              \else
+                \@tempswatrue
+            \fi\fi
+            %\if@tempswa
+              \rlap{%
+                \if@mn@verbose
+                  \PackageInfo{marginnote}{xpos seems to be \@mn@currxpos}%
+                \fi
+                \begingroup
+                  \ifx\@mn@currxpos\relax\else\ifx\@mn@currxpos\@empty\else
+                      \kern-\dimexpr\@mn@currxpos\relax
+                  \fi\fi
+                  \ifx\@mn@currpage\relax
+                    \let\@mn@currpage\@ne
+                  \fi
+                  \if@twoside\ifodd\@mn@currpage\relax
+                      \kern\oddsidemargin
+                    \else
+                      \kern\evensidemargin
+                    \fi
+                  \else
+                    \kern\oddsidemargin
+                  \fi
+                  \kern 1in
+                \endgroup
+                \kern\marginnotetextwidth\kern\marginparsep
+                \vbox to\z@{\kern\marginnotevadjust\kern #3
+                  \vbox to\z@{%
+                    \hsize\marginparwidth
+                    \linewidth\hsize
+                    \kern-\parskip
+                    \marginfont\raggedrightmarginnote\strut\hspace{\z@}%
+                    \ignorespaces#2\endgraf
+                    \vss}%
+                  \vss}%
+              }%
+          }%
+        }%
+      \endgroup
+    }
+    \makeatother
+  \else
+    \paperwidth=\dimexpr \paperwidth + 6cm\relax
+    \oddsidemargin=\dimexpr\oddsidemargin + 3cm\relax
+    \evensidemargin=\dimexpr\evensidemargin + 3cm\relax
+    \marginparwidth=\dimexpr \marginparwidth + 3cm\relax
+    \setlength{\marginparwidth}{4.6cm}
+  \fi
+  \makeatother
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Add \createtodoauthor command
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[textsize=tiny]{todonotes}
+\usepackage[normalem]{ulem}
+
+\makeatletter
+\font\uwavefont=lasyb10 scaled 652
+\newcommand\colorwave[1][blue]{\bgroup\markoverwith{\lower3\p@\hbox{\uwavefont\textcolor{#1}{\char58}}}\ULon}
+
+\newcommand\highlight[2]{{\color{#1}{\colorwave[#1]{#2}}}}
+\makeatother
+
+\makeatletter
+\newcommand\InFloat[2]{\ifnum\@floatpenalty<0\relax#1\else#2\fi}
+\makeatother
+
+\newboolean{inComment}
+\setboolean{inComment}{false}
+
+\ifx\paperversion\paperversiondraft
+\newcommand\createtodoauthor[2]{
+  \def\tmpdefault{emptystring}
+  \expandafter\newcommand\csname #1\endcsname[2][\tmpdefault]{% comment to avoid spurious whitespace
+    \ifthenelse{\boolean{inComment}}{% comment to avoid spurious whitespace
+      \PackageError{paper-template}{Comments in comments not supported}{}% comment to avoid spurious whitespace
+    }{}\setboolean{inComment}{true}% comment to avoid spurious whitespace
+    \def\tmp{##1}% comment to avoid spurious whitespace
+    \InFloat{
+        \smash{
+	  \marginnote{
+	    \todo[inline,linecolor=#2,backgroundcolor=#2,bordercolor=#2]
+	      {\textbf{#1 (Figure):} ##2}
+          }
+        }
+    }{\ifthenelse{\equal{\tmp}{\tmpdefault}} % Is there text to highlight?
+      {\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}\ignorespaces}
+      {\ifthenelse{\equal{##2}{}} % Is there a note?
+        {\highlight{#2}{##1}}
+        {\highlight{#2}{##1}\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]
+	  {\textbf{#1:} ##2}% comment to avoid spurious whitespace
+	}% comment to avoid spurious whitespace
+      }% comment to avoid spurious whitespace
+    }% comment to avoid spurious whitespace
+    \setboolean{inComment}{false}% comment to avoid spurious whitespace
+  }
+}
+\else
+\newcommand\createtodoauthor[2]{%
+\expandafter\newcommand\csname #1\endcsname[2][]{##1}%
+}%
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Add minted and support custom lexers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{minted}
+\usepackage{etoolbox}
+
+\makeatletter
+\ifcsdef{minted@optlistcl@quote}
+{
+\ifwindows
+  \renewcommand{\minted@optlistcl@quote}[2]{%
+    \ifstrempty{#2}{\detokenize{#1}}{\detokenize{#1="#2"}}}
+\else
+  \renewcommand{\minted@optlistcl@quote}[2]{%
+    \ifstrempty{#2}{\detokenize{#1}}{\detokenize{#1='#2'}}}
+\fi
+
+% similar to \minted@def@optcl@switch
+\newcommand{\minted@def@optcl@novalue}[2]{%
+  \define@booleankey{minted@opt@g}{#1}%
+    {\minted@addto@optlistcl{\minted@optlistcl@g}{#2}{}%
+     \@namedef{minted@opt@g:#1}{true}}
+    {\@namedef{minted@opt@g:#1}{false}}
+  \define@booleankey{minted@opt@g@i}{#1}%
+    {\minted@addto@optlistcl{\minted@optlistcl@g@i}{#2}{}%
+     \@namedef{minted@opt@g@i:#1}{true}}
+    {\@namedef{minted@opt@g@i:#1}{false}}
+  \define@booleankey{minted@opt@lang}{#1}%
+    {\minted@addto@optlistcl@lang{minted@optlistcl@lang\minted@lang}{#2}{}%
+     \@namedef{minted@opt@lang\minted@lang:#1}{true}}
+    {\@namedef{minted@opt@lang\minted@lang:#1}{false}}
+  \define@booleankey{minted@opt@lang@i}{#1}%
+    {\minted@addto@optlistcl@lang{minted@optlistcl@lang\minted@lang @i}{#2}{}%
+     \@namedef{minted@opt@lang\minted@lang @i:#1}{true}}
+    {\@namedef{minted@opt@lang\minted@lang @i:#1}{false}}
+  \define@booleankey{minted@opt@cmd}{#1}%
+      {\minted@addto@optlistcl{\minted@optlistcl@cmd}{#2}{}%
+        \@namedef{minted@opt@cmd:#1}{true}}
+      {\@namedef{minted@opt@cmd:#1}{false}}
+}
+\minted@def@optcl@novalue{customlexer}{-x}
+}
+{
+}
+\makeatother
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Base style and command for \circled to print a colored circle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Width is assured to be the same across all characters using the typewriter font which is monospaced
+% Zeroing out the inner separator removes padding between content and node (inner sep).
+% Zeroing out the outer separator removes space between the node border and its anchors (e.g., east).
+% Minimum size was derived on experimentation and it may need adjustment when changing font style/size.
+%
+% There is no guarantee for the letter ascenders/descenders to baseline when set to char.base, hence adding \strut.
+% which is an invisible vertical rule with the height and depth of the parentheses ( and ).
+% It ensures that the line height in a line of text is at least as large as if it contained parentheses. 
+\tikzset{
+  circledstyle/.style={
+    shape=circle,
+    #1,
+    font=\tt\small,
+    inner sep=0pt,
+    outer sep=0pt,
+    minimum size=1.2em,
+    text=black
+  }
+}
+
+% define a base tikz node for circled commands accepting a fill colour and the node text as arguments
+\DeclareRobustCommand{\circledbase}[3][]{%
+    \tikz[baseline=(char.base)]{\node[circledstyle, fill=#2] (char) {#3\strut};}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Add refcheck support
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[norefs,nocites]{refcheck}
+
+% make refcheck work with autoref
+% based on: https://tex.stackexchange.com/questions/87610/making-refcheck-work-with-cleveref
+\makeatletter
+\newcommand{\refcheckize}[1]{%
+  \expandafter\let\csname @@\string#1\endcsname#1%
+  \expandafter\DeclareRobustCommand\csname relax\string#1\endcsname[1]{%
+    \csname @@\string#1\endcsname{##1}\wrtusdrf{##1}}%
+  \expandafter\let\expandafter#1\csname relax\string#1\endcsname
+}
+\makeatother
+
+%%% add the reference commands we want refcheck to be aware of
+\refcheckize{\autoref}
+

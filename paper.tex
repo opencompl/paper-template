@@ -1,59 +1,26 @@
 \def\paperversiondraft{draft}
-\def\paperversionblind{normal}
-\def\paperversioncameraIEEE{cameraIEEE}
-\def\paperversioncameraACM{cameraACM}
+\def\paperversionnormal{normal}
 
-% If no draft paper-version is requested, compile in 'normal' mode
-\ifx\paperversion\paperversiondraft
+% If the paper version is set to 'normal' mode keep it,
+% otherwise set it to 'draft' mode.
+\ifx\paperversion\paperversionnormal
 \else
-  \ifx\paperversion\paperversioncameraIEEE
-  \else
-    \ifx\paperversion\paperversioncameraACM
-    \else
-    \def\paperversion{normal}
-    \fi
-  \fi
+  \def\paperversion{draft}
 \fi
 
-\def\grammarlyon{on}
-
-% Disable review mode for grammarly version.
-\ifx\grammarly\grammarlyon
-\def\ClassReview{}
-\else
-\def\ClassReview{review,}
-\fi
-
-\ifx\paperversion\paperversioncameraIEEE
-  \documentclass[conference]{IEEEtran}
-\else
-  \ifx\paperversion\paperversioncameraACM
-    \documentclass[sigplan]{acmart}
-  \else
-    \documentclass[\ClassReview anonymous, sigplan]{acmart}
-  \fi
-\fi
+\documentclass[review, anonymous, sigplan]{acmart}
 
 \def\acmversionanonymous{anonymous}
 \def\acmversionjournal{journal}
 \def\acmversionnone{none}
 
-\ifx\paperversion\paperversioncameraIEEE
-    \def\acmversion{none}
+\makeatletter
+\if@ACM@anonymous
+  \def\acmversion{anonymous}
 \else
-  \makeatletter
-  \if@ACM@anonymous
-    \def\acmversion{anonymous}
-  \else
-    \def\acmversion{journal}
-  \fi
-  \makeatother
+  \def\acmversion{journal}
 \fi
-
-\ifx\grammarly\grammarlyon
-\usepackage[none]{hyphenat}
-\else
-\fi
+\makeatother
 
 \usepackage{colortbl}
 
@@ -76,122 +43,50 @@
 \usepackage[T1]{fontenc}
 \usepackage{microtype}
 
-\usepackage{minted}
-\usemintedstyle{colorful}
-\newminted[mlir]{tools/MLIRLexer.py:MLIRLexerOnlyOps -x}{mathescape}
-
 \usepackage{xargs}
 \usepackage{lipsum}
-\usepackage[textsize=tiny]{todonotes}
 \usepackage{xparse}
 \usepackage{xifthen, xstring}
-\usepackage[normalem]{ulem}
 \usepackage{xspace}
 \usepackage{marginnote}
 \usepackage{etoolbox}
+\usepackage[acronym,shortcuts]{glossaries}
+\usepackage{amsmath}
+\usepackage{thmtools} % required for autoref to lemmas
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{hyphenat}
+\usepackage[shortcuts]{extdash}
 
+\input{tex/setup.tex}
+\input{tex/acm.tex}
+
+\usemintedstyle{colorful}
+
+% Newer versions of minted require the 'customlexer' argument for custom lexers
+% whereas older versions require the '-x' to be passed via the command line.
 \makeatletter
-\font\uwavefont=lasyb10 scaled 652
-
-\newcommand\colorwave[1][blue]{\bgroup\markoverwith{\lower3\p@\hbox{\uwavefont\textcolor{#1}{\char58}}}\ULon}
-\makeatother
-
-\ifx\paperversion\paperversiondraft
-\newcommand\createtodoauthor[2]{%
-\def\tmpdefault{emptystring}
-\expandafter\newcommand\csname #1\endcsname[2][\tmpdefault]{\def\tmp{##1}\ifthenelse{\equal{\tmp}{\tmpdefault}}
-   {\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}}
-   {\ifthenelse{\equal{##2}{}}{\colorwave[#2]{##1}\xspace}{\todo[linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1:} ##2}\colorwave[#2]{##1}}}}
-\expandafter\newcommand\csname #1f\endcsname[2][\tmpdefault]{
-	\smash{\marginnote{
-		\todo[inline,linecolor=#2,backgroundcolor=#2,bordercolor=#2]{\textbf{#1 (Figure):} ##2}}}
-   }
+\ifcsdef{MintedExecutable}
+{
+  % minted v3
+  \newminted[mlir]{tools/lexers/MLIRLexer.py:MLIRLexerOnlyOps}{mathescape}
+  \newminted[xdsl]{tools/lexers/MLIRLexer.py:MLIRLexer}{mathescape, style=murphy}
+  \newminted[lean4]{tools/lexers/Lean4Lexer.py:Lean4Lexer}{mathescape}
 }
-%
-\else
-\newcommand\createtodoauthor[2]{%
-\expandafter\newcommand\csname #1\endcsname[2][]{##1}%
-\expandafter\newcommand\csname #1f\endcsname[2][]{##1}%
-}%
-\fi
-
-% Broaden margins to make room for todo notes
-\makeatletter
-\patchcmd{\@addmarginpar}{\ifodd\c@page}{\ifodd\c@page\@tempcnta\m@ne}{}{}
+{
+  \ifcsdef{minted@optlistcl@quote}
+  {
+    \newminted[mlir]{tools/lexers/MLIRLexer.py:MLIRLexerOnlyOps}{customlexer, mathescape}
+    \newminted[xdsl]{tools/lexers/MLIRLexer.py:MLIRLexer}{customlexer, mathescape, style=murphy}
+    \newminted[lean4]{tools/lexers/Lean4Lexer.py:Lean4Lexer}{customlexer, mathescape}
+  }
+  {
+    \newminted[mlir]{tools/lexers/MLIRLexer.py:MLIRLexerOnlyOps -x}{mathescape}
+    \newminted[xdsl]{tools/lexers/MLIRLexer.py:MLIRLexer -x}{mathescape, style=murphy}
+    \newminted[lean4]{tools/lexers/Lean4Lexer.py:Lean4Lexer -x}{mathescape}
+  }
+}
 \makeatother
-\ifx\paperversion\paperversiondraft
-  \makeatletter
-  \if@ACM@journal
-    \geometry{asymmetric}
-    \paperwidth=\dimexpr \paperwidth + 3.5cm\relax
-    \oddsidemargin=\dimexpr\oddsidemargin + 0cm\relax
-    \evensidemargin=\dimexpr\evensidemargin + 0cm\relax
-    \marginparwidth=\dimexpr \marginparwidth + 3cm\relax
-    \setlength{\marginparwidth}{4.6cm}
-    % This makeatletter box helps to move notes to the right
-    \makeatletter
-    \long\def\@mn@@@marginnote[#1]#2[#3]{%
-      \begingroup
-        \ifmmode\mn@strut\let\@tempa\mn@vadjust\else
-          \if@inlabel\leavevmode\fi
-          \ifhmode\mn@strut\let\@tempa\mn@vadjust\else\let\@tempa\mn@vlap\fi
-        \fi
-        \@tempa{%
-          \vbox to\z@{%
-            \vss
-            \@mn@margintest
-            \if@reversemargin\if@tempswa
-                \@tempswafalse
-              \else
-                \@tempswatrue
-            \fi\fi
-            %\if@tempswa
-              \rlap{%
-                \if@mn@verbose
-                  \PackageInfo{marginnote}{xpos seems to be \@mn@currxpos}%
-                \fi
-                \begingroup
-                  \ifx\@mn@currxpos\relax\else\ifx\@mn@currxpos\@empty\else
-                      \kern-\dimexpr\@mn@currxpos\relax
-                  \fi\fi
-                  \ifx\@mn@currpage\relax
-                    \let\@mn@currpage\@ne
-                  \fi
-                  \if@twoside\ifodd\@mn@currpage\relax
-                      \kern\oddsidemargin
-                    \else
-                      \kern\evensidemargin
-                    \fi
-                  \else
-                    \kern\oddsidemargin
-                  \fi
-                  \kern 1in
-                \endgroup
-                \kern\marginnotetextwidth\kern\marginparsep
-                \vbox to\z@{\kern\marginnotevadjust\kern #3
-                  \vbox to\z@{%
-                    \hsize\marginparwidth
-                    \linewidth\hsize
-                    \kern-\parskip
-                    \marginfont\raggedrightmarginnote\strut\hspace{\z@}%
-                    \ignorespaces#2\endgraf
-                    \vss}%
-                  \vss}%
-              }%
-          }%
-        }%
-      \endgroup
-    }
-    \makeatother
-  \else
-    \paperwidth=\dimexpr \paperwidth + 6cm\relax
-    \oddsidemargin=\dimexpr\oddsidemargin + 3cm\relax
-    \evensidemargin=\dimexpr\evensidemargin + 3cm\relax
-    \marginparwidth=\dimexpr \marginparwidth + 3cm\relax
-    \setlength{\marginparwidth}{4.6cm}
-  \fi
-  \makeatother
-\fi
 
 % We use the following color scheme
 % 
@@ -216,6 +111,8 @@
 \createtodoauthor{authorFour}{pairedFourDarkGreen}
 \createtodoauthor{authorFive}{pairedFiveLightRed}
 \createtodoauthor{authorSix}{pairedSixDarkRed}
+
+\newacronym{ir}{IR}{Intermediate Representation}
 
 \graphicspath{{./images/}}
 
@@ -243,93 +140,38 @@
 
 \newdelimitedcommand{toolname}{Tool}
 
+\usepackage{booktabs}
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
 
-% Print \autoref as "Section X.Y.Z"
-\ifx\paperversion\paperversioncameraIEEE
-\else
-  \renewcommand*{\sectionautorefname}{Section}
-  \renewcommand*{\subsectionautorefname}{Section}
-  \renewcommand*{\subsubsectionautorefname}{Section}
-\fi
+\usepackage[verbose]{newunicodechar}
+\newunicodechar{₁}{\ensuremath{_1}}
+\newunicodechar{₂}{\ensuremath{_2}}
+\newunicodechar{∀}{\ensuremath{\forall}}
+\newunicodechar{α}{\ensuremath{\alpha}}
+\newunicodechar{β}{\ensuremath{\beta}}
 
 % \circled command to print a colored circle.
 % \circled{1} pretty-prints "(1)"
 % This is useful to refer to labels that are embedded within figures.
-\usepackage{tikz}
-\usetikzlibrary{arrows}
-\usetikzlibrary{shapes}
-\DeclareRobustCommand\circled[2][]{\ifthenelse{\isempty{#1}}{\tikz[baseline=(char.base)]{\node[shape=circle,fill=pairedOneLightBlue,inner sep=1pt] (char) {#2};}}{\autoref{#1}: \hyperref[#1]{\tikz[baseline=(char.base)]{\node[shape=circle,fill=pairedOneLightBlue,inner sep=1pt] (char) {#2};}}}}
+\DeclareRobustCommand{\circled}[2][]{%
+    \ifthenelse{\isempty{#1}}%
+        {\circledbase{pairedOneLightBlue}{#2}}%
+        {\autoref{#1}: \hyperref[#1]{\circledbase{pairedOneLightBlue}{#2}}}%
+}
 
-
-\ifx\paperversion\paperversioncameraIEEE
-\else
-  \ifx\acmversion\acmversionjournal
-  %% Journal information (used by PACMPL format)
-  %% Supplied to authors by publisher for camera-ready submission
-  \acmJournal{PACMPL}
-  \acmVolume{1}
-  \acmNumber{1}
-  \acmArticle{1}
-  \acmYear{2017}
-  \acmMonth{1}
-  \acmDOI{10.1145/nnnnnnn.nnnnnnn}
-  \startPage{1}
-  \else
-  %% Conference information (used by SIGPLAN proceedings format)
-  %% Supplied to authors by publisher for camera-ready submission
-  \acmConference[PL'17]{ACM SIGPLAN Conference on Programming Languages}{January 01--03, 2017}{New York, NY, USA}
-  \acmYear{2017}
-  \acmISBN{978-x-xxxx-xxxx-x/YY/MM}
-  \acmDOI{10.1145/nnnnnnn.nnnnnnn}
-  \startPage{1}
-  \fi
-\fi
-
-
-%% Copyright information
-%% Supplied to authors (based on authors' rights management selection;
-%% see authors.acm.org) by publisher for camera-ready submission
-%\setcopyright{none}             %% For review submission
-%\setcopyright{acmcopyright}
-%\setcopyright{acmlicensed}
-%\setcopyright{rightsretained}
-%\copyrightyear{2017}           %% If different from \acmYear
-
-
-%% Bibliography style
-\ifx\paperversion\paperversioncameraIEEE
-  \bibliographystyle{IEEETran}
-\else
-  \bibliographystyle{ACM-Reference-Format}
-\fi
-%% Citation style
-%% Note: author/year citations are required for papers published as an
-%% issue of PACMPL.
-%\citestyle{acmauthoryear}  %% For author/year citations
-%\citestyle{acmnumeric}     %% For numeric citations
-%\setcitestyle{nosort}      %% With 'acmnumeric', to disable automatic
-                            %% sorting of references within a single citation;
-                            %% e.g., \cite{Smith99,Carpenter05,Baker12}
-                            %% rendered as [14,5,2] rather than [2,5,14].
-%\setcitesyle{nocompress}   %% With 'acmnumeric', to disable automatic
-                            %% compression of sequential references within a
-                            %% single citation;
-                            %% e.g., \cite{Baker12,Baker14,Baker16}
-                            %% rendered as [2,3,4] rather than [2-4].
-
-
+% listings don't write "Listing" in autoref without this.
+\providecommand*{\listingautorefname}{Listing}
+\renewcommand{\sectionautorefname}{Section}
+\renewcommand{\subsectionautorefname}{Section}
+\renewcommand{\subsubsectionautorefname}{Section}
 
 \begin{document}
 
 %% Title information
-\ifx\paperversion\paperversioncameraIEEE
-  \title{Full title}
-\else
-  \title[Short Title]{Full Title}       %% [Short Title] is optional;
-                                        %% when present, will be used in
-                                        %% header instead of Full Title.
-  \subtitle{Subtitle}                   %% \subtitle is optional
-\fi
+\title[Short Title]{Full Title}       %% [Short Title] is optional;
+                                      %% when present, will be used in
+                                      %% header instead of Full Title.
+\subtitle{Subtitle}                   %% \subtitle is optional
 
 
 %% Author information
@@ -341,91 +183,49 @@
 %% appropriate command.
 %% Many elements are not rendered, but should be provided for metadata
 %% extraction tools.
+\author{First1 Last1}
+\authornote{with author1 note}          %% \authornote is optional;
+                                      %% can be repeated if necessary
+\orcid{nnnn-nnnn-nnnn-nnnn}             %% \orcid is optional
+\affiliation{
+  \position{Position1}
+  \department{Department1}              %% \department is recommended
+  \institution{Institution1}            %% \institution is required
+  \streetaddress{Street1 Address1}
+  \city{City1}
+  \state{State1}
+  \postcode{Post-Code1}
+  \country{Country1}
+}
+\email{first1.last1@inst1.edu}          %% \email is recommended
 
-%% Author with single affiliation.
-\ifx\paperversion\paperversioncameraIEEE
-  \author{\IEEEauthorblockN{1\textsuperscript{st} Given Name Surname}
-  \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-  \textit{name of organization (of Aff.)}\\
-  City, Country \\
-  email address or ORCID}
-  \and
-  \IEEEauthorblockN{2\textsuperscript{nd} Given Name Surname}
-  \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-  \textit{name of organization (of Aff.)}\\
-  City, Country \\
-  email address or ORCID}
-  \and
-  \IEEEauthorblockN{3\textsuperscript{rd} Given Name Surname}
-  \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-  \textit{name of organization (of Aff.)}\\
-  City, Country \\
-  email address or ORCID}
-  \and
-  \IEEEauthorblockN{4\textsuperscript{th} Given Name Surname}
-  \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-  \textit{name of organization (of Aff.)}\\
-  City, Country \\
-  email address or ORCID}
-  \and
-  \IEEEauthorblockN{5\textsuperscript{th} Given Name Surname}
-  \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-  \textit{name of organization (of Aff.)}\\
-  City, Country \\
-  email address or ORCID}
-  \and
-  \IEEEauthorblockN{6\textsuperscript{th} Given Name Surname}
-  \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-  \textit{name of organization (of Aff.)}\\
-  City, Country \\
-  email address or ORCID}
-  }
-\else
-  \author{First1 Last1}
-  \authornote{with author1 note}          %% \authornote is optional;
-                                        %% can be repeated if necessary
-  \orcid{nnnn-nnnn-nnnn-nnnn}             %% \orcid is optional
-  \affiliation{
-    \position{Position1}
-    \department{Department1}              %% \department is recommended
-    \institution{Institution1}            %% \institution is required
-    \streetaddress{Street1 Address1}
-    \city{City1}
-    \state{State1}
-    \postcode{Post-Code1}
-    \country{Country1}
-  }
-  \email{first1.last1@inst1.edu}          %% \email is recommended
+\author{First2 Last2}
+\authornote{with author2 note}          %% \authornote is optional;
+                                      %% can be repeated if necessary
+\orcid{nnnn-nnnn-nnnn-nnnn}             %% \orcid is optional
+\affiliation{
+  \position{Position2a}
+  \department{Department2a}             %% \department is recommended
+  \institution{Institution2a}           %% \institution is required
+  \streetaddress{Street2a Address2a}
+  \city{City2a}
+  \state{State2a}
+  \postcode{Post-Code2a}
+  \country{Country2a}
+}
+\email{first2.last2@inst2a.com}         %% \email is recommended
+\affiliation{
+  \position{Position2b}
+  \department{Department2b}             %% \department is recommended
+  \institution{Institution2b}           %% \institution is required
+  \streetaddress{Street3b Address2b}
+  \city{City2b}
+  \state{State2b}
+  \postcode{Post-Code2b}
+  \country{Country2b}
+}
+\email{first2.last2@inst2b.org}         %% \email is recommended
 
-  \author{First2 Last2}
-  \authornote{with author2 note}          %% \authornote is optional;
-                                        %% can be repeated if necessary
-  \orcid{nnnn-nnnn-nnnn-nnnn}             %% \orcid is optional
-  \affiliation{
-    \position{Position2a}
-    \department{Department2a}             %% \department is recommended
-    \institution{Institution2a}           %% \institution is required
-    \streetaddress{Street2a Address2a}
-    \city{City2a}
-    \state{State2a}
-    \postcode{Post-Code2a}
-    \country{Country2a}
-  }
-  \email{first2.last2@inst2a.com}         %% \email is recommended
-  \affiliation{
-    \position{Position2b}
-    \department{Department2b}             %% \department is recommended
-    \institution{Institution2b}           %% \institution is required
-    \streetaddress{Street3b Address2b}
-    \city{City2b}
-    \state{State2b}
-    \postcode{Post-Code2b}
-    \country{Country2b}
-  }
-  \email{first2.last2@inst2b.org}         %% \email is recommended
-\fi
-
-\def\makeabstract{
 \begin{abstract}
 % An abstract should consist of six main sentences:
 %  1. Introduction. In one sentence, what’s the topic?
@@ -437,14 +237,23 @@
 
 % (http://www.easterbrook.ca/steve/2010/01/how-to-write-a-scientific-abstract-in-six-easy-steps/)
 
-\lipsum[1]
-\end{abstract}
-}
+  % generated by lipsum
+  Curabitur dictum gravida mauris.
+  Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
+  Donec vehicula augue eu neque.
+  Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+  Cras viverra metus rhoncus sem.
 
-\ifx\paperversion\paperversioncameraIEEE
-\else
-  \makeabstract
-\fi
+  Our \emph{key} insight defines the mass-energy equivalence relationship as: $E = mc^2$.
+  We prototype our approach in \toolname{}.
+
+  % generated by lipsum
+  Curabitur dictum gravida mauris.
+  Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
+  Donec vehicula augue eu neque.
+  Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+  Cras viverra metus rhoncus sem.
+\end{abstract}
 
 % Only add ACM notes and keywords in camera ready version
 % Drop citations and footnotes in draft and blind mode.
@@ -484,29 +293,6 @@
 %% commands, abstract environment, Computing Classification System
 %% environment and commands, and keywords command.
 \maketitle
-\ifx\grammarly\grammarlyon
-%% In grammarly mode use one-column,
-\onecolumn
-%% don't break words across lines,
-\hyphenpenalty 10000
-\exhyphenpenalty 10000
-%% and don't insert headers or footers
-\pagestyle{plain}
-%% or page numbers.
-\pagenumbering{gobble}
-\else 
-\fi
-
-% IEEE wants abstract and keywords 
-% after maketitle
-\ifx\paperversion\paperversioncameraIEEE
-  \makeabstract
-%% Keywords
-%% comma separated list
-  \begin{IEEEkeywords}
-    keyword1, keyword2, keyword3  %% \keywords is optional
-  \end{IEEEkeywords}
-\fi
 
 \section{Introduction}
 
@@ -516,7 +302,7 @@ Of this super cool article \ldots
 If there is \authorTwo[some text we want to refer to specifically]{this looks
 particularly interesting} we can refer to this text from within our comments.
 
-And here we only underline \authorTwo[Text]{} that is interesting, but do not
+And here we only mark \authorTwo[text]{} that is \authorTwo[interesting]{}, but do not
 actually comment.
 
 Now we have a sequence of comments,
@@ -540,10 +326,11 @@ flexible way.
 % https://docs.google.com/drawings/d/1juKp43D3rLC-luBQPwQZ_wCnDK2S_6C1k6USV0wKE0g/edit?usp=sharing
 \includegraphics[width=\columnwidth]{overview.pdf}
 \caption{Our key idea visualized}
-\grosserf{Replace this figure with your own drawing.}
+\grosser{Replace this figure with your own drawing.}
 \end{figure}
 
-~\\
+\vspace{.5em}
+\noindent
 Our contributions are:
 \grosser{Always state your contributions explicitly: (A) this makes it
 easy for the reader to understand what novelty is presented, and (B)
@@ -551,7 +338,7 @@ these contributions help you to focus. In particular, the objective of
 the remaining paper should be to support the claims stated here.
 }
 \begin{itemize}
-	\item Contribution 1
+	\item Contribution 1 (\autoref{sec:implementation})
 	\item Contribution 2
 	\item Contribution 3
 	\item Contribution 4
@@ -562,6 +349,7 @@ the remaining paper should be to support the claims stated here.
 \lipsum[1-3]
 
 \section{Implementation}
+\label{sec:implementation}
 
 \section{Related Work}
 
@@ -576,8 +364,6 @@ the remaining paper should be to support the claims stated here.
 \section{Conclusion}
 \lipsum[1]
 
-\ifx\paperversion\paperversioncameraIEEE
-\else
 %% Acknowledgments
 \begin{acks}                            %% acks environment is optional
                                         %% contents suppressed with 'anonymous'
@@ -594,7 +380,6 @@ the remaining paper should be to support the claims stated here.
   of the author and do not necessarily reflect the views of the
   National Science Foundation.
 \end{acks}
-\fi
 
 %% Bibliography
 \bibliography{references}
@@ -613,12 +398,14 @@ papers with multiple authors have a consistent look and that commonly occurring
 items are formatted in ways that are known to work well.
 
 \subsection{Figures}
+\label{appendix:figures}
 
 \paragraph{Referencing Figures} When referencing figures from the text we
 ensure the following:
 \begin{description}
-      \item [All figures are referenced] A paper with un-referenced figures
-	      appears incomplete.
+      \item [All figures are referenced] A paper with un-referenced figures appears incomplete.
+        We can check this using the \texttt{refcheck} package.
+        Issuing \texttt{make refcheck} on the commandline lists all \emph{labeled} elements that are not referenced in the text.
       \item [References to figures are brief and easy to skip]~\\
                 We minimize the number of words needed to refer to a figure. Reducing
                 the number of non-information-carrying words directly increases
@@ -707,6 +494,38 @@ Complex diagrams often benefit from labels inside the diagrams. We suggest to
 use a filled circle (e.g, in light blue) to highlight these numbers and use
 these references, e.g., \circled{1} implemented as \texttt{\textbackslash{}circled\{1\}}, in the text to refer to them.
 
+\paragraph{Captions and Core Message}
+\label{appendix:captions}
+
+Each figure should have a caption that makes a clear statement about this
+figure, as such a statement makes it easier for the reader to (in)validate the
+figure as evidence for the claim we make. Traditionally, figures often have a
+caption indicating its content:\\ {\color{pairedTwoDarkBlue} \textit{$\cdot$
+Speedup of approach A vs approach B on system X}}\\ {\color{pairedTwoDarkBlue}
+\textit{$\cdot$ Architecture diagram of our solution}}\\ While these statements
+clearly state the content of a figure at the meta-level, they often lack
+information about the precise content and the claim a figure is meant to
+evidence. While knowing that a figure is an architecture diagram is useful for
+the reader when looking at the figure the reader automatically asks two
+questions: (a) what properties set this architecture apart and (b) does its
+implementation deliver the claimed properties? Or, in more general terms, what
+claims do we aim to evidence with this figure and does the figure provide the
+needed evidence to support our claims? In theory, this information could be
+contained in the text of the paper, but to optimize for readers who skim the
+figures first, we want to offer them as part of the caption. Nevertheless, it
+makes often sense to word the caption strategically to still document the
+meta-level content of a figure.\\ $\to$ {\color{pairedFourDarkGreen}
+\textit{$\cdot$ Approach A is consistently faster than approach B, except for
+inputs that are not used in practice}}\\ $\to$ {\color{pairedFourDarkGreen}
+\textit{$\cdot$ The architecture of our design increases reusability by making
+components A, B, \& C independent of the core.}} For example, after reading the
+last caption the reader can validate if the architecture design indeed enables
+the promised independence, and we can double-check while drafting the paper that
+our figure is visualized to facilitate checking if it works as evidence. ! This
+does not mean we should mislead with our figure but rather make things easy to
+check. If our figure or data would not support our claim, it should be similarly
+easy to invalidate our claim!
+
 \subsubsection{Plots} We use matplotlib to create performance
 plots such as \autoref{fig:speedup}. We use the following
 formatting guidelines:
@@ -734,13 +553,40 @@ We also suggest to follow these technical remarks:
 \label{fig:speedup}
 \end{figure}
 
+\subsubsection{Tables} We optimize our tables for readability by removing as
+much clutter as possible, while highlighting the key structure. Markus Püschel
+(see doc/paper-writing/guide-tables.pdf) wrote a nice guide on how to make nice
+tables. \autoref{tab:simple_table} illustrates this with a simple
+table.
+
+\begin{table}
+\ra{1.2}
+\centering
+\begin{tabular}{l l l r}
+  \toprule
+  \textbf{Animal} & \textbf{Size} & \textbf{Biotope} & \textbf{Age}\\
+  \midrule
+  Dog & Medium & Ground & 20\\
+  Cat & Medium & Ground &20 \\
+  Ant & Small & Ground & 30 \\
+  Elephant & Large & Ground & 70\\
+  Whale & Large & Water & 100\\
+  Salmon & Medium & Water & 13 \\
+  Eagle & Large & Air & 35 \\
+  \bottomrule
+\end{tabular}
+\vspace{1em}
+\caption{A table with heigh lines and emphasized header.}
+\label{tab:simple_table}
+\end{table}
+
 \subsubsection{Listings} We aim to use minted to create listings as much as
 possible, as this allows us to edit code quickly. We use syntax highlighting
 to make the parts of the code that matter most stand out. Hence, we keep
 most code black, comments gray, and highlight just the MLIR operands that
 we care about most.
 
-\begin{listing}
+\begin{listing}[H]
 % We cannot put '{' on a line after % in draftonly mode, as the hack we used to
 % not include the draft section will interpret the listing as normal
 % latex where '%' is a comment and {} need to match, which they will
@@ -756,6 +602,99 @@ def @foo(%0 : !dialect.type)
 	captions and refer to labels, e.g. \circled[lst:example]{a}.}
 \label{lst:example}
 \end{listing}
+
+\begin{listing}[H]
+\begin{lean4}
+theorem funext {f₁ f₂ : ∀ (x : α), β x}
+  (h : ∀ x, f₁ x = f₂ x) : f₁ = f₂ := by
+  show extfunApp (Quotient.mk' f₁) = 
+       extfunApp (Quotient.mk' f₂)
+  apply congrArg
+  apply Quotient.sound
+  exact h
+\end{lean4}
+\caption{A simple Lean4 code example, taken from
+  \url{https://lean-lang.org/lean4/doc/syntax\_highlight\_in\_latex.html\#example-with-minted}.}
+\end{listing}
+
+The syntax highlighting also works for xDSL-like IRs. Notice that different
+minted styles can be used for different environments. The xDSL environment uses
+the murphy-style in this case, whereas the MLIR version applies the
+colorful-style.
+
+\begin{xdsl*}{fontsize=\scriptsize}
+func.func() [sym_name = "main", function_type = !fun<[
+              !iterators.columnar_batch<!tuple<[!i64]>>
+                 ], []>] {
+  ^bb0(%0 : !iterators.columnar_batch<!tuple<[!i64]>>):
+    %t : !iterators.stream<!llvm.struct<[!i64]>> =
+      iterators.scan_columnar_batch(%0 : ...)
+    %filtered : !iterators.stream<!llvm.struct<[!i64]>> =
+          iterators.filter(%input : …) [predicateRef = @s0]
+    iterators.sink(%filtered : !iterators.stream<!tuple<[!i64]>>)
+    func.return()
+}
+
+func.func() [sym_name = "s0", function_type = !fun<[
+    !llvm.struct<[!i64]>], [!i1]>] {
+  ^bb0(%struct : !llvm.struct<[!i64]>):
+    %id : !i64 = llvm.extractvalue(%struct : ...)
+              [position = [0 : !index]]
+    %five  : !i64 = arith.constant() [value = 5 : !i64]
+    %cmp : !i1 = arith.cmpi(%id : !i64, %five : !i64)
+              [predicate = 4 : !i64]
+    func.return(%cmp : !i1)
+}
+\end{xdsl*}
+
+\section{Writing}
+
+A couple of hints with respect to how we write text.
+
+\subsection{Citations}
+\label{appendix:citations}
+
+\subsubsection{Do not use numerical citations as nouns}
+Especially when working with numerical citations (e.g., [1]) the use of
+citations as nouns reduces readability. Hence, we do not use numerical citations
+as nouns and instead expand these citations with \texttt{\textbackslash{}citet} to the
+authornames.
+\\
+{\color{pairedTwoDarkBlue}
+\textit{[1] showed that .. $\dots$}}\\
+$\to$ {\color{pairedFourDarkGreen}\textit{Author et al. [1] showed}}
+
+\subsubsection{Prefer meaningful text over citations as textual content}
+While acknowledging authors of work is important, maximizing the amount of technical
+content (outside of a historic perspective) typically makes text more direct and
+concrete. Hence, we avoid the discussion of who did what in text if the
+historic context does not add meaning or empty words can be replaced by an immediate
+citation. E.g, in the following the words `introduced in` are not carrying
+information and can be dropped.\\
+{\color{pairedTwoDarkBlue}
+\textit{we extend PreviousIdea introduced in [1] $\dots$ by}}\\
+$\to$ {\color{pairedFourDarkGreen}\textit{we extend PreviousIdea [1] by}}
+
+
+\subsubsection{Managing acronyms automatically}
+Managing acronyms manually can lead to situations where the specific term is not properly expanded upon first use or when it is introduced.
+The \texttt{acronym} package is useful to avoid such situations and provides full control over acronyms.
+The expanded form of an abbreviation should be in lowercase, unless its parts are also capitalized (e.g., United Kingdom for UK).
+For example, assume we have defined an acronym with \texttt{\textbackslash{}newacronym\{ir\}\{IR\}\{intermediate representation\}}:
+\begin{itemize}
+  \item Upon first use of \texttt{\textbackslash{}ac\{ir\}} we get: \ac{ir}.
+  \item On the second reference: \ac{ir}.
+  \item To force expansion (e.g., for the background section where the term is first described), we use \texttt{\textbackslash{}acf\{ir\}} which gives: \acf{ir}.
+  \item To force contraction (e.g., to save space for a figure caption), we use \texttt{\textbackslash{}acs\{ir\}} which gives: \acs{ir}.
+  \item To obtain plural form, we use \texttt{\textbackslash{}acp\{ir\}} giving: \acp{ir}.
+\end{itemize}
+
+\subsubsection{Adding hyphenation rules}
+While \LaTeX\ handles word breaks automatically, and packages like \texttt{microtype} aim to minimize word splitting, there are instances where either new words lack hyphenation rules, or the suggested hyphenation for a word is undesirable.
+The \texttt{hyphenat} package allows adding hyphenation rules using the \texttt{\textbackslash{}hyphenation} macro, e.g., \texttt{\textbackslash{}hyphenation\{Alex-Net\}} for AlexNet.
+
+Allowing hyphenation of compound words, we can use \texttt{\textbackslash{}-/} from the \texttt{extdash} package, for example \texttt{high\-/level} can be written as \texttt{high\textbackslash{}-/level}.
+Disallowing a line break at the compound word hyphen, we can use \texttt{\textbackslash{}=/}, as \texttt{RISC\textbackslash{}=/V} for \texttt{RISC\=/V}.
 
 \end{draftonly}
 

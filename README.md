@@ -1,8 +1,8 @@
 ![Compile paper](../../workflows/Compile%20paper/badge.svg)
 
 Download:
-[Draft (with comments)](../../releases/latest/download/draft.pdf) |
-[Paper](../../releases/latest/download/paper.pdf)
+[Paper (with comments)](../../releases/latest/download/paper.pdf)
+[Submission (without comments)](../../releases/latest/download/submission.pdf) |
 
 This repository serves as a template for writing computer science papers in LaTeX. It supports
 the following features:
@@ -33,3 +33,27 @@ the following features:
       `\includegraphics[width=<insert-width-here>]{path/to/figure}`. 
     -  `matplotlib` [by default uses physical units when sizing a figure](https://matplotlib.org/stable/gallery/subplots_axes_and_figures/figure_size_units.html#figure-size-in-inches-default).
        Thus, when creating a figure, use `fig = plt.figure(figsize=(3, 6))` for a `3inx6in` figure. 
+
+# Notes
+
+- For `minted` version 3, users are required to add the following to their `${HOME}` or `TEXMFHOME` directory in a file 
+  named `.latexminted_config`:
+
+  ```json
+  {
+    "security": {
+      "enable_cwd_config": true
+    }
+  }
+  ```
+
+  This is due to the fact that `minted` restricts shell execution of custom lexers by default for security reasons
+  (i.e., arbitrary code execution).
+
+  Moreover, the `minted` package requires each custom lexer to be listed by name and associated with its SHA256 hash of
+  its containing file in a `.latexminted_config` file at the top of the paper template directory. We provide this 
+  configuration, and a way to update it upon updating/adding the lexers by running the following command:
+
+  ```bash
+  tools/generate_lexers_json.py
+  ```

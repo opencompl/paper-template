@@ -16,45 +16,17 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    container:
+      # Most recent version of texlive image has broken minted/pygments
+      image: ghcr.io/xu-cheng/texlive-full:20221101
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v3
-
-    - name: Create .latexminted_config file
-      run: |
-        echo '{
-          "security": {
-            "enable_cwd_config": true
-          }
-        }' > ${HOME}/.latexminted_config 
-
     - name: Compile paper
-      uses: xu-cheng/latex-action@master
-      with:
-        root_file: paper.tex
-
+      run: |
+        latexmk -shell-escape -pdf paper
     - name: Compile submission
-      uses: xu-cheng/latex-action@master
-      with:
-        root_file: submission.tex
-
-    - name: Format Python files with yapf
-      id: autoyapf
-      uses: mritunjaysharma394/autoyapf@v2
-      with:
-        args: --style pep8 --recursive --in-place .
-
-    - name: Release
-      if: ${{ github.event_name == 'push' }}
-      id: create_release
-      uses: softprops/action-gh-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        name: Release ${{ github.run_number }}
-        tag_name: release-${{ github.run_number }}
-        files: |
-          paper.pdf
-          submission.pdf
+      run: |
+        latexmk -shell-escape -pdf submission
