@@ -22,3 +22,27 @@ the following features:
     - The [ACMart fonts](https://github.com/opencompl/paper-template/blob/master/acmart.cls#L720-L728)
       use [Inconsolata](https://ctan.org/pkg/inconsolata?lang=en) for monospace, 
       [Libertine](https://ctan.org/pkg/libertine?lang=en) for serif, and [newtx](https://ctan.org/pkg/newtx?lang=en) for math.
+
+# Notes
+
+- For `minted` version 3, users are required to add the following to their `${HOME}` or `TEXMFHOME` directory in a file 
+  named `.latexminted_config`:
+
+  ```json
+  {
+    "security": {
+      "enable_cwd_config": true
+    }
+  }
+  ```
+
+  This is due to the fact that `minted` restricts shell execution of custom lexers by default for security reasons
+  (i.e., arbitrary code execution).
+
+  Moreover, the `minted` package requires each custom lexer to be listed by name and associated with its SHA256 hash of
+  its containing file in a `.latexminted_config` file at the top of the paper template directory. We provide this 
+  configuration, and a way to update it upon updating/adding the lexers by running the following command:
+
+  ```bash
+  tools/generate_lexers_json.py
+  ```
