@@ -321,7 +321,7 @@
 %   acmtog   & Large double-column format.  Used for
 %          TOG, including annual conference Technical Papers.\\
 %   sigconf & Proceedings format for most ACM
-%          conferences (with the exception of SIGPlAN) and all ICPS
+%          conferences (with the exception of SIGPLAN) and all ICPS
 %          volumes.\\
 %   sigplan & Proceedings format for SIGPLAN conferences.\\
 %   acmengage & ACM EngageCSEdu Course materials.\\
@@ -874,7 +874,7 @@
 % the output.  For example, if the badge image is |ae-logo.pdf|, the
 % command is
 % \begin{verbatim}
-% \acmBadgeR[http://ctuning.org/ae/ppopp2016.html]{ae-logo}
+% \acmBadge[http://ctuning.org/ae/ppopp2016.html]{ae-logo}
 % \end{verbatim}
 % The command can be repeated, if a paper has several badges.  
 %
@@ -1251,7 +1251,7 @@
 % languages are \emph{secondary,} and used for translated titles,
 % keywords, abstracts.  Thus the paper above is written in English,
 % and has a secondary abstract and a secondary title in French.  On
-% the other hand, a paper in French wih secondary titles and abstracts
+% the other hand, a paper in French with secondary titles and abstracts
 % in English and German should use, for example
 % \begin{verbatim}
 % \documentclass[sigconf,
@@ -1534,7 +1534,7 @@
 %
 % As for the |printonly| and |screenonly| environments,
 % |\begin{acks}| and |\end{acks}| should start on a
-% line of their own with no leading or trailing spaces.
+% line of their own with no leading or trailing spaces or comments. 
 %
 % \DescribeMacro{\grantsponsor}%
 % \DescribeMacro{\grantnum}%
@@ -1567,7 +1567,7 @@
 %
 %   The authors would also like to thank the anonymous referees for
 %   their valuable comments and helpful suggestions. This work is
-%   supported by the \grantsponsor{GS501100001809}{National Natural
+%   supported by the \grantsponsor{my-grant-GS501100001809}{National Natural
 %   Science Foundation of
 %   China}{https://doi.org/10.13039/501100001809} under Grant
 %   No.:~\grantnum{GS501100001809}{61273304}
@@ -1782,10 +1782,10 @@
 %
 %\subsubsection{Processing using Bib\LaTeX}
 % You will find in this package two sets of style files for Bib\LaTeX,
-% \verb|acmnumeric| and \verb|acmauthoryear|, that mimic the behaviour
-% of the ACM-Reference-Format.bst Bib\TeX\ sytle. They provide you
+% \verb|acmnumeric| and \verb|acmauthoryear|, that mimic the behavior
+% of the ACM-Reference-Format.bst Bib\TeX\ style. They provide you
 % access to all the power of Bib\LaTeX\ and already include
-% support for advanced citation of software artefact from the
+% support for advanced citation of software artifacts from the
 % \verb|biblatex-software| package, also separately available on CTAN.
 % Look at the \verb|biblatex-software| documentation to learn more about
 % what it offers.
@@ -1794,7 +1794,10 @@
 % when using Bib\LaTeX\ instead of Bib\TeX, that we summarize briefly
 % here (please refer to the official Bib\LaTeX\ documentation for more details).
 %
-% In the preamble of your document you need to load the Bib\LaTeX\ package
+% First of all, you need to pass the \verb|natbib=false| option to the document class,
+% and remove the \verb|\citestyle{acmauthoryear}| command from the sources (if present).
+%
+% Then, in the preamble of your document you need to load the Bib\LaTeX\ package
 % and select the approriate bibliography style, as follows
 % \begin{verbatim}
 % \RequirePackage[
@@ -1804,7 +1807,7 @@
 % \end{verbatim}
 %
 % Also in the preamble, you need to declare the bibliography sources files
-% using the \verb|\addbibresouce| directe (one \verb|\addbibresource|
+% using the \verb|\addbibresource| command (one \verb|\addbibresource|
 % command per source file), e.g.:
 % \begin{verbatim}
 % \addbibresource{software.bib}
@@ -1955,30 +1958,6 @@
 % The script |texcount| provides a report of word count in the
 % document.
 %
-%
-%\subsection{Creative Commons licenses for ACM publications}
-%\label{sec:ug_cc}
-%
-% At present ACM does not allow the authors to typeset Creative
-% Commons license for most ACM publications.  These licenses can be
-% used under an agreement with the ACM publishing office.  In this
-% case they are inserted by ACM itself.
-%
-% The exceptions are ACM Engage format, which allows Creative Commons
-% license, and conferences organized and copyrighted by IW3C2.  In
-% these cases the authors should use correspondingly
-% |\setcopyright{cc}|, |\setcopyright{iw3c2w3}|, or
-% |\setcopyright{iw3c2w3g}| (the latter should be used by Google
-% employees).
-%
-% Yet another case is the typesetting of non-ACM materials, when the
-% option |nonacm| is used.  This case is somewhat opposite, because
-% for this case \emph{only} Creative Common licenses are supported.
-%
-% The command |\setcopyright{cc}| produces an error unless the format is
-% |acmengage| or |nonacm| option is selected.  On the other hand, if
-% the option |nonacm| is selected, any argument of |\setcopyright|
-% other than |cc| is treated as |none|. 
 %
 %
 %\subsection{Disabled or forbidden commands}
@@ -2277,7 +2256,7 @@
 %</gobble>
 %<class&!tagged>\ProvidesClass{acmart}
 %<tagged>\ProvidesClass{acmart-tagged}
-[2024/08/25 v2.09 Typesetting articles for the Association for Computing Machinery]
+[2024/12/28 v2.12 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -2979,9 +2958,10 @@
 %    \end{macrocode}
 %
 % \changes{v1.40}{2017/06/05}{Added `textcase' package}
-% We need |textcase| for better upcasing
+% \changes{v2.12}{2024/12/28}{Removed `textcase' package}
+% We no longer need |textcase| for better upcasing.
 %    \begin{macrocode}
-\RequirePackage{textcase}
+% \RequirePackage{textcase}
 %    \end{macrocode}
 %
 %
@@ -3970,23 +3950,27 @@
 % monotype font declaration}
 % \changes{v1.74}{2020/10/25}{Changed the order of font loading}%
 % We use Libertine throughout.
+% \changes{v2.12}{2024/12/29}{Use unicode-math and libertinus for Unicode engines}%
+% We use Libertine throughout.
 %    \begin{macrocode}
 \if@ACM@newfonts
-  \RequirePackage[T1]{fontenc}
   % Note that the order in which packages are loaded matters,
   % and the correct order depends on the LaTeX engine used.
   % See https://github.com/borisveytsman/acmart/issues/402
   % and https://github.com/borisveytsman/acmart/issues/410
   \ifxetex
-    \RequirePackage[libertine]{newtxmath}
+    \RequirePackage{unicode-math}
+    \setmathfont[Scale=MatchUppercase]{libertinusmath-regular.otf}
     \RequirePackage[tt=false]{libertine}
     \setmonofont[StylisticSet=3]{inconsolata}
   \else
     \ifluatex
-      \RequirePackage[libertine]{newtxmath}
+      \RequirePackage{unicode-math}
+      \setmathfont[Scale=MatchUppercase]{libertinusmath-regular.otf}
       \RequirePackage[tt=false]{libertine}
       \setmonofont[StylisticSet=3]{inconsolata}
     \else
+       \RequirePackage[T1]{fontenc}
        \RequirePackage[tt=false, type1=true]{libertine}
        \RequirePackage[varqu]{zi4}
        \RequirePackage[libertine]{newtxmath}
@@ -4092,6 +4076,10 @@
 \AtBeginEnvironment{listing}{\let\@vspace\@vspace@orig
   \let\@vspacer\@vspacer@orig}
 \AtBeginEnvironment{listing*}{\let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig}
+\AtBeginEnvironment{lstinputlisting}{\let\@vspace\@vspace@orig
+  \let\@vspacer\@vspacer@orig}
+\AtBeginEnvironment{lstinputlisting*}{\let\@vspace\@vspace@orig
   \let\@vspacer\@vspacer@orig}
 
 %    \end{macrocode}
@@ -5129,7 +5117,7 @@
   \def\position##1{\ignorespaces}%
   \def\institution##1{##1\ignorespaces}%
   \def\department{\@ifnextchar[{\@department}{\@department[]}}%
-  \def\@department[##1]##2{\unskip, ##2\ignorespaces}%
+  \def\@department[##1]##2{##2, \ignorespaces}%
   \let\city\position
   \let\state\position
   \let\country\position
@@ -5267,10 +5255,12 @@
 % Adding a footnote mark to the authors
 %    \begin{macrocode}
 \newcommand\authornotemark[1][\relax]{%
-  \ifx#1\relax\relax\relax
-  \g@addto@macro\addresses{\@authornotemark}%
-  \else
-  \g@addto@macro\addresses{\@@authornotemark{#1}}%
+  \if@ACM@anonymous\else
+    \ifx#1\relax\relax\relax
+      \g@addto@macro\addresses{\@authornotemark}%
+    \else
+      \g@addto@macro\addresses{\@@authornotemark{#1}}%
+    \fi
   \fi}
 %    \end{macrocode}
 %
@@ -5381,7 +5371,7 @@
 %   The book ISBN
 %    \begin{macrocode}
 \def\acmISBN#1{\def\@acmISBN{#1}}
-\acmISBN{978-x-xxxx-xxxx-x/YY/MM}
+\acmISBN{978-x-xxxx-xxxx-x/YYYY/MM}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -5685,7 +5675,7 @@
   \fi}
 \AtEndDocument{%
   \ifx\@received\@empty\else
-    \par\bigskip\noindent\small\normalfont\@received\par
+    \par\bigskip\noindent{\small\normalfont\@received\par}%
   \fi}
 %    \end{macrocode}
 %
@@ -6051,6 +6041,7 @@
 % non-acm or ACM engage publications}
 % \changes{v2.09}{2024/08/25}{Deleted checking whether CC licenses are
 % allowed}
+% \changes{v2.11}{2024/12/21}{Changed URL for CC licenses}
 %   The canned permission block.
 %    \begin{macrocode}
 \def\@copyrightpermission{%
@@ -6090,7 +6081,7 @@
    Government and is in the public domain. Non-exclusive copying or
    redistribution is allowed, provided that the article citation is
    given and the authors and agency are clearly identified as its
-   source. All others Request permissions from
+   source. Request permissions from
    owner\hspace*{.5pt}/author(s). 
   \or % usgovmixed
    ACM acknowledges that this contribution was authored or co-authored
@@ -6182,8 +6173,8 @@
    the appropriate attribution.
  \or % CC
    \IfEq{\ACM@cc@type}{zero}{%
-     \def\ACM@CC@Url{https://creativecommons.org/publicdomain/zero/1.0/legalcode}}{%
-  \edef\ACM@CC@Url{https://creativecommons.org/licenses/\ACM@cc@type/\ACM@cc@version/legalcode}}%
+     \def\ACM@CC@Url{https://creativecommons.org/publicdomain/zero/1.0}}{%
+  \edef\ACM@CC@Url{https://creativecommons.org/licenses/\ACM@cc@type/\ACM@cc@version}}%
    \href{\ACM@CC@Url}{\includegraphics[height=5ex]{doclicense-CC-\ACM@cc@type-88x31}}\\
    \href{\ACM@CC@Url}{%
    This work is licensed under a Creative Commons
@@ -6373,7 +6364,9 @@
 % publications}
 % \changes{v2.00}{2023/10/24}{Deleted acmPrice}
 % \changes{v2.00}{2023/11/05}{Added ``ACM'' for papers}
-% \changes{v2.03}{2024/12/04}{Special processing for conferences in TOG}
+% \changes{v2.03}{2023/12/04}{Special processing for conferences in
+% TOG}
+% \changes{v2.11}{2024/12/07}{Deleted conference date from bibstrip}
 %   The (in)famous \cs{maketitle}.  Note that in |sigchi-a| mode, authors
 %   are \emph{not} in the title box.
 %
@@ -6442,14 +6435,16 @@
          \if@ACM@engage
             {\itshape \@acmBooktitle, \@acmYear.}\par
          \else 
-         {\itshape \acmConference@shortname, \acmConference@date, \acmConference@venue}\par
+         {\itshape \acmConference@shortname, \acmConference@venue}\par
          \fi
        \fi
     \fi
     \if@printcopyright
       \copyright\ \@copyrightyear\ \@copyrightowner\\
     \else
-      \@copyrightyear.\
+      \ifx\@copyrightyear\@empty\else  
+        \@copyrightyear.\
+      \fi
     \fi
     \if@ACM@manuscript
       Manuscript submitted to ACM\\
@@ -6575,6 +6570,7 @@
     \fi
     \ifx\@empty\@authorsaddresses\else\bigskip\@setauthorsaddresses\fi
     \zsaveposy{@ACM@acmcpbox@y}%
+    \par
   }
 \egroup}
 %    \end{macrocode}
@@ -7160,6 +7156,8 @@
 %   This version is used in most journal formats.  Note that \cs{and} between
 %   authors with the same affiliation becomes \verb*| and |:
 % \changes{v1.87}{2022/08/14}{Special treatment for acmcp}
+% \changes{v1.12}{2024/12/28}{Removed MakeTextUppercase due to a bug
+% with new kernel}
 %    \begin{macrocode}
 \def\@mkauthors@i{%
   \def\@currentauthors{}%
@@ -7167,9 +7165,9 @@
   \global\let\and\@typeset@author@line
   \def\@author##1{%
     \ifx\@currentauthors\@empty
-      \gdef\@currentauthors{\@authorfont\MakeTextUppercase{##1}}%
+      \gdef\@currentauthors{\@authorfont\MakeUppercase{##1}}%
     \else
-       \g@addto@macro{\@currentauthors}{\and\MakeTextUppercase{##1}}%
+       \g@addto@macro{\@currentauthors}{\and\MakeUppercase{##1}}%
     \fi
     \gdef\and{}}%
   \def\email##1##2{}%
@@ -8237,8 +8235,8 @@
 % \changes{v1.45}{2017/08/15}{Switched \cs{bfeseries}\cs{sffamily} to
 % \cs{sffamily}\cs{bfseries}}
 % \changes{v1.67}{2020/01/11}{Deleted redefinitions of sections}
-% \changes{1.85}{2022/05/08}{Added: acmengage}
-% \changes{2.08}{2024/05/27}{Deleted uppercasing}
+% \changes{v1.85}{2022/05/08}{Added: acmengage}
+% \changes{v2.08}{2024/05/27}{Deleted uppercasing}
 % Fonts for sections etc. are different for different formats.
 %    \begin{macrocode}
 \def\@secfont{\sffamily\bfseries\section@raggedright}
@@ -8286,6 +8284,27 @@
 % \end{macro}
 % \end{macro}
 % \end{macro}
+%
+% \changes{v2.10}{2024/10/19}{Added tocindent for paragraphs and
+% subparagraphs} 
+% Amasat does not define tocindents for paragraphs and subparagraphs.
+% Here we add them
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \@for\@tempa:=-1,0,1,2,3,4,5\do{%
+    \@ifundefined{r@tocindent\@tempa}{%
+      \@xp\gdef\csname r@tocindent\@tempa\endcsname{0pt}}{}%
+  }%
+}
+\def\@writetocindents{%
+  \begingroup
+  \@for\@tempa:=-1,0,1,2,3,4,5\do{%
+    \immediate\write\@auxout{%
+      \string\newlabel{tocindent\@tempa}{%
+        \csname r@tocindent\@tempa\endcsname}}%
+  }%
+  \endgroup}
+%    \end{macrocode}
 %
 % \begin{macro}{\@adddotafter}
 %   Add punctuation after a sectioning command
