@@ -230,3 +230,44 @@
 %%% add the reference commands we want refcheck to be aware of
 \refcheckize{\autoref}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% export page layout to a CSV file
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% helper macro to fully expand dimension expressions
+\newcommand{\expanddim}[1]{\the\dimexpr#1\relax}
+
+% Define the conversion function from any length to inches
+\makeatletter
+\newcommand{\convertToInches}[2]{%
+  \edef\@temp{\expandafter\expandafter\expandafter\strip@pt\expandafter\dimexpr#1\relax}%
+  \edef#2{\fpeval{round(\@temp / 72.27, 2)}}%
+}
+\makeatother
+
+% create a new file for output
+\newwrite\myfile
+\immediate\openout\myfile=\jobname-layout.csv
+
+% write widths to file
+\makeatletter
+\newcommand{\writePageWidths}{
+  \newcommand{\mylen}{}%
+  \convertToInches{\columnwidth}{\mylen}%
+  \immediate\write\myfile{columnwidth, \mylen}%
+  \convertToInches{\textwidth}{\mylen}%
+  \immediate\write\myfile{textwidth, \mylen}%
+  \convertToInches{\columnsep}{\mylen}%
+  \immediate\write\myfile{columnsep, \mylen}%
+  \convertToInches{\textheight}{\mylen}%
+  \immediate\write\myfile{textheight, \mylen}%
+  \convertToInches{\paperwidth}{\mylen}%
+  \immediate\write\myfile{paperwidth, \mylen}%
+  \convertToInches{\paperheight}{\mylen}%
+  \immediate\write\myfile{paperheight, \mylen}%
+}
+\makeatother
+
+\AtEndDocument{
+  \writePageWidths
+}
