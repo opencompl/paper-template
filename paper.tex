@@ -66,16 +66,25 @@
 % Newer versions of minted require the 'customlexer' argument for custom lexers
 % whereas older versions require the '-x' to be passed via the command line.
 \makeatletter
-\ifcsdef{minted@optlistcl@quote}
+\ifcsdef{MintedExecutable}
 {
-\newminted[mlir]{tools/MLIRLexer.py:MLIRLexerOnlyOps}{customlexer, mathescape}
-\newminted[xdsl]{tools/MLIRLexer.py:MLIRLexer}{customlexer, mathescape, style=murphy}
-\newminted[lean4]{tools/Lean4Lexer.py:Lean4Lexer}{customlexer, mathescape}
+  % minted v3
+  \newminted[mlir]{tools/MLIRLexer.py:MLIRLexerOnlyOps}{mathescape}
+  \newminted[xdsl]{tools/MLIRLexer.py:MLIRLexer}{mathescape, style=murphy}
+  \newminted[lean4]{tools/Lean4Lexer.py:Lean4Lexer}{mathescape}
 }
 {
-\newminted[mlir]{tools/MLIRLexer.py:MLIRLexerOnlyOps -x}{mathescape}
-\newminted[xdsl]{tools/MLIRLexer.py:MLIRLexer -x}{mathescape, style=murphy}
-\newminted[lean4]{tools/Lean4Lexer.py:Lean4Lexer -x}{mathescape}
+  \ifcsdef{minted@optlistcl@quote}
+  {
+    \newminted[mlir]{tools/MLIRLexer.py:MLIRLexerOnlyOps}{customlexer, mathescape}
+    \newminted[xdsl]{tools/MLIRLexer.py:MLIRLexer}{customlexer, mathescape, style=murphy}
+    \newminted[lean4]{tools/Lean4Lexer.py:Lean4Lexer}{customlexer, mathescape}
+  }
+  {
+    \newminted[mlir]{tools/MLIRLexer.py:MLIRLexerOnlyOps -x}{mathescape}
+    \newminted[xdsl]{tools/MLIRLexer.py:MLIRLexer -x}{mathescape, style=murphy}
+    \newminted[lean4]{tools/Lean4Lexer.py:Lean4Lexer -x}{mathescape}
+  }
 }
 \makeatother
 
