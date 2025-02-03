@@ -1,6 +1,6 @@
 {
   "custom_lexers": {
-    "Lean4Lexer.py": "b605e06a957316a2de8607f43322dd2744ecbc53a6d29002ad0c42b0f9f71d6f",
-    "MLIRLexer.py": "c5517a4c7fa5696bac71fc3396b1dbb9041fe3e85a9abe377198d2458c885fe6"
+    "MLIRLexer.py": "0ffb20e64fd5851b5ffb0dade33e5d79638192f37f65733ccd92e053db8e5c01",
+    "Lean4Lexer.py": "b605e06a957316a2de8607f43322dd2744ecbc53a6d29002ad0c42b0f9f71d6f"
   }
 }
