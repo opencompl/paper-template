@@ -55,6 +55,8 @@
 \usepackage{thmtools} % required for autoref to lemmas
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
+\usepackage{hyphenat}
+\usepackage[shortcuts]{extdash}
 
 \input{tex/setup.tex}
 \input{tex/acm.tex}
@@ -64,16 +66,25 @@
 % Newer versions of minted require the 'customlexer' argument for custom lexers
 % whereas older versions require the '-x' to be passed via the command line.
 \makeatletter
-\ifcsdef{minted@optlistcl@quote}
+\ifcsdef{MintedExecutable}
 {
-\newminted[mlir]{tools/MLIRLexer.py:MLIRLexerOnlyOps}{customlexer, mathescape}
-\newminted[xdsl]{tools/MLIRLexer.py:MLIRLexer}{customlexer, mathescape, style=murphy}
-\newminted[lean4]{tools/Lean4Lexer.py:Lean4Lexer}{customlexer, mathescape}
+  % minted v3
+  \newminted[mlir]{tools/lexers/MLIRLexer.py:MLIRLexerOnlyOps}{mathescape}
+  \newminted[xdsl]{tools/lexers/MLIRLexer.py:MLIRLexer}{mathescape, style=murphy}
+  \newminted[lean4]{tools/lexers/Lean4Lexer.py:Lean4Lexer}{mathescape}
 }
 {
-\newminted[mlir]{tools/MLIRLexer.py:MLIRLexerOnlyOps -x}{mathescape}
-\newminted[xdsl]{tools/MLIRLexer.py:MLIRLexer -x}{mathescape, style=murphy}
-\newminted[lean4]{tools/Lean4Lexer.py:Lean4Lexer -x}{mathescape}
+  \ifcsdef{minted@optlistcl@quote}
+  {
+    \newminted[mlir]{tools/lexers/MLIRLexer.py:MLIRLexerOnlyOps}{customlexer, mathescape}
+    \newminted[xdsl]{tools/lexers/MLIRLexer.py:MLIRLexer}{customlexer, mathescape, style=murphy}
+    \newminted[lean4]{tools/lexers/Lean4Lexer.py:Lean4Lexer}{customlexer, mathescape}
+  }
+  {
+    \newminted[mlir]{tools/lexers/MLIRLexer.py:MLIRLexerOnlyOps -x}{mathescape}
+    \newminted[xdsl]{tools/lexers/MLIRLexer.py:MLIRLexer -x}{mathescape, style=murphy}
+    \newminted[lean4]{tools/lexers/Lean4Lexer.py:Lean4Lexer -x}{mathescape}
+  }
 }
 \makeatother
 
@@ -677,6 +688,13 @@ For example, assume we have defined an acronym with \texttt{\textbackslash{}newa
   \item To force contraction (e.g., to save space for a figure caption), we use \texttt{\textbackslash{}acs\{ir\}} which gives: \acs{ir}.
   \item To obtain plural form, we use \texttt{\textbackslash{}acp\{ir\}} giving: \acp{ir}.
 \end{itemize}
+
+\subsubsection{Adding hyphenation rules}
+While \LaTeX\ handles word breaks automatically, and packages like \texttt{microtype} aim to minimize word splitting, there are instances where either new words lack hyphenation rules, or the suggested hyphenation for a word is undesirable.
+The \texttt{hyphenat} package allows adding hyphenation rules using the \texttt{\textbackslash{}hyphenation} macro, e.g., \texttt{\textbackslash{}hyphenation\{Alex-Net\}} for AlexNet.
+
+Allowing hyphenation of compound words, we can use \texttt{\textbackslash{}-/} from the \texttt{extdash} package, for example \texttt{high\-/level} can be written as \texttt{high\textbackslash{}-/level}.
+Disallowing a line break at the compound word hyphen, we can use \texttt{\textbackslash{}=/}, as \texttt{RISC\textbackslash{}=/V} for \texttt{RISC\=/V}.
 
 \end{draftonly}
 
