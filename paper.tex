@@ -69,21 +69,21 @@
 \ifcsdef{MintedExecutable}
 {
   % minted v3
-  \newminted[mlir]{tools/MLIRLexer.py:MLIRLexerOnlyOps}{mathescape}
-  \newminted[xdsl]{tools/MLIRLexer.py:MLIRLexer}{mathescape, style=murphy}
-  \newminted[lean4]{tools/Lean4Lexer.py:Lean4Lexer}{mathescape}
+  \newminted[mlir]{tools/lexers/MLIRLexer.py:MLIRLexerOnlyOps}{mathescape}
+  \newminted[xdsl]{tools/lexers/MLIRLexer.py:MLIRLexer}{mathescape, style=murphy}
+  \newminted[lean4]{tools/lexers/Lean4Lexer.py:Lean4Lexer}{mathescape}
 }
 {
   \ifcsdef{minted@optlistcl@quote}
   {
-    \newminted[mlir]{tools/MLIRLexer.py:MLIRLexerOnlyOps}{customlexer, mathescape}
-    \newminted[xdsl]{tools/MLIRLexer.py:MLIRLexer}{customlexer, mathescape, style=murphy}
-    \newminted[lean4]{tools/Lean4Lexer.py:Lean4Lexer}{customlexer, mathescape}
+    \newminted[mlir]{tools/lexers/MLIRLexer.py:MLIRLexerOnlyOps}{customlexer, mathescape}
+    \newminted[xdsl]{tools/lexers/MLIRLexer.py:MLIRLexer}{customlexer, mathescape, style=murphy}
+    \newminted[lean4]{tools/lexers/Lean4Lexer.py:Lean4Lexer}{customlexer, mathescape}
   }
   {
-    \newminted[mlir]{tools/MLIRLexer.py:MLIRLexerOnlyOps -x}{mathescape}
-    \newminted[xdsl]{tools/MLIRLexer.py:MLIRLexer -x}{mathescape, style=murphy}
-    \newminted[lean4]{tools/Lean4Lexer.py:Lean4Lexer -x}{mathescape}
+    \newminted[mlir]{tools/lexers/MLIRLexer.py:MLIRLexerOnlyOps -x}{mathescape}
+    \newminted[xdsl]{tools/lexers/MLIRLexer.py:MLIRLexer -x}{mathescape, style=murphy}
+    \newminted[lean4]{tools/lexers/Lean4Lexer.py:Lean4Lexer -x}{mathescape}
   }
 }
 \makeatother
