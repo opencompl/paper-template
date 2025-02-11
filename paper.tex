@@ -617,10 +617,9 @@ theorem funext {f₁ f₂ : ∀ (x : α), β x}
   \url{https://lean-lang.org/lean4/doc/syntax\_highlight\_in\_latex.html\#example-with-minted}.}
 \end{listing}
 
-The syntax highlighting also works for xDSL-like IRs. Notice that different
-minted styles can be used for different environments. The xDSL environment uses
-the murphy-style in this case, whereas the MLIR version applies the
-colorful-style.
+The syntax highlighting also works for xDSL-like IRs.
+Notice that different minted styles can be used for different environments.
+The xDSL environment uses the murphy-style in this case, whereas the MLIR version applies the colorful-style.
 
 \begin{xdsl*}{fontsize=\scriptsize}
 func.func() [sym_name = "main", function_type = !fun<[
@@ -646,6 +645,8 @@ func.func() [sym_name = "s0", function_type = !fun<[
     func.return(%cmp : !i1)
 }
 \end{xdsl*}
+
+The code in this document was compiled with minted version: \csname ver@minted.sty\endcsname.
 
 \section{Writing}
 
