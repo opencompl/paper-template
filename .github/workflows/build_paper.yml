@@ -1,5 +1,3 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Compile paper
 
 # Provide permissions to read and write the repo, create releases.
@@ -30,11 +28,13 @@ jobs:
           }
         }' > ${HOME}/.latexminted_config 
 
+    # Uses the latest TeXLive distribution (currently with minted v3+)
     - name: Compile paper
       uses: xu-cheng/latex-action@master
       with:
         root_file: paper.tex
 
+    # Uses the latest TeXLive distribution (currently with minted v3+)
     - name: Compile submission
       uses: xu-cheng/latex-action@master
       with:
