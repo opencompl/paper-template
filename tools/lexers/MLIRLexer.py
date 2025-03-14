@@ -1,8 +1,8 @@
 from pygments.lexer import RegexLexer, bygroups
-from pygments.token import Name, Keyword, Operator, Comment, Text, Punctuation, Literal
+from pygments.token import Name, Keyword, Number, Operator, Comment, Text, Punctuation, Literal
 
 comment_rule = (r'//.*?\n', Comment)
-ssa_value_rule = (r'%[^[ )]*]*', Name.Variable)
+ssa_value_rule = (r'%[a-zA-Z0-9_][a-zA-Z0-9_$.]*', Name.Variable)
 symbol_rule = (r'@[^(]*', Name.Function)
 basic_block_rule = (r'\^[^(:\]]*', Name.Label)
 operation_rule = (
@@ -51,6 +51,10 @@ class MLIRLexer(RegexLexer):
             non_assign_operation_rule,
             builtin_type_rule,
             type_rule,
+            (r'i([0-9]+)', Keyword.Type),
+            (r'false', Number),
+            (r'true', Number),
+            (r'(-?[0-9]+(?:\.[0-9]+)?)', Number),
             abbrev_type_tule,
             (r'(\n|\s)+', Text),
             first_attribute_rule,
