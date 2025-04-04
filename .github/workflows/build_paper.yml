@@ -38,12 +38,6 @@ jobs:
       with:
         root_file: submission.tex
 
-    - name: Format Python files with yapf
-      id: autoyapf
-      uses: mritunjaysharma394/autoyapf@v2
-      with:
-        args: --style pep8 --recursive --in-place .
-
     - name: Release
       if: ${{ github.event_name == 'push' }}
       id: create_release
