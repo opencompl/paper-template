@@ -24,10 +24,18 @@ grammar: $(TEX_MAIN_PAPER)
 refcheck: paper
 	@grep -e 'refcheck.*Unused' paper.log
 
-${PDF_PAPER}: ${TEX_MAIN_PAPER} ${IMAGES}
+# Generate the SHA hashes of custom lexers for minted
+# NOTE: if any new lexers are added, they ought to be added to the 
+#       dependencies here
+.latexminted_config: tools/lexers/Lean4Lexer.py tools/lexers/MLIRLexer.py
+	./tools/check_latexminted_config_exists.sh
+	./tools/generate_lexers_json.py
+
+
+${PDF_PAPER}: ${TEX_MAIN_PAPER} ${IMAGES} .latexminted_config
 	latexmk ${TEX_MAIN_PAPER}
 
-${PDF_SUBMISSION}: ${TEX_MAIN_SUBMISSION} ${IMAGES}
+${PDF_SUBMISSION}: ${TEX_MAIN_SUBMISSION} ${IMAGES} .latexminted_config
 	latexmk ${TEX_MAIN_SUBMISSION}
 
 abstract: ${TEX_MAIN_PAPER}
@@ -45,3 +53,4 @@ view-submission: ${TEX_MAIN_SUBMISSION} ${IMAGES}
 
 clean:
 	latexmk -C
+	rm ".latexminted_config"
