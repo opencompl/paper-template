@@ -89,7 +89,7 @@
 \makeatother
 
 % We use the following color scheme
-% 
+%
 % This scheme is both print-friendly and colorblind safe for
 % up to four colors (including the red tones makes it not
 % colorblind safe any more)
@@ -285,7 +285,7 @@
 
 %% Keywords
 %% comma separated list
-\keywords{keyword1, keyword2, keyword3} 
+\keywords{keyword1, keyword2, keyword3}
 \fi
 
 %% \maketitle
@@ -448,7 +448,7 @@ We reference figures in text using
 \texttt{fig:speedup}.  The use of autoref ensures that all references
 to figures are formatted consistently, e.g. as \autoref{fig:speedup}.
 
-\paragraph{Color Scheme} 
+\paragraph{Color Scheme}
 
 In Figures we use a color scheme that is print-friendly and also visible
 with red-green blindness. The following colors are all print-friendly
@@ -607,7 +607,7 @@ def @foo(%0 : !dialect.type)
 \begin{lean4}
 theorem funext {f₁ f₂ : ∀ (x : α), β x}
   (h : ∀ x, f₁ x = f₂ x) : f₁ = f₂ := by
-  show extfunApp (Quotient.mk' f₁) = 
+  show extfunApp (Quotient.mk' f₁) =
        extfunApp (Quotient.mk' f₂)
   apply congrArg
   apply Quotient.sound
