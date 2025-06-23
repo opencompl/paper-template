@@ -2,7 +2,7 @@
 
 FILE='.latexminted_config'
 
-if [[ !( -f "$HOME/$FILE" || -f "$TEXMF/$FILE" ) ]]; then
+if [[ ! ( -f "$HOME/$FILE" || -f "$TEXMF/$FILE" ) ]]; then
     echo 'Error:'
     echo "  Neither $HOME/$FILE (~/$FILE) nor $TEXMF/$FILE (\$TEXMF/$FILE) seem to exist!"
     echo 
