@@ -20,11 +20,8 @@ jobs:
 
     - name: Create .latexminted_config file
       run: |
-        echo '{
-          "security": {
-            "enable_cwd_config": true
-          }
-        }' > ${HOME}/.latexminted_config 
+        ./tools/create_latexminted_config.sh
+        make .latexminted_config
 
     # Uses the latest TeXLive distribution (currently with minted v3+)
     - name: Compile paper
