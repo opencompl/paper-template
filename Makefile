@@ -28,7 +28,6 @@ refcheck: paper
 # NOTE: if any new lexers are added, they ought to be added to the 
 #       dependencies here
 .latexminted_config: tools/lexers/Lean4Lexer.py tools/lexers/MLIRLexer.py
-	./tools/check_latexminted_config_exists.sh
 	./tools/generate_lexers_json.py
 
 
@@ -53,4 +52,4 @@ view-submission: ${TEX_MAIN_SUBMISSION} ${IMAGES}
 
 clean:
 	latexmk -C
-	rm ".latexminted_config"
+	rm -f ".latexminted_config"
