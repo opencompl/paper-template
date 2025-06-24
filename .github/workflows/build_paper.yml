@@ -4,7 +4,7 @@ name: Compile paper
 # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions
 permissions: write-all
 
-# Controls when the action will run. Triggers the workflow on push or pull request 
+# Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on: [push, pull_request]
 
@@ -20,7 +20,6 @@ jobs:
 
     - name: Create .latexminted_config file
       run: |
-        ./tools/create_latexminted_config.sh
         make .latexminted_config
 
     # Uses the latest TeXLive distribution (currently with minted v3+)
