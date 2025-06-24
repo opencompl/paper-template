@@ -3,6 +3,7 @@
 import os
 import hashlib
 import json
+from pathlib import Path
 
 LEXER_DIR = "tools/lexers"
 
@@ -27,13 +28,25 @@ def generate_lexers_json():
             file_hash = calculate_sha256(file_path)
             custom_lexers[filename] = file_hash
 
-    result = {"custom_lexers": custom_lexers}
+    return custom_lexers
 
-    with open(OUTPUT_JSON, "w") as file:
-        json.dump(result, file, indent=2)
+def generate_json_file():
+    # Load existing config, if it exists
+    config_path = Path(OUTPUT_JSON)
+    if config_path.exists():
+        with open(config_path, 'r') as f:
+            config = json.load(f)
+    else:
+        config = {}
+    
+    # Update only the lexers
+    config["custom_lexers"] = generate_lexers_json()
+
+    # Output the new config file
+    with open(config_path, "w") as file:
+        json.dump(config, file, indent=2)
 
     print(f"JSON file created at {OUTPUT_JSON}")
 
-
 if __name__ == "__main__":
-    generate_lexers_json()
+    generate_json_file()
