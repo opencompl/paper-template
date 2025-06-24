@@ -53,7 +53,4 @@ view-submission: ${TEX_MAIN_SUBMISSION} ${IMAGES}
 
 clean:
 	latexmk -C
-	# If latexminted_config exists, refresh the lexer SHAs
-	# We do this here, since clean is a natural response to caching
-	# issues, such as outdated lexer SHAs in the minted config
-	[ -f ".latexminted_config" ] && ./tools/generate_lexers_json.py || true
+	rm ".latexminted_config"
