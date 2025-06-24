@@ -19,6 +19,18 @@ the following features:
   - Pieces of text can be addressed specifically by underlining this text
   - Comments in float enviroments (e.g., figure)
 
+To periodically update your paper with the latest template changes after cloning this repository, you can run the 
+following commands:
+
+```bash
+# add upstream (only required once)
+git remote add upstream https://github.com/original/repo.git
+
+# periodically update
+git fetch upstream
+git merge upstream/main
+```
+
 # Notes
 
 - For `minted` version 3, users are required to add the following to their `${HOME}` or `TEXMFHOME` directory in a file
