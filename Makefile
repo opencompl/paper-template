@@ -54,8 +54,8 @@ view-submission: ${TEX_MAIN_SUBMISSION} ${IMAGES}
 clean:
 	latexmk -C
 	[ -d "_minted" ] && rm -r _minted || true
-	[ -d "_minted-$(basename $(TEX_MAIN_PAPER) .tex)" ] && rm -r "_minted-$(basename $(TEX_MAIN_PAPER) .tex)" || true
-	[ -d "_minted-$(basename $(TEX_MAIN_SUBMISSION) .tex)" ] && rm -r "_minted-$(basename $(TEX_MAIN_SUBMISSION) .tex)" || true
+	[ -d "_minted-$(TEX_MAIN_PAPER)" ] && rm -r "_minted-$(TEX_MAIN_PAPER)" || true
+	[ -d "_minted-$(TEX_MAIN_SUBMISSION)" ] && rm -r "_minted-$(TEX_MAIN_SUBMISSION)" || true
 	# If latexminted_config exists, refresh the lexer SHAs
 	# We do this here, since clean is a natural response to caching
 	# issues, such as outdated lexer SHAs in the minted config
