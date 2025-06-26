@@ -25,7 +25,7 @@ refcheck: paper
 	@grep -e 'refcheck.*Unused' paper.log
 
 # Generate the SHA hashes of custom lexers for minted
-# NOTE: if any new lexers are added, they ought to be added to the 
+# NOTE: if any new lexers are added, they ought to be added to the
 #       dependencies here
 .latexminted_config: tools/lexers/Lean4Lexer.py tools/lexers/MLIRLexer.py
 	./tools/check_latexminted_config_exists.sh
@@ -53,6 +53,7 @@ view-submission: ${TEX_MAIN_SUBMISSION} ${IMAGES}
 
 clean:
 	latexmk -C
+	rm -rf _minted "_minted-$(TEX_MAIN_PAPER)" "_minted-$(TEX_MAIN_SUBMISSION)"
 	# If latexminted_config exists, refresh the lexer SHAs
 	# We do this here, since clean is a natural response to caching
 	# issues, such as outdated lexer SHAs in the minted config
