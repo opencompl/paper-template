@@ -78,7 +78,7 @@ jobs:
 
     # Uses an older TeXLive distribution (with minted v2.6)
     - name: Compile paper
-      uses: xu-cheng/latex-action@master
+      uses: xu-cheng/latex-action@v3
       with:
         docker_image: ghcr.io/xu-cheng/texlive-full:20221101
         root_file: paper.tex
@@ -86,7 +86,7 @@ jobs:
 
     # Uses an older TeXLive distribution (with minted v2.6)
     - name: Compile submission
-      uses: xu-cheng/latex-action@master
+      uses: xu-cheng/latex-action@v3
       with:
         docker_image: ghcr.io/xu-cheng/texlive-full:20221101
         root_file: submission.tex
