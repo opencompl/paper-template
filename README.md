@@ -25,8 +25,6 @@ following commands:
 ```bash
 # add upstream (only required once)
 git remote add upstream git@github.com:opencompl/paper-template.git
-# or
-git remote add upstream https://github.com/opencompl/paper-template.git
 
 # periodically update
 git fetch upstream
