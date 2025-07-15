@@ -23,4 +23,6 @@ assignees: ''
 ### Submit Paper
 - [ ] make clean and rebuild
 - [ ] check checksum of last-compiled PDF with the one uploaded
-- [ ] check PC conflicts again
+- [ ] check the PDF looks right, is anonimized, has no TODOs
+- [ ] a co-author quickly checks the new PDF on HotCRP
+
