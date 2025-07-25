@@ -20,7 +20,7 @@ jobs:
 
     - name: Create .latexminted_config file
       run: |
-        ./tools/create_latexminted_config.sh
+        bash ./tools/create_latexminted_config.sh
         make .latexminted_config
 
     # Uses the latest TeXLive distribution (currently with minted v3+)

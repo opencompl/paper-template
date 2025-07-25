@@ -28,8 +28,8 @@ refcheck: paper
 # NOTE: if any new lexers are added, they ought to be added to the
 #       dependencies here
 .latexminted_config: tools/lexers/Lean4Lexer.py tools/lexers/MLIRLexer.py
-	./tools/check_latexminted_config_exists.sh
-	./tools/generate_lexers_json.py
+	bash ./tools/check_latexminted_config_exists.sh
+	python3 ./tools/generate_lexers_json.py
 
 
 ${PDF_PAPER}: ${TEX_MAIN_PAPER} ${IMAGES} .latexminted_config
@@ -39,7 +39,7 @@ ${PDF_SUBMISSION}: ${TEX_MAIN_SUBMISSION} ${IMAGES} .latexminted_config
 	latexmk ${TEX_MAIN_SUBMISSION}
 
 abstract: ${TEX_MAIN_PAPER}
-	./tools/extract-abstract.py -i $< -o $@.md
+	python3 ./tools/extract-abstract.py -i $< -o $@.md
 
 paper: ${PDF_PAPER}
 
@@ -57,4 +57,4 @@ clean:
 	# If latexminted_config exists, refresh the lexer SHAs
 	# We do this here, since clean is a natural response to caching
 	# issues, such as outdated lexer SHAs in the minted config
-	[ -f ".latexminted_config" ] && ./tools/generate_lexers_json.py || true
+	[ -f ".latexminted_config" ] && python3 ./tools/generate_lexers_json.py || true
