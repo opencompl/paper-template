@@ -65,6 +65,8 @@ ENTRY
         issn          % UTAH
         lccn          % UTAH
 	distinctURL   % whether to print url if doi is present
+	archived      % Where the url is archived
+	venue         % for presentations
   }
   {}
   { label.year extra.label sort.year sort.label basic.label.year}
@@ -634,7 +636,7 @@ FUNCTION { output.doi } % UTAH
 { % output non-empty DOI as one-line sentence (stack untouched)
   doi empty.or.unknown
     { }
-    {
+    { 
       "\href{https://doi.org/" strip.doi * "}{doi:\nolinkurl{" *
       strip.doi  * "}}" * writeln
     }
@@ -761,7 +763,7 @@ FUNCTION { output.url } % UTAH
   {
     url empty.or.unknown
       { }
-      {
+      {  new.sentence
           %% Use \urldef, outside \showURL, so that %nn, #, etc in URLs work
           %% correctly.  Put the actual URL on its own line to reduce the
           %% likelihood of BibTeX's nasty line wrapping after column 79.
@@ -775,7 +777,15 @@ FUNCTION { output.url } % UTAH
             { "" }
             { "Retrieved " lastaccessed * " from " * }
           if$
-          "\tempurl}" * writeln
+          "\tempurl" *
+	  archived empty.or.unknown
+	    { }
+	    {"\urldef\tempurla%" writeln
+	      "\url{" archived * "}%" * writeln
+	      ", archived at [\tempurla]" *
+	    }
+	  if$
+	  "}" * writeln
       }
       if$
   }
@@ -1748,6 +1758,20 @@ FUNCTION { format.journal.volume.number.day.month.year }
   if$
 }
 
+
+FUNCTION { format.journal.underreview }
+{
+  journal empty.or.unknown
+    { "" }
+    { "\bibinfo{journal}{"
+      journal.canon.abbrev emphasize *
+      "}." * }
+  if$
+  
+  " Manuscript submitted for review" *
+}
+
+
 FUNCTION { format.chapter.pages }
 {
   chapter empty.or.unknown
@@ -1780,6 +1804,14 @@ FUNCTION { format.in.booktitle }
   { "In \bibinfo{booktitle}{" booktitle * "}" * }
   if$
 }
+
+FUNCTION { format.venue }
+{ %Venues for presentations
+  venue empty.or.unknown
+  { "" }
+  {"Presentation at \bibinfo{venue}{" venue * "}" * }
+  if$
+  }
 
 FUNCTION { format.in.ed.booktitle }
 {
@@ -2128,8 +2160,8 @@ FUNCTION { output.issue.doi.coden.isxn.lccn.url.eprint }
   output.coden  % CODEN is functionally like ISSN, so output them sequentially
   output.issn
   output.lccn
-  output.doi    % DOI is ALWAYS last according to CrossRef DOI documentation
   output.eprint
+  output.doi    % DOI is ALWAYS last according to CrossRef DOI documentation
   output.url    % but ACM wants URL last
 }
 
@@ -2197,6 +2229,38 @@ FUNCTION { article }
   output.issue.doi.coden.isxn.lccn.url.eprint.note
   fin.entry
 }
+
+FUNCTION { underreview }
+{
+  output.bibitem
+
+  author empty.or.unknown
+    {
+      editor empty.or.unknown
+        { "neither author and editor supplied for " cite$ * warning$ }
+        { format.editors "editor" output.check }
+      if$
+    }
+    { format.authors "author" output.check }
+  if$
+
+  author format.no.key output       % added
+  output.year.check                 % added
+  new.block
+  format.articletitle "title" output.check
+  new.block
+  howpublished empty.or.unknown
+    { }
+    { "\bibinfo{howpublished}{" howpublished "}" * * output }
+  if$
+
+  format.journal.underreview "journal" output.check
+
+  fin.block
+  output.issue.doi.coden.isxn.lccn.url.eprint.note
+  fin.entry
+}
+
 
 FUNCTION { book }
 {
@@ -2379,6 +2443,60 @@ FUNCTION { inproceedings }
   fin.entry
 }
 
+
+FUNCTION { presentation }
+{
+  output.bibitem
+  format.authors "author" output.check
+  author format.key output            % added
+  output.year.check                   % added
+  new.block
+  format.articletitle "title" output.check
+  howpublished empty.or.unknown
+    { }
+    { "\bibinfo{howpublished}{" howpublished "}" * * output.dot.space }
+  if$
+  crossref missing$
+    {
+      journal missing$          % jtb: proceedings appearing in journals
+        { new.sentence
+	  format.venue "venue" output.check
+          format.series output.removenospace
+          format.editors.fml output % BV 2011/09/27 Moved dot to comma
+          series empty.or.unknown
+              { format.bvolume.noseries output }
+              {}
+          if$
+          new.sentence
+          organization output
+          publisher output
+          address output
+          format.bookpages output
+        }
+        {
+	   new.sentence
+	   format.venue "venue" output.check
+           format.editors.fml output
+           new.sentence
+           format.journal.volume.number.day.month.year output
+        }
+      if$
+      format.articleno output
+      format.pages.check.without.articleno output
+    }
+    {
+      format.incoll.inproc.crossref output.nonnull
+      format.articleno output
+      format.pages.check.without.articleno output
+    }
+  if$
+  format.articleno.numpages output
+  fin.block
+  output.issue.doi.coden.isxn.lccn.url.eprint.note
+  fin.entry
+}
+
+
 FUNCTION { conference } { inproceedings }
 
 FUNCTION { manual }
@@ -2386,7 +2504,7 @@ FUNCTION { manual }
   output.bibitem
   author empty.or.unknown
     { editor empty.or.unknown
-      { organization "organization" output.check
+      { organization output
         organization format.key output }  % if all else fails, use key
       { format.editors "author and editor" output.check }
       if$
@@ -2398,7 +2516,7 @@ FUNCTION { manual }
   format.btitle "title" output.check
   organization address new.block.checkb
   % jtb: back to normal style: organization, address
-  organization "organization" output.check
+  organization output
   address output
   fin.block
   output.issue.doi.coden.isxn.lccn.url.eprint.note
@@ -2451,13 +2569,18 @@ FUNCTION { online } { manual }
 
 FUNCTION { game } { manual }
 
+FUNCTION { video } { manual }
+
 FUNCTION { artifactsoftware } { manual }
 
 FUNCTION { artifactdataset } { manual }
 
-FUNCTION { software } { manual }
+FUNCTION { software } { artifactsoftware }
 
-FUNCTION { dataset } { manual }
+FUNCTION { dataset } { artifactdataset }
+
+
+FUNCTION { preprint } { manual }
 
 FUNCTION { phdthesis }
 {
