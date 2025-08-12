@@ -13,5 +13,5 @@ jobs:
 
     - name: Push to private paper repository
       run: |
-        git add private git@github.com:tobiasgrosser/paper-template-private.git
+        git remote add private git@github.com:tobiasgrosser/paper-template-private.git
         git push private HEAD:main
