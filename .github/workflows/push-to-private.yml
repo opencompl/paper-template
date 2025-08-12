@@ -1,0 +1,16 @@
+name: Compile paper
+
+permissions: write-all
+
+on: [push]
+
+jobs:
+  build-texlive-latest:
+    runs-on: ubuntu-latest
+    
+    - uses: actions/checkout@v3
+
+    - name: Push to private paper repository
+      run: |
+        git add private git@github.com:tobiasgrosser/paper-template-private.git
+        git push private HEAD:main
