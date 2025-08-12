@@ -8,6 +8,7 @@ jobs:
   build-texlive-latest:
     runs-on: ubuntu-latest
     
+    steps:
     - uses: actions/checkout@v3
 
     - name: Push to private paper repository
