@@ -22,4 +22,4 @@ jobs:
     - name: Push to private paper repository
       run: |
         git remote add private https://tobiasgrosser:${{ secrets.TEMPLATE_PRIVATE_REPO }}@github.com/opencompl/paper-template-private.git
-        git push private HEAD:main
+        git push -f private HEAD:main
