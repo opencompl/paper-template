@@ -10,8 +10,7 @@ jobs:
     
     steps:
     - uses: actions/checkout@v3
-      env:
-        ACCESS_TOKEN: ${{ secrets.TEMPLATE_PRIVATE_REPO }}
+      token: ${{ secrets.TEMPLATE_PRIVATE_REPO }}
 
     - name: Push to private paper repository
       run: |
