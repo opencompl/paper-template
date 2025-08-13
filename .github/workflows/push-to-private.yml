@@ -21,7 +21,5 @@ jobs:
 
     - name: Push to private paper repository
       run: |
-        git remote add private git@github.com:opencompl/paper-template-private.git
+        git remote add private https://tobiasgrosser:${{ secrets.TEMPLATE_PRIVATE_REPO }}@github.com/opencompl/paper-template-private.git
         git push private HEAD:main
-        env:
-          ACCESS_TOKEN: ${{ secrets.TEMPLATE_PRIVATE_REPO }}
