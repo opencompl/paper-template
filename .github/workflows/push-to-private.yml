@@ -6,7 +6,7 @@ on: [push]
 
 jobs:
   push-to-repo:
-    if: github.repository == "opencompl/paper-template"
+    if: github.repository == 'opencompl/paper-template'
     runs-on: ubuntu-latest
     
     steps:
