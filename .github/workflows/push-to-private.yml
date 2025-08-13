@@ -1,11 +1,11 @@
-name: Compile paper
+name: Push copy to private repo
 
 permissions: write-all
 
 on: [push]
 
 jobs:
-  build-texlive-latest:
+  push-to-repo:
     runs-on: ubuntu-latest
     
     steps:
