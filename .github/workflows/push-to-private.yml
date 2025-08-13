@@ -9,9 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v5
       with:
         token: ${{ secrets.TEMPLATE_PRIVATE_REPO }}
+
+    - uses: actions/checkout@v5
+      with:
+        token: ${{ secrets.TEMPLATE_PRIVATE_REPO }}
+        repository: opencompl/paper-template-private
+        path: my-tools
 
     - name: Push to private paper repository
       run: |
