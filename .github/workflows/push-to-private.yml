@@ -10,10 +10,10 @@ jobs:
     
     steps:
     - uses: actions/checkout@v3
+      env:
+        ACCESS_TOKEN: ${{ secrets.TEMPLATE_PRIVATE_REPO }}
 
     - name: Push to private paper repository
       run: |
         git remote add private git@github.com:opencompl/paper-template-private.git
         git push private HEAD:main
-      env:
-        ACCESS_TOKEN: ${{ secrets.TEMPLATE_PRIVATE_REPO }}
