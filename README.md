@@ -6,8 +6,12 @@ Download:
 
 ### Conference: ASPLOS
 
-- [ ] Abstract: 2025-08-13T23:59:00-05:00
-- [ ] Submission: 2025-08-20T23:59:00-05:00
+- Abstract: 2025-08-13T23:59:00-05:00
+- Submission: 2025-08-20T23:59:00-05:00
+
+### Communication:
+
+- Chat: 
 
 ## Info about the Paper-Template repository
 
