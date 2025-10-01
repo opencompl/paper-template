@@ -13,6 +13,7 @@ Download:
 
 - Chat: 
 - Lead:
+- Senior Lead:
 
 ## Info about the Paper-Template repository
 
