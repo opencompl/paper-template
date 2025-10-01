@@ -9,9 +9,10 @@ Download:
 - Abstract: 2025-08-13T23:59:00-05:00
 - Submission: 2025-08-20T23:59:00-05:00
 
-### Communication:
+### Paper Information
 
 - Chat: 
+- Lead:
 
 ## Info about the Paper-Template repository
 
