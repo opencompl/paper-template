@@ -8,7 +8,7 @@
   \def\paperversion{draft}
 \fi
 
-\documentclass[review, anonymous, acmsmall]{acmart}
+\documentclass[review,sigconf]{acmart}
 
 \def\acmversionanonymous{anonymous}
 \def\acmversionjournal{journal}
@@ -61,33 +61,6 @@
 \input{tex/setup.tex}
 \input{tex/acm.tex}
 
-\usemintedstyle{colorful}
-
-% Newer versions of minted require the 'customlexer' argument for custom lexers
-% whereas older versions require the '-x' to be passed via the command line.
-\makeatletter
-\ifcsdef{MintedExecutable}
-{
-  % minted v3
-  \newminted[mlir]{tools/lexers/MLIRLexer.py:MLIRLexerOnlyOps}{mathescape}
-  \newminted[xdsl]{tools/lexers/MLIRLexer.py:MLIRLexer}{mathescape, style=murphy}
-  \newminted[lean4]{tools/lexers/Lean4Lexer.py:Lean4Lexer}{mathescape}
-}
-{
-  \ifcsdef{minted@optlistcl@quote}
-  {
-    \newminted[mlir]{tools/lexers/MLIRLexer.py:MLIRLexerOnlyOps}{customlexer, mathescape}
-    \newminted[xdsl]{tools/lexers/MLIRLexer.py:MLIRLexer}{customlexer, mathescape, style=murphy}
-    \newminted[lean4]{tools/lexers/Lean4Lexer.py:Lean4Lexer}{customlexer, mathescape}
-  }
-  {
-    \newminted[mlir]{tools/lexers/MLIRLexer.py:MLIRLexerOnlyOps -x}{mathescape}
-    \newminted[xdsl]{tools/lexers/MLIRLexer.py:MLIRLexer -x}{mathescape, style=murphy}
-    \newminted[lean4]{tools/lexers/Lean4Lexer.py:Lean4Lexer -x}{mathescape}
-  }
-}
-\makeatother
-
 % We use the following color scheme
 %
 % This scheme is both print-friendly and colorblind safe for
@@ -105,14 +78,13 @@
 \definecolor{pairedFiveLightRed}{HTML}{fb9a99}
 \definecolor{pairedSixDarkRed}{HTML}{e31a1c}
 
-\createtodoauthor{grosser}{pairedOneLightBlue}
-\createtodoauthor{authorTwo}{pairedTwoDarkBlue}
-\createtodoauthor{authorThree}{pairedThreeLightGreen}
-\createtodoauthor{authorFour}{pairedFourDarkGreen}
-\createtodoauthor{authorFive}{pairedFiveLightRed}
-\createtodoauthor{authorSix}{pairedSixDarkRed}
-
-\newacronym{ir}{IR}{Intermediate Representation}
+\newacronym{foss}{FOSS}{Free and Open-Source Software}
+\newacronym{oss}{OSS}{Open-Source Software}
+\newacronym{llm}{LLM}{Large Language Model}
+\newacronym{ai}{AI}{Artificial Intelligence}
+\newacronym{gpt}{GPT}{Generative Pre-Trained Transformer}
+\newacronym{pr}{PR}{Pull Request}
+\newacronym{slti}{SLTI}{Social Learning in Technological Innovation}
 
 \graphicspath{{./images/}}
 
@@ -138,17 +110,10 @@
 \csname #1 \endcsname
 }
 
-\newdelimitedcommand{toolname}{Tool}
 
 \usepackage{booktabs}
 \newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
 
-\usepackage[verbose]{newunicodechar}
-\newunicodechar{₁}{\ensuremath{_1}}
-\newunicodechar{₂}{\ensuremath{_2}}
-\newunicodechar{∀}{\ensuremath{\forall}}
-\newunicodechar{α}{\ensuremath{\alpha}}
-\newunicodechar{β}{\ensuremath{\beta}}
 
 % \circled command to print a colored circle.
 % \circled{1} pretty-prints "(1)"
@@ -168,125 +133,44 @@
 \begin{document}
 
 %% Title information
-\title[Short Title]{Full Title}       %% [Short Title] is optional;
-                                      %% when present, will be used in
-                                      %% header instead of Full Title.
-\subtitle{Subtitle}                   %% \subtitle is optional
+\title{Infrastructure Appropriation and the Crisis of Care}       %% [Short Title] is optional;
 
+\author{Anton Lydike}
+\affiliation{
+	\institution{University of Edinburgh}            %% \institution is required
+	\streetaddress{Street1 Address1}
+	\city{Edinburgh}
+	\country{Scotland}
+}
+\email{anton.lydike@ed.ac.uk}          %% \email is recommended
 
-%% Author information
-%% Contents and number of authors suppressed with 'anonymous'.
-%% Each author should be introduced by \author, followed by
-%% \authornote (optional), \orcid (optional), \affiliation, and
-%% \email.
-%% An author may have multiple affiliations and/or emails; repeat the
-%% appropriate command.
-%% Many elements are not rendered, but should be provided for metadata
-%% extraction tools.
-\author{First1 Last1}
-\authornote{with author1 note}          %% \authornote is optional;
-                                      %% can be repeated if necessary
-\orcid{nnnn-nnnn-nnnn-nnnn}             %% \orcid is optional
-\affiliation{
-  \position{Position1}
-  \department{Department1}              %% \department is recommended
-  \institution{Institution1}            %% \institution is required
-  \streetaddress{Street1 Address1}
-  \city{City1}
-  \state{State1}
-  \postcode{Post-Code1}
-  \country{Country1}
-}
-\email{first1.last1@inst1.edu}          %% \email is recommended
-
-\author{First2 Last2}
-\authornote{with author2 note}          %% \authornote is optional;
-                                      %% can be repeated if necessary
-\orcid{nnnn-nnnn-nnnn-nnnn}             %% \orcid is optional
-\affiliation{
-  \position{Position2a}
-  \department{Department2a}             %% \department is recommended
-  \institution{Institution2a}           %% \institution is required
-  \streetaddress{Street2a Address2a}
-  \city{City2a}
-  \state{State2a}
-  \postcode{Post-Code2a}
-  \country{Country2a}
-}
-\email{first2.last2@inst2a.com}         %% \email is recommended
-\affiliation{
-  \position{Position2b}
-  \department{Department2b}             %% \department is recommended
-  \institution{Institution2b}           %% \institution is required
-  \streetaddress{Street3b Address2b}
-  \city{City2b}
-  \state{State2b}
-  \postcode{Post-Code2b}
-  \country{Country2b}
-}
-\email{first2.last2@inst2b.org}         %% \email is recommended
 
 \begin{abstract}
-% An abstract should consist of six main sentences:
-%  1. Introduction. In one sentence, what’s the topic?
-%  2. State the problem you tackle.
-%  3. Summarize (in one sentence) why nobody else has adequately answered the research question yet.
-%  4. Explain, in one sentence, how you tackled the research question.
-%  5. In one sentence, how did you go about doing the research that follows from your big idea.
-%  6. As a single sentence, what’s the key impact of your research?
+	% An abstract should consist of six main sentences:
+	%  1. Introduction. In one sentence, what’s the topic?
+	%  2. State the problem you tackle.
+	%  3. Summarize (in one sentence) why nobody else has adequately answered the research question yet.
+	%  4. Explain, in one sentence, how you tackled the research question.
+	%  5. In one sentence, how did you go about doing the research that follows from your big idea.
+	%  6. As a single sentence, what’s the key impact of your research?
 
-% (http://www.easterbrook.ca/steve/2010/01/how-to-write-a-scientific-abstract-in-six-easy-steps/)
+	Open-source communities have accrued vast infrastructural capital in the form of knowledge, code, trust, and
+	shared procedures. This social achievement forms the patchwork of projects upon which modern internet
+	infrastructure is built. While corporations have historically extracted value from these commons piecemeal,
+	the inherent unstructured nature and the establishment of regulatory spaces have provided resistance to
+	total extraction. The advent of \acp{llm} is proving to completely and totally re-shape this
+	carefully established ecosystem.
+	This work analyzes the intricate interplay between communities and corporations across four pillars:
+	\textbf{generation} (the labor of care), \textbf{mediation} (the role of maintainers and regulation),
+	\textbf{extraction} (the appropriation of the capital of the commons), and \textbf{depletion} (the crisis of care).
+	Drawing parallels to the repurposing of digital infrastructures in targeted advertising, policy-making,
+	and ``influence policing'', we argue that \acp{llm} represent a crisis of infrastructural depletion
+	that threatens the sustainability of the digital commons.
 
-  % generated by lipsum
-  Curabitur dictum gravida mauris.
-  Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
-  Donec vehicula augue eu neque.
-  Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-  Cras viverra metus rhoncus sem.
-
-  Our \emph{key} insight defines the mass-energy equivalence relationship as: $E = mc^2$.
-  We prototype our approach in \toolname{}.
-
-  % generated by lipsum
-  Curabitur dictum gravida mauris.
-  Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
-  Donec vehicula augue eu neque.
-  Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-  Cras viverra metus rhoncus sem.
 \end{abstract}
 
-% Only add ACM notes and keywords in camera ready version
-% Drop citations and footnotes in draft and blind mode.
-\ifx\acmversion\acmversionanonymous
 \settopmatter{printacmref=false} % Removes citation information below abstract
 \renewcommand\footnotetextcopyrightpermission[1]{} % removes footnote with conference information in first column
-\fi
-\ifx\acmversion\acmversionjournal
-%% 2012 ACM Computing Classification System (CSS) concepts
-%% Generate at 'http://dl.acm.org/ccs/ccs.cfm'.
-\begin{CCSXML}
-<ccs2012>
-<concept>
-<concept_id>10011007.10011006.10011008</concept_id>
-<concept_desc>Software and its engineering~General programming languages</concept_desc>
-<concept_significance>500</concept_significance>
-</concept>
-<concept>
-<concept_id>10003456.10003457.10003521.10003525</concept_id>
-<concept_desc>Social and professional topics~History of programming languages</concept_desc>
-<concept_significance>300</concept_significance>
-</concept>
-</ccs2012>
-\end{CCSXML}
-
-\ccsdesc[500]{Software and its engineering~General programming languages}
-\ccsdesc[300]{Social and professional topics~History of programming languages}
-%% End of generated code
-
-%% Keywords
-%% comma separated list
-\keywords{keyword1, keyword2, keyword3}
-\fi
 
 %% \maketitle
 %% Note: \maketitle command must come after title commands, author
@@ -295,91 +179,61 @@
 \maketitle
 
 \section{Introduction}
+Modern digital society relies on a foundation of invisible scaffolding: the \ac{oss} projects that underpin global infrastructure. 
+This section motivates the analysis by framing \ac{oss} not merely as a technical resource, but as a \cite{collier_peering_2025} ``social achievement'' sustained by a delicate balance of community norms and corporate participation. 
+We introduce the controversy: the shift from collaborative social shaping to adversarial extraction.
 
-Of this super cool article \ldots
-\grosser{A simple comment refering to a particular location}
+\section{Infrastructure, Capital and Extraction}
+To analyze this shift, we propose a framework to define and relate infrastructure, capital and extraction. This model builds upon prior
+work, taking in inspiration from the \ac{slti} framework introduced by \citet{stewart_intermediaries_2008}, specifically
+building on the concept of intermediaries driving technology adoption and social learning.
+As laid out, open-source communities occupy a special role in the \ac{slti} framework, as they are engaging in a form of \emph{co-design}, performing both technology development and diffusion \cite{stewart_intermediaries_2008}.
+We want to show that such intermediaries must -- by necessity -- accumulate capital in soft currencies like knowledge and trust
+as well as more classical forms like software products and platforms.
 
-If there is \authorTwo[some text we want to refer to specifically]{this looks
-particularly interesting} we can refer to this text from within our comments.
+We define this as \emph{infrastructural capital}, the accumulated value of a digital commons -- comprising code, shared knowledge, social trust, and procedural norms -- which allows a technical system to function as reliable infrastructure. 
+Unlike traditional economic capital, it is not merely a ``resource'' to be spent, but a social achievement maintained through the continuous labor of care and ``peering pressure''.
+It is characterized by its social stickiness: its value is embedded in the durable networks of human maintainers and intermediaries who ensure the system's stability, security, and legibility.
+This is a natural extension of Bourdieu's definition of capital as accumulated labour \cite{bourdieu_1986}.
 
-And here we only mark \authorTwo[text]{} that is \authorTwo[interesting]{}, but do not
-actually comment.
+We then look at how this infrastructural capital is appropriated (used) by other parties.
+Specifically, we want to look at different forms of this appropriation, and differentiate between \emph{collaborative} \cite{collier_peering_2025,skains_creative_2016} and \emph{adversarial} \cite{collier_influence_2024} appropriation.
+We define \emph{collaborative appropriation} as the process of copying, transforming, deploying or otherwise adopting infrastructural capital in accordance with the initial goals and values of the entity or entities that create and/or manage this capital.
+The definition of \emph{adversarial appropriation} follows from this as appropriation that is not in accordance with such goals and values.
 
-Now we have a sequence of comments,
-\authorThree{Comment 3}
-\authorFour{Comment 4}
-\authorFive{Comment 5}
-\authorSix{Comment 6}
-which should not introduce overlong white space sequences.
+Finally, we investigate \emph{depletion} or \emph{exhaustion} of such capital through over-extraction. 
+The depletion of the digital commons is not a technical failure but a \textit{crisis of care} \cite{fraser_contradictions_2016}. As \citet{asparouhova_working_2020} demonstrates, the open-source model is increasingly defined by an asymmetry where a small number of maintainers bear a ``maintenance burden'' that has reached the point of over-exhaustion. 
 
-Sometimes it is also important to \emph{emphasize} text to understand if it is
-underlined or printed in italic.
+\section{The Patchwork World of Open Source}
+We want to spend some time discussing the development of the open source communities over time, their co-development 
+with the wider internet infrastructure and their interactions with the more commercially-interested parties in this system.
+We want to focus on intricate interplay of openeness, freedom and commercialisation and how these concepts are shaped and
+interpreted across the different open-source communities.
 
-We sometimes use macros to state that a tool as the name \toolname{} in a
-flexible way.
+\subsection{A History of Open Infrastructure}
+The origins of the internet in scientific collaboration established a precedent for open development and peer-to-peer standard setting. We examine the ideological fracture between \ac{foss} (GPL-focused user freedom) and \ac{oss} (MIT-focused adoption freedom), noting that these licenses are the fragile regulatory frameworks currently under threat.
 
-\lipsum[1-3]
+\subsection{The Capital of the Intermediaries}
+\ac{oss} exists as a \textit{patchwork} of varied capital: structured (code), semi-structured (documentation), and unstructured (trust and communal knowledge). Utilizing the \ac{slti} framework \cite{stewart_intermediaries_2008}, we argue that \ac{oss} communities act as tightly-coupled intermediaries that short-circuit traditional innovation cycles, generating a vast ``capital of the commons.'' Historically, corporate extraction (e.g., cloud providers repackaging code) targeted the structured bits, largely leaving the social fabric intact.
 
-\begin{figure}
-% Link to figure
-%
-% https://docs.google.com/drawings/d/1juKp43D3rLC-luBQPwQZ_wCnDK2S_6C1k6USV0wKE0g/edit?usp=sharing
-\includegraphics[width=\columnwidth]{overview.pdf}
-\caption{Our key idea visualized}
-\grosser{Replace this figure with your own drawing.}
-\end{figure}
+\section{The Arrival of LLMs}
+We outline the technical shift represented by \acp{llm}, emphasizing their unique ability to ingest and synthesize unstructured inputs.
 
-\vspace{.5em}
-\noindent
-Our contributions are:
-\grosser{Always state your contributions explicitly: (A) this makes it
-easy for the reader to understand what novelty is presented, and (B)
-these contributions help you to focus. In particular, the objective of
-the remaining paper should be to support the claims stated here.
-}
-\begin{itemize}
-	\item Contribution 1 (\autoref{sec:implementation})
-	\item Contribution 2
-	\item Contribution 3
-	\item Contribution 4
-\end{itemize}
+\subsection{LLMs as Tools of Appropriation}
+\acp{llm} represent the ultimate engine for \textit{adversarial appropriation} \cite{collier_influence_2024}. By creating a \cite{collier_influence_2024} ``patchwork profile'' of millions of developers' logic, they perform \textit{license laundering}---effectively converting protected \ac{foss} logic into proprietary outputs. Furthermore, they induce depletion by drowning human intermediaries in AI-generated \acp{pr}, clogging the essential review processes.
 
-\section{Our New Idea}
+\subsection{The Independence Paradox}
+While \acp{llm} offer developers increased individual autonomy, we caveat this by arguing that such empowerment often atomizes the community. By reducing the need for human-to-human ties, these tools may inadvertently weaken the social network that generates the very capital the models rely upon.
 
-\lipsum[1-3]
+\section{Conclusion: Seizing the Capital of the Commons}
+The \ac{oss} community has been invaluable in creating the infrastructure of the modern age, generating immense infrastructural capital through a culture of care \cite{collier_peering_2025}. While a tenuous balance between communities and corporations was maintained for decades, the advent of \acp{llm} has fundamentally upended this equilibrium.
 
-\section{Implementation}
-\label{sec:implementation}
+The controversy is not merely a legal dispute over copyright, but a sociological crisis of \textbf{infrastructural sustainability}. When we automate the extraction of logic but leave the burden of care to overstretched humans, we risk the irreversible destruction of the digital commons. The crisis of care in \ac{oss} serves as a warning for a data society that risks strip-mining its own social foundations.
 
-\section{Related Work}
 
-\lipsum[1-3]
 
-\grosser{Related work should always be at the end of the document,
-         as it otherwise becomes an obstacle your reader must
-	 overcome before reaching your idea. For details see:
-	 \url{https://www.microsoft.com/en-us/research/academic-program/write-great-research-paper/}
-}
 
-\section{Conclusion}
-\lipsum[1]
 
-%% Acknowledgments
-\begin{acks}                            %% acks environment is optional
-                                        %% contents suppressed with 'anonymous'
-  %% Commands \grantsponsor{<sponsorID>}{<name>}{<url>} and
-  %% \grantnum[<url>]{<sponsorID>}{<number>} should be used to
-  %% acknowledge financial support and will be used by metadata
-  %% extraction tools.
-  This material is based upon work supported by the
-  \grantsponsor{GS100000001}{National Science
-    Foundation}{http://dx.doi.org/10.13039/100000001} under Grant
-  No.~\grantnum{GS100000001}{nnnnnnn} and Grant
-  No.~\grantnum{GS100000001}{mmmmmmm}.  Any opinions, findings, and
-  conclusions or recommendations expressed in this material are those
-  of the author and do not necessarily reflect the views of the
-  National Science Foundation.
-\end{acks}
 
 %% Bibliography
 \bibliography{references}
