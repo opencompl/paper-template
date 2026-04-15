@@ -85,6 +85,9 @@
 \newacronym{gpt}{GPT}{Generative Pre-Trained Transformer}
 \newacronym{pr}{PR}{Pull Request}
 \newacronym{slti}{SLTI}{Social Learning in Technological Innovation}
+\newacronym{rfc}{RFC}{Request for Comments}
+\newacronym{gpl}{GPL}{GNU General Public License}
+
 
 \graphicspath{{./images/}}
 
@@ -211,19 +214,79 @@ We want to focus on intricate interplay of openeness, freedom and commercialisat
 interpreted across the different open-source communities.
 
 \subsection{A History of Open Infrastructure}
-The origins of the internet in scientific collaboration established a precedent for open development and peer-to-peer standard setting. We examine the ideological fracture between \ac{foss} (GPL-focused user freedom) and \ac{oss} (MIT-focused adoption freedom), noting that these licenses are the fragile regulatory frameworks currently under threat.
 
-\subsection{The Capital of the Intermediaries}
-\ac{oss} exists as a \textit{patchwork} of varied capital: structured (code), semi-structured (documentation), and unstructured (trust and communal knowledge). Utilizing the \ac{slti} framework \cite{stewart_intermediaries_2008}, we argue that \ac{oss} communities act as tightly-coupled intermediaries that short-circuit traditional innovation cycles, generating a vast ``capital of the commons.'' Historically, corporate extraction (e.g., cloud providers repackaging code) targeted the structured bits, largely leaving the social fabric intact.
+The foundational architecture of the modern internet is a legacy of scientific and academic collaboration, established through a culture of radical transparency and peer-to-peer standard-setting.
+Since the early beginnings, protocols were developed in a collaborative process called \ac{rfc}, a process where technical authority was derived not from institutional mandate but from a communal labor of care and consensus \cite{collier_peering_2025}.
+This era established the internet as an information commons, where the value of the network grew specifically because its underlying logic was openly shared and collaboratively appropriated.
+
+However, as this digital infrastructure moved from academic curiosity to global utility, the community underwent significant ideological change.
+The most important of which might be the establishment of the free software movement by Richard Stallman in 1985 and the emergence of the \ac{gpl} shortly after.
+Richard Stallman’s creations were a direct response to the increasing enclosure of software by commercial entities, which he viewed as an existential threat to the ``hacker ethic'' of collaborative sharing \cite{stallman_1985}.
+By institutionalizing the concept of copyleft, the \ac{gpl} created a robust regulatory space \cite{stewart_intermediaries_2008} in an attempt to mandate collaborative appropriation: any entity using or modifying the code was legally required to return those modifications to the commons.
+This framework turned the structured output of software into a self-replenishing resource, ensuring that the labor of care performed by the community could not be easily converted into proprietary, closed-source capital \cite{weber_2004}.
+Thus, the GPL license embodies a socio-technical intervention designed to maintain the sustainability of the digital commons against the pressures of commercial extraction. Software covered by the \ac{gpl} is referred to as \ac{foss}, with the common clarification of ``free, as in freedom''.
+
+In contrast to the protective stance of the Free Software movement, the emergence of the ``Open Source'' branding in the late 1990s signaled a shift toward a more commercially-permeable regulatory space.
+Proponents of this shift argued that the ideological requirements of the \ac{gpl} acted as a barrier to corporate participation and large-scale technology diffusion \cite{perens_1999}.
+By championing permissive licenses such as the MIT and Apache licenses, this movement argued that forcing companies to contribute their code back to the digital commons was too burdensome and would hence exclude commercial entities from the entire process \cite{raymond_1999}.
+Advocates of these licenses argued that this made commercial adoption easier and would hence ensure that companies have a vested interest in seeing the ecosystem prosper and would contribute back to the commons \cite{raymond_1999}.
+This facilitated a rapid expansion of the internet's technical foundations, as corporations could now adopt and build upon shared codebases with minimal risk. However, this transition also weakened the formal barriers against adversarial extraction created earlier.
+
+\subsection{The Capital of the Commons}
+
+This integrated position allows open-source communities to function as a unique class of innovation intermediary. Within the \ac{slti} framework, they represent a mode of collaborative technology experimentation where the traditional boundaries between development and diffusion are eroded \cite{stewart_intermediaries_2008}.
+By acting simultaneously as creators, intermediaries, and lead-users, these communities engage in a form of evolutionary co-design that generates significant infrastructural capital.
+For decades, a tenuous equilibrium held between these communities and commercial interests.
+While corporations frequently appropriated this capital -- as seen in the integration of the Linux kernel into the Android ecosystem or the repackaging of PostgreSQL for cloud-based relational database services -- they typically operated within a framework of ideas and resources shaped by the community's established norms.
+
+The nature of this equilibrium, however, depends heavily on the specific configuration of the socio-technical constituency involved.
+In instances like the development of Android~\cite{android}, the appropriation remains largely collaborative, as commercial actors are forced to contribute patches to Linux back to the upstream project to comply with its \ac{gpl} license.
+This ensures a replenishment of the infrastructural capital through a continued labor of care.
+Conversely, services such as Amazon Relational Database Service (RDS)~\cite{amazon_rds} represent a more complex interplay.
+While such offerings utilize the structured outputs of open source, they often do so by wrapping the community's social achievement in proprietary management layers.
+In these cases, the mediation between development and use is dramatically altered, as the corporation captures the buying dynamics and market understanding while the informal intermediaries and local experts of the original community are bypassed.
+
+Despite the established norms of the open-source ecosystem, the equilibrium has frequently been tested by attempts at adversarial extraction through the circumvention of copyleft requirements.
+A landmark instance of this tension is found in the legal actions surrounding the BusyBox~\cite{busybox} project, which saw several high-profile lawsuits against consumer electronics manufacturers for incorporating GPL-licensed code into proprietary hardware without providing the corresponding source code \cite{meeker_2008}.
+These cases demonstrated that the regulatory spaces established by community intermediaries are not self-enforcing; rather, they require active defense to prevent the conversion of the digital commons into closed commercial capital.
+This era of litigation highlighted the fragility of infrastructural capital when faced with actors who prioritize the immediate utility of the structured code over the social obligations and collaborative values that sustain the broader network \cite{moglen_1999}.
 
 \section{The Arrival of LLMs}
-We outline the technical shift represented by \acp{llm}, emphasizing their unique ability to ingest and synthesize unstructured inputs.
+The release of GPT2 by OpenAI~\cite{solaiman_release_2019} marks the start of a shift in technology that appears to be about as influential as the introduction of the internet itself. We want to take a look at how this technology is impacting the balance of power in the open source ecosystem.
 
-\subsection{LLMs as Tools of Appropriation}
-\acp{llm} represent the ultimate engine for \textit{adversarial appropriation} \cite{collier_influence_2024}. By creating a \cite{collier_influence_2024} ``patchwork profile'' of millions of developers' logic, they perform \textit{license laundering}---effectively converting protected \ac{foss} logic into proprietary outputs. Furthermore, they induce depletion by drowning human intermediaries in AI-generated \acp{pr}, clogging the essential review processes.
+At its core, the \ac{llm} represents a fundamental shift in how digital information is processed and synthesized.
+Unlike previous iterations of machine learning models that relied on highly structured datasets, these models excel at ingesting vast quantities of unstructured inputs -- ranging from natural language prose to the varied logic found in software repositories.
+The \ac{gpt} process, and the larger class of \acp{llm} functions not by understanding code in a conceptual sense, but by predicting the most probable sequences of tokens based on the patterns found in its training data \cite{brown_language_2020}.
 
-\subsection{The Independence Paradox}
-While \acp{llm} offer developers increased individual autonomy, we caveat this by arguing that such empowerment often atomizes the community. By reducing the need for human-to-human ties, these tools may inadvertently weaken the social network that generates the very capital the models rely upon.
+The so called scaling laws for neural language models~\cite{kaplan_scaling_2020} dictate, that the quality of the model is directly correlated with the size of the model and the dataset to train such models.
+Hence, the success is predicated on a massive act of appropriation: the ingestion of the global digital commons as raw material.
+By harvesting billions of lines of code, documentation, discourse and prose without regard for the specific social or legal frameworks governing them, \acp{llm} effectively bypass the traditional regulatory spaces that have historically managed the flow of infrastructural capital.
+
+\subsection{LLMs as Engines of Appropriation}
+An \ac{llm} does more than just copy code; it embodies the extracted commons, reifying the community’s collective knowledge into a proprietary interface.
+This facilitates a process of license laundering, where the logical structures of \ac{foss} projects -- originally protected by copyleft mandates -- are transformed into non-attributed outputs that can be easily integrated into proprietary stacks.
+This erosion of the license-based buffer fundamentally undermines the role of the maintainer as an innovation intermediary.
+By stripping away the requirement for collaborative return, \acp{llm} allow for a total conversion of social capital into private economic capital.
+
+Furthermore, the impact of \acp{llm} extends beyond the extraction of code to the depletion of the community’s social energy.
+The proliferation of AI-generated content has begun to drown repositories in a high volume of low-quality \acp{pr}, clogging the essential peer-review processes that underpin the labor of care.
+This creates a feedback loop of over-exhaustion: as community members spend increasing amounts of their limited time filtering machine-generated noise, their capacity to perform meaningful maintenance diminishes.
+In this context, the \ac{llm} acts as an accelerant for infrastructural depletion, harvesting the rewards of the digital commons while simultaneously exhausting the human networks required to sustain it \cite{asparouhova_working_2020}.
+
+To summarise, while extracting the infrastructural capital of the commons used to be performed piecemeal and in adherence to the license terms, \acp{llm} enable a new, holistic extraction that finds a way around all the guardrails that were previously erected to protect fragile intermediaries.
+
+\subsection{LLMs as Engines of Autonomy}
+The relationship between \acp{llm} and the digital commons is not exclusively characterized by external extraction; a parallel movement exists where these models are being reclaimed as tools for individual empowerment.
+As proprietary models, and open-source alternatives proliferate, community members are increasingly integrating \acp{llm} into their own workflows to automate routine tasks, generate boilerplate code, and accelerate the learning curves for complex new technologies.
+This shift promises a form of radical independence, potentially reducing the individual developer's reliance on external structured capital and established institutional knowledge.
+By lowering the barriers to entry for sophisticated software development, \acp{llm} appear to democratize the ability to produce and maintain digital infrastructure.
+
+However, this newfound autonomy carries a significant sociological caveat regarding the long-term health of the commons.
+If the primary value of open source lies in its status as a \textit{social achievement} -- rooted in the dense networks of peer review, mentorship, and communal trust -- then the atomization of the development process may prove counterproductive.
+When \acp{llm} empower the individual to bypass the social ties and ``peering pressure'' \cite{collier_peering_2025} that define the community, they risk eroding the very collective bonds that generate infrastructural capital.
+While an individual may become more productive in the short term, this shift toward solitary, machine-augmented development threatens to weaken the interdependent human networks that sustain the ecosystem.
+Consequently, the use of \acp{llm} as tools of independence may inadvertently accelerate the transition from a vibrant, collaborative commons to a fragmented landscape of isolated actors, further complicating the crisis of care.
+
 
 \section{Conclusion: Seizing the Capital of the Commons}
 The \ac{oss} community has been invaluable in creating the infrastructure of the modern age, generating immense infrastructural capital through a culture of care \cite{collier_peering_2025}. While a tenuous balance between communities and corporations was maintained for decades, the advent of \acp{llm} has fundamentally upended this equilibrium.
