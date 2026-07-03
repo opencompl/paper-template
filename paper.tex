@@ -52,29 +52,15 @@
 \usepackage{etoolbox}
 \usepackage[acronym,shortcuts]{glossaries}
 \usepackage{amsmath}
-\usepackage{thmtools} % required for autoref to lemmas
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
 \usepackage{hyphenat}
 \usepackage[shortcuts]{extdash}
 
-% TeX Live 2025+ thmtools aliases shared theorem counters before calling the
-% original \newtheorem, which makes acmart's default theorem definitions fail.
-% Defer the alias until after \newtheorem so acmart can create the environments.
-\makeatletter
-\renewcommand\thmt@autorefsetup{%
-  \expandafter\def\csname\thmt@envname autorefname\expandafter\endcsname
-    \expandafter{\thmt@thmname}%
-  \ifthmt@hassibling
-    \def\thmt@autoreffix{%
-      \@counteralias{\thmt@envname}{\thmt@sibling}%
-      \expandafter\global\expandafter\let\csname the\thmt@envname
-        \expandafter\endcsname\csname the\thmt@sibling\endcsname
-      \def\thmt@autoreffix{}%
-    }%
-  \fi
-}
-\makeatother
+% Load thmtools after acmart has created its built-in theorem environments.
+% Newer thmtools aliases shared counters before \newtheorem, which collides
+% with acmart's default conjecture/proposition/lemma definitions otherwise.
+\AtEndPreamble{\usepackage{thmtools}}
 
 \input{tex/setup.tex}
 \input{tex/acm.tex}
