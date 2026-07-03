@@ -45,7 +45,7 @@ require_var() {
   local name="$1"
   local value="${!name:-}"
 
-  if [ -z "$value" ] || [ "$value" = "TODO" ]; then
+  if [ -z "$value" ] || [[ "$value" == *TODO* ]]; then
     die "$name is not set. Update $config_file or provide it in the environment."
   fi
 }
