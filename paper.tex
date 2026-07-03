@@ -58,12 +58,22 @@
 \usepackage{hyphenat}
 \usepackage[shortcuts]{extdash}
 
-% TeX Live 2025+ leaves a conjecture counter defined before acmart creates its
-% default theorem environments. Clear it so acmart can define conjecture itself.
+% TeX Live 2025+ thmtools aliases shared theorem counters before calling the
+% original \newtheorem, which makes acmart's default theorem definitions fail.
+% Defer the alias until after \newtheorem so acmart can create the environments.
 \makeatletter
-\@ifundefined{conjecture}{%
-  \expandafter\let\csname c@conjecture\endcsname\@undefined
-}{}
+\renewcommand\thmt@autorefsetup{%
+  \expandafter\def\csname\thmt@envname autorefname\expandafter\endcsname
+    \expandafter{\thmt@thmname}%
+  \ifthmt@hassibling
+    \def\thmt@autoreffix{%
+      \@counteralias{\thmt@envname}{\thmt@sibling}%
+      \expandafter\global\expandafter\let\csname the\thmt@envname
+        \expandafter\endcsname\csname the\thmt@sibling\endcsname
+      \def\thmt@autoreffix{}%
+    }%
+  \fi
+}
 \makeatother
 
 \input{tex/setup.tex}
