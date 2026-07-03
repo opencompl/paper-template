@@ -6,10 +6,7 @@ permissions: write-all
 
 # Controls when the action will run. Triggers the workflow on push, pull request,
 # or a manual run from the GitHub Actions UI.
-on:
-  push:
-  pull_request:
-  workflow_dispatch:
+on: [push, pull_request]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
