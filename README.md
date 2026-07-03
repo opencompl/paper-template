@@ -74,15 +74,15 @@ git merge upstream/main
 This repository has support for opt-in automatic submission of `submission.pdf` to HotCRP on every push to main.
 This requires setting up the submission in HotCRP first.
 
-0. Assume the HotCRP site is hosted at https://asplos26.hotcrp.com
+0. For this example, we will take `https://asplos26.hotcrp.com` as the HotCRP site.
 1. Create the paper submission on the HotCRP website. `HOTCRP_PID` is the paper's submission ID in the URL (eg. `https://asplos26.hotcrp.com/paper/HOTCRP_PID`)
 2. Create an Authentication Token in HotCRP's **Account Settings**: (eg. `https://asplos26.hotcrp.com/profile/developer`)
-3. Set up `.github/hotcrp.env` with the values from HotCRP, and set `HOTCRP_ACTION_UPLOAD_ENABLED=true` to enable uploading by GitHub Actions.
+3. Set up `.github/hotcrp.env` with the values from HotCRP, and set `HOTCRP_ACTION_UPLOAD_ENABLED:=true` to enable uploading by GitHub Actions.
 
 ```sh
-HOTCRP_SITE_URL=https://asplos26.hotcrp.com
-HOTCRP_PID=TODO
-HOTCRP_ACTION_UPLOAD_ENABLED=true # This toggle enables the GitHub workflow
+: "${HOTCRP_SITE_URL:=https://asplos26.hotcrp.com}"
+: "${HOTCRP_PID:=67}"
+: "${HOTCRP_ACTION_UPLOAD_ENABLED:=true}"
 ```
 
 4. Lastly, add the `HOTCRP_TOKEN` repository secret in GitHub under **Settings -> Secrets and variables -> Actions**.
