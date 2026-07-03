@@ -10,25 +10,25 @@ Usage:
   tools/upload-to-hotcrp.sh [CONFIG_FILE]
   tools/upload-to-hotcrp.sh --help
 
-Uploads a paper PDF to the configured HotCRP submission.
+Uploads a paper PDF to the configured HotCRP submission, to be run from root of
+the repository.
 
-CONFIG_FILE is sourced as a shell env file. If omitted, .github/hotcrp.env is
-sourced when it exists; otherwise existing environment variables are used.
-Environment variables should take precedence over CONFIG_FILE defaults when
-CONFIG_FILE uses Bash default assignments such as : "${HOTCRP_PID:=TODO}".
+CONFIG_FILE is sourced as a shell env file, with .github/hotcrp as the default.
+Environment variables take precedence over CONFIG_FILE defaults when CONFIG_FILE
+uses Bash default assignments such as : "${HOTCRP_PID:=TODO}".
 
 Required values:
-  HOTCRP_SITE_URL          HotCRP site base URL, for example https://asplos26.hotcrp.com
-  HOTCRP_PID               Numeric HotCRP paper ID
-  HOTCRP_TOKEN             HotCRP API token
+  HOTCRP_SITE_URL         HotCRP site base URL, e.g. https://asplos26.hotcrp.com
+  HOTCRP_PID              Numeric HotCRP paper ID
+  HOTCRP_TOKEN            HotCRP API token
 
 GitHub Actions control:
   HOTCRP_ACTION_UPLOAD_ENABLED
-                           In GitHub Actions, must be exactly true to upload.
-                           Defaults to false.
+                          In GitHub Actions, must be exactly true to upload.
+                          Defaults to false.
 
 Optional overrides:
-  HOTCRP_PDF               PDF to upload. Defaults to submission.pdf.
+  HOTCRP_PDF              PDF to upload. Defaults to submission.pdf.
 
 Local example:
   HOTCRP_TOKEN=... tools/upload-to-hotcrp.sh .github/hotcrp.env
@@ -67,7 +67,6 @@ if [ "$#" -gt 0 ] || [ -f "$config_file" ]; then
   [ -f "$config_file" ] || die "missing HotCRP config file: $config_file"
 
   set -a
-  # shellcheck source=/dev/null
   . "$config_file"
   set +a
 fi
@@ -124,7 +123,8 @@ curl -fsS \
   "$HOTCRP_SITE_URL/api/paper" \
   > hotcrp-response.json
 
-# Error reporting uses Python3's stdlib json to avoid installing extra packages in the container
+# Error reporting uses Python3's stdlib json to avoid installing extra packages
+# in the actions container
 python3 - <<'PY'
 import json
 import sys
