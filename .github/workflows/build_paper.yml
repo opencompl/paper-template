@@ -18,92 +18,92 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
 
-      - name: Create .latexminted_config file
-        run: |
-          bash ./tools/create_latexminted_config.sh
-          make .latexminted_config
+    - name: Create .latexminted_config file
+      run: |
+        bash ./tools/create_latexminted_config.sh
+        make .latexminted_config
 
-      # Uses the latest TeXLive distribution (currently with minted v3+)
-      - name: Compile paper
-        uses: xu-cheng/latex-action@master
-        with:
-          root_file: paper.tex
+    # Uses the latest TeXLive distribution (currently with minted v3+)
+    - name: Compile paper
+      uses: xu-cheng/latex-action@master
+      with:
+        root_file: paper.tex
 
-      # Uses the latest TeXLive distribution (currently with minted v3+)
-      - name: Compile submission
-        uses: xu-cheng/latex-action@master
-        with:
-          root_file: submission.tex
+    # Uses the latest TeXLive distribution (currently with minted v3+)
+    - name: Compile submission
+      uses: xu-cheng/latex-action@master
+      with:
+        root_file: submission.tex
 
-      - name: Release
-        if: ${{ github.event_name == 'push' }}
-        id: create_release
-        uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          name: Release ${{ github.run_number }}
-          tag_name: release-${{ github.run_number }}
-          files: |
-            paper.pdf
-            submission.pdf
+    - name: Release
+      if: ${{ github.event_name == 'push' }}
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        name: Release ${{ github.run_number }}
+        tag_name: release-${{ github.run_number }}
+        files: |
+          paper.pdf
+          submission.pdf
 
-      - name: Set up Python for HotCRP response validation
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
+    - name: Set up Python for HotCRP response validation
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.x"
 
-      - name: Upload to HotCRP
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-        env:
-          HOTCRP_TOKEN: ${{ secrets.HOTCRP_TOKEN }}
-        run: bash ./tools/upload-to-hotcrp.sh .github/hotcrp.env
+    - name: Upload to HotCRP
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      env:
+        HOTCRP_TOKEN: ${{ secrets.HOTCRP_TOKEN }}
+      run: bash ./tools/upload-to-hotcrp.sh .github/hotcrp.env
 
   build-texlive-2024:
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
 
-      # Uses an older TeXLive distribution (with minted v2.9)
-      - name: Compile paper
-        uses: xu-cheng/latex-action@master
-        with:
-          docker_image: ghcr.io/xu-cheng/texlive-full:20240901
-          root_file: paper.tex
+    # Uses an older TeXLive distribution (with minted v2.9)
+    - name: Compile paper
+      uses: xu-cheng/latex-action@master
+      with:
+        docker_image: ghcr.io/xu-cheng/texlive-full:20240901
+        root_file: paper.tex
 
-      # Uses an older TeXLive distribution (with minted v2.9)
-      - name: Compile submission
-        uses: xu-cheng/latex-action@master
-        with:
-          docker_image: ghcr.io/xu-cheng/texlive-full:20240901
-          root_file: submission.tex
+    # Uses an older TeXLive distribution (with minted v2.9)
+    - name: Compile submission
+      uses: xu-cheng/latex-action@master
+      with:
+        docker_image: ghcr.io/xu-cheng/texlive-full:20240901
+        root_file: submission.tex
   build-texlive-2022:
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
 
-      # Uses an older TeXLive distribution (with minted v2.6)
-      - name: Compile paper
-        uses: xu-cheng/latex-action@v3
-        with:
-          docker_image: ghcr.io/xu-cheng/texlive-full:20221101
-          root_file: paper.tex
-          latexmk_shell_escape: true
+    # Uses an older TeXLive distribution (with minted v2.6)
+    - name: Compile paper
+      uses: xu-cheng/latex-action@v3
+      with:
+        docker_image: ghcr.io/xu-cheng/texlive-full:20221101
+        root_file: paper.tex
+        latexmk_shell_escape: true
 
-      # Uses an older TeXLive distribution (with minted v2.6)
-      - name: Compile submission
-        uses: xu-cheng/latex-action@v3
-        with:
-          docker_image: ghcr.io/xu-cheng/texlive-full:20221101
-          root_file: submission.tex
-          latexmk_shell_escape: true
+    # Uses an older TeXLive distribution (with minted v2.6)
+    - name: Compile submission
+      uses: xu-cheng/latex-action@v3
+      with:
+        docker_image: ghcr.io/xu-cheng/texlive-full:20221101
+        root_file: submission.tex
+        latexmk_shell_escape: true
