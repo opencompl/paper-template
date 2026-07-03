@@ -1,6 +1,6 @@
 % \iffalse
 %
-% Copyright 2016-2025, Association for Computing Machinery
+% Copyright 2016-2026, Association for Computing Machinery
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either
 % version 1.3 of this license or (at your option) any
@@ -16,11 +16,14 @@
 % <borisv@lk.net>
 %
 % This work consists of the file acmart.dtx, the derived file
-% acmart.cls, the files ACM-Reference-Format.bst, and templates
-% sample-acmlarge.tex, sample-acmsmall.tex, sample-acmtog.tex,
-% samplebody-conf.tex, samplebody-journals.tex, sample-manuscript.tex,
-% sample-sigconf-authordraft.tex, sample-sigconf.tex,
-% sample-sigplan.tex
+% acmart.cls, the files ACM-Reference-Format.bst, templates
+% acmengage.dtx, samples.dtx, and derived templates acmcp.tex,
+% acmengage.tex, acmlarge.tex, acmmanuscript.tex,
+% acmsmall-biblatex.tex, acmsmall-conf.tex, acmsmall-submission.tex,
+% acmsmall-tagged.tex, acmsmall.tex, acmtog-conf.tex, acmtog.tex,
+% sigconf-authordraft.tex, sigconf-biblatex.tex, sigconf-i13n.tex,
+% sigconf-lualatex.tex, sigconf-tagged.tex, sigconf.tex, sigplan.tex.
+
 %
 % \fi
 %
@@ -57,7 +60,7 @@
 % \ifx\currentjob\guide\OnlyDescription\fi
 % \GetFileInfo{acmart.dtx}
 % \title{\LaTeX{} Class for the \emph{Association for Computing
-% Machinery}\thanks{\copyright 2016--2025, Association for Computing Machinery}}
+% Machinery}\thanks{\copyright 2016--2026, Association for Computing Machinery}}
 % \author{Boris Veytsman\thanks{%
 % \href{mailto:borisv@lk.net}{\texttt{borisv@lk.net}},
 % \href{mailto:boris@varphi.com}{\texttt{boris@varphi.com}}}}
@@ -117,6 +120,7 @@
 %  Ulrike Fischer,
 %  Jason Hemann,
 %  Peter Kemp,
+%  David F. Kotz,
 %  Luis Leiva,
 %  Ben Liblit,
 %  Rholais Lii,
@@ -221,6 +225,7 @@
 % \item \textsl{caption}, \url{https://ctan.org/pkg/caption},
 % \item \textsl{cmap}, \url{https://ctan.org/pkg/cmap},
 % \item \textsl{comment}, \url{https://ctan.org/pkg/comment},
+% \item \textsl{doclicense}, \url{https://ctan.org/pkg/doclicense},
 % \item \textsl{draftwatermark}, \url{https://ctan.org/pkg/draftwatermark},
 % \item \textsl{environ}, \url{https://ctan.org/pkg/environ},
 % \item \textsl{etoolbox}, \url{https://ctan.org/pkg/etoolbox},
@@ -239,6 +244,7 @@
 % \item \textsl{natbib}, \url{https://ctan.org/pkg/natbib},
 % \item \textsl{newtxmath}, \url{https://ctan.org/pkg/newtxmath},
 % \item \textsl{pbalance}, \url{https://ctan.org/pkg/pbalance},
+% \item \textsl{pifont}, \url{https://ctan.org/pkg/pifont},
 % \item \textsl{refcount}, \url{https://ctan.org/pkg/refcount},
 % \item \textsl{setspace}, \url{https://ctan.org/pkg/setspace},
 % \item \textsl{totpages}, \url{https://ctan.org/pkg/totpages},
@@ -297,10 +303,11 @@
 %     \normalfont Value & Meaning\\
 %     \midrule
 %   manuscript & A manuscript. This is the default. \\
-%   acmsmall & Small single-column format.  Used for ACMJCSS, CIE, CSUR,
+%       acmsmall & Small single-column format.  Used for ACMJCSS,
+%            ACMJDS, AILET, CIE, CSUR,
 %            FAC, GAMES, JACM, JATS,  JDIQ, JDS, JEA, JERIC,
 %            JETC, JRC, PACMCGIT, PACMHCI, PACMMOD, PACMNET,
-%            PACMPL, PACMSE, POMACS, TAAS, TACCESS, TACO,
+%            PACMPL, PACMSE, POMACS, TAAS, TACCESS, TACO, TAIS, TAISAP,
 %            TALG, TALLIP (formerly TALIP), TCPS, TDS,
 %            TEAC, TECS, TELO, THRI, TIIS, TIOT, TISSEC, TIST, TKDD, TMIS,
 %            TOCE, TOCHI, TOCL,
@@ -367,7 +374,7 @@
 % confusing different revisions.  The footer also includes the page range of
 % the document.  This helps detect missing pages in hard copies.
 %
-% The option |authordraft| is intended for author's drafts that are not
+% The option |authordraft| is intended for authors' drafts that are not
 % intended for distribution.  It typesets a copyright block to give the
 % author an idea of its size and the overall size of the paper but
 % overprints it with the phrase ``Unpublished working draft. Not for
@@ -558,8 +565,8 @@
 % \email{...}
 % \end{verbatim}
 % Do \emph{not} use the \LaTeX\ \cs{and} macro or commas, or \verb|\\|
-% between the authors! Each author deserves his or
-% her own \cs{author} command.  An attempt to list several authors or
+% between the authors! Each author deserves their
+% own \cs{author} command.  An attempt to list several authors or
 % their e-mails in one command leads to a warning or an error.  This
 % is not a bug, but the expected behavior.
 %
@@ -728,7 +735,11 @@
 %   \country{San Serriffe}}
 % \end{verbatim}
 %
-%
+%  \DescribeMacro{\correspondingauthor}%
+% The command \cs{correspondingauthor} after an author's name marks
+% the corresponding author.  Note that there could be more than one
+% corresponding author.  Make sure that you have the email of the
+% author entered.
 %
 % \DescribeMacro{\thanks}%
 % Like |amsart| (and unlike standard \LaTeX{}), we allow
@@ -792,7 +803,7 @@
 % \authornotemark[1]
 % \end{verbatim}
 % The correct numbering of these marks is the responsibility of the
-% user.
+% user.  
 %
 % \DescribeMacro{\acmVolume}%
 % \DescribeMacro{\acmNumber}%
@@ -876,11 +887,10 @@
 % article in a journal or book.  It is used by the typesetter.
 %
 %
-% \DescribeMacro{\terms}%
 % \DescribeMacro{\keywords}%
 % The command
 % \cs{keywords}\marg{keyword, keyword,\ldots} sets keywords for the
-% article.  They must be
+% publication. If present, keywords must be 
 % separated by commas, for example,
 % \begin{verbatim}
 % \keywords{wireless sensor networks, media access control,
@@ -947,8 +957,6 @@
 % \verb|\setcopyright{acmcopyright}|.  The possible values for this
 % command are listed in Table~\ref{tab:setcopyright}.  This command
 % must be placed in the preamble, before |\begin{document}|.
-% Additional information about ACM copyright rules is discussed in
-% Section~\ref{sec:ug_cc}.
 %
 % \begin{table}
 %   \centering
@@ -1255,7 +1263,8 @@
 %
 % This key can use any language defined in \textsl{babel}
 % package~\cite{Braams22:Babel} (currently the package is tested with
-% English, French, German and Spanish languages; other languages may
+% English, French, German and Spanish languages.  If \cs{keywords} are
+% used, then other languages may
 % require a translation of \cs{keywordsname} macro).  Actually
 % \textsl{acmart} loads \textsl{babel} internally, so you can use  the
 % facilities provided by this package.
@@ -1267,9 +1276,10 @@
 % \DescribeMacro{\translatedtitle}%
 % \DescribeMacro{\translatedsubtitle}%
 % \DescribeMacro{\translatedkeywords}%
-% The commands \cs{translatedtitle}\marg{language}{title},
-% \cs{translatedsubtitle}\marg{language}{subtitle} and
-% \cs{translatedkeywords}{language}{keywords} are used to set title,
+% The commands \cs{translatedtitle},
+% \cs{translatedsubtitle}, and (if keywords are used)
+% \cs{translatedkeywords} have two mandatory arguments each:
+% \marg{language} and \marg{keywords}.  They  are used to set title,
 % subtitle and keywords in the secondary language.  For example, a
 % paper in English with French title and abstract may set 
 % \begin{verbatim}
@@ -1297,6 +1307,39 @@
 % Use the standard commands (\cs{title}, \cs{subtitle},
 % \cs{keywords}, |abstract|) for the main language of the paper.  
 %
+%
+%\subsection{Tagging}
+%\label{sec:ug-tagging}
+%
+%
+% ACM is firmly committed to produce fully tagged PDFs compliant with
+% the accessibility standards.
+% 
+% The \LaTeX\ tagging project,
+% \url{https://latex3.github.io/tagging-project/} is aimed to create
+% accessible and standards compliant PDFs.  To create a tagged PDF,
+% start your document with the \cs{DocumentMetadata} command, for
+% example,
+% \begin{verbatim}
+% \DocumentMetadata{
+%  lang        = en,
+%  pdfstandard = ua-2,
+%  pdfstandard = a-4f, 
+%  tagging=on,
+%  tagging-setup={math/setup=mathml-SE} 
+% }
+% \end{verbatim}
+% You must use \texttt{lualatex} to make the document fully tagged.
+% For some features you may need \texttt{lualatex-dev}.
+%
+%
+%
+% At present this code is still experimental.  If you use it, please
+% \emph{do not ask ACM for support}.  On the other hand, bug reports
+% at \url{https://github.com/borisveytsman/acmart/issues} will be
+% appreciated.
+%
+%
 %\subsection{Algorithms}
 %\label{sec:ug_algorithms}
 %
@@ -1309,7 +1352,7 @@
 %\subsection{Figures and tables}
 %\label{sec:ug_floats}
 %
-% The new ACM styles use the standard \LaTeX\ interface for figures and
+% ACM styles use the standard \LaTeX\ interface for figures and
 % tables.  There are some important items to be aware of, however.
 %
 % \begin{enumerate}
@@ -1387,16 +1430,28 @@
 % need to override this.  A good way to do so is to put the contents
 % into a \cs{minipage} of the width \cs{columnwidth}.
 %
+% If tagging is enabled (see Section~\ref{sec:ug-tagging}), it assumes
+% that the first row of table contains headers.  To change this
+% assumption, use \c{tagpdfsetup}, for example, if you have two rows
+% of headers,
+% \begin{verbatim}
+% \tagpdfsetup{table/header-rows={1,2}}
+% \end{verbatim}
+%
 %
 %\subsection{Descriptions of images}
 %\label{sec:descriptions}
 %
-% \DescribeMacro{\Description}%
 % Some readers of ACM publications might be visually challenged.
 % These readers might use a voice-over software to read aloud the
 % papers.  It is important to provide them a description of each
 % image used in the paper.
 %
+% There are two ways to include descriptions in thd figures.
+%
+% \DescribeMacro{\Description}%
+% The old way, that predates \LaTeX\ tagging project is based on the
+% \cs{Description} command.
 % The command \cs{Description}\oarg{short description}\marg{long
 % description} should be placed inside every \texttt{figure},
 % \texttt{teaserfigure} or \texttt{marginfigure} environment to
@@ -1409,6 +1464,20 @@
 %   \includegraphics{voltage}
 %   \Description{A bell-like histogram centered at $0.5$~V with most
 %   measurements between $0.2$~V and $0.8$~V}
+%   \caption{Histogram of the measurements of voltage}
+%   \label{fig:voltage}
+% \end{figure}
+% \end{verbatim}
+%
+% The new way, which is switched on by the \cs{DocumentMetada} command
+% is based on the |alt| keyword for the \cs{includegraphics} command,
+% for example,
+% \begin{verbatim}
+% \begin{figure}
+%   \centering
+%   \includegraphics[alt={A bell-like histogram
+%   centered at $0.5$~V with most
+%   measurements between $0.2$~V and $0.8$~V}]{voltage}
 %   \caption{Histogram of the measurements of voltage}
 %   \label{fig:voltage}
 % \end{figure}
@@ -1448,7 +1517,19 @@
 %   \theoremstyle{acmdefinition}
 %   \newtheorem{remark}[theorem]{Remark}}
 % \end{verbatim}
-% 
+%
+% If you use \textsl{cleveref} and share counters between the
+% theorem-like constructs, you need to explicitly tell
+% \textsl{cleveref} the kind of the construct you use, for example,
+% \begin{verbatim}
+% \newtheorem{theorem}{Theorem}[section]
+% \newtheorem{lemma}[theorem]{Lemma}
+%  % Theorems and lemmas share counters
+% ...
+% \begin{theorem}\label{thm:test} % This is a theorem
+%   ...
+% \begin{lemma}\label[lemma]{test-lemma} % This is a lemma
+% \end{verbatim}
 %
 %\subsection{Online-only and offline-only material}
 %\label{sec:ug_screen}
@@ -1616,7 +1697,12 @@
 % Note that before version~1.48 the command \cs{citeyear} put the year
 % in parentheses.  In version~1.48 and later it produces just the
 % year; the command \cs{citeyearpar} can be used to emulate its old
-% behavior.
+% behavior.  You can use these commands to produce in-text citations,
+% for example,
+% \begin{verbatim}
+% So we see that \citeauthor{Burano2026} 
+% proved this conjecture in \citeyear{Burano2026}~\cite{Burano2026}. 
+% \end{verbatim}
 %
 % There are several customized \BibTeX\ entry types and fields in the ACM
 % style file \path{ACM-Reference-Format.bst} that you may want to be
@@ -1635,7 +1721,11 @@
 % \end{verbatim}
 % Normally the printing of URL is suppressed if DOI is present.
 % However, there is a special field \path{distinctURL}.  If it is
-% present and is not zero, URL is printed even if DOI is present.
+% present and has any value, URL is printed even if DOI is present,
+% for example,
+% \begin{verbatim}
+% distinctURL = 'true',
+% \end{verbatim}
 %
 % The dynamic nature of Internet makes URLs not permanent: sometimes
 % they disappear or change.  The problem of ``stale links'' exists
@@ -1860,7 +1950,9 @@
 % are includes, so you can use strings like |journal = taccess| for
 % \emph{ACM Transactions on Accessible Computing}.
 %
-%\subsubsection{Processing using Bib\LaTeX}
+% \subsubsection{Processing using Bib\LaTeX}
+%
+% 
 % You will find in this package two sets of style files for Bib\LaTeX,
 % \verb|acmnumeric| and \verb|acmauthoryear|, that mimic the behavior
 % of the ACM-Reference-Format.bst Bib\TeX\ style. They provide you
@@ -1868,7 +1960,8 @@
 % support for advanced citation of software artifacts from the
 % \verb|biblatex-software| package, also separately available on CTAN.
 % Look at the \verb|biblatex-software| documentation to learn more about
-% what it offers.
+% what it offers.  This support is highly experimental and currently
+% is \emph{not} supported by TAPS!
 % 
 % There are a few key differences in how the \LaTeX\ sources are set up
 % when using Bib\LaTeX\ instead of Bib\TeX, that we summarize briefly
@@ -1901,6 +1994,36 @@
 % directory after running \verb|make| for templates showcasing
 % these Bib\LaTeX\ styles.
 
+%
+%
+%\subsubsection{Manual bibliography}
+%\label{sec:ug_manual_bibliography}
+%
+% Some people create bibliographies manually, writing down
+% \cs{bibitem} commands explicitly.  This approach is \emph{not}
+% recommended for ACM styles.  The reason is, ACM submissions, besides
+% being typeset, are also processed by special programs that extract
+% metadata and references.  Bibliographies created automatically with
+% ACM styles contain customized macros for these programs, for
+% example,
+% \begin{verbatim}
+% \bibitem[Ablamowicz and Fauser(2007)]%
+%         {Ablamowicz07}
+% \bibfield{author}{\bibinfo{person}{Rafal Ablamowicz} {and}
+%   \bibinfo{person}{Bertfried Fauser}.} \bibinfo{year}{2007}\natexlab{}.
+% \newblock \bibinfo{booktitle}{\emph{CLIFFORD: a Maple 11 Package for Clifford
+%   Algebra Computations, version 11}}.
+% \newblock
+% \urldef\tempurl%
+% \url{http://math.tntech.edu/rafal/cliff11/index.html}
+% \showURL{%
+% Retrieved February 28, 2008 from \tempurl} 
+% \end{verbatim}
+%
+% Manual bibliographies without these macros may slow down the
+% publication process, and thus are not recommended for ACM
+% submissions. 
+%
 %\subsection{Colors}
 %\label{sec:ug_colors}
 %
@@ -1943,36 +2066,6 @@
 %    \url{http://daprlab.com/ace/} for designing WCAG 2.0 compliant
 %    palettes.
 %  \end{enumerate}
-%
-%
-%
-%\subsubsection{Manual bibliography}
-%\label{sec:ug_manual_bibliography}
-%
-% Some people create bibliographies manually, writing down
-% \cs{bibitem} commands explicitly.  This approach is \emph{not}
-% recommended for ACM styles.  The reason is, ACM submissions, besides
-% being typeset, are also processed by special programs that extract
-% metadata and references.  Bibliographies created automatically with
-% ACM styles contain customized macros for these programs, for
-% example,
-% \begin{verbatim}
-% \bibitem[Ablamowicz and Fauser(2007)]%
-%         {Ablamowicz07}
-% \bibfield{author}{\bibinfo{person}{Rafal Ablamowicz} {and}
-%   \bibinfo{person}{Bertfried Fauser}.} \bibinfo{year}{2007}\natexlab{}.
-% \newblock \bibinfo{booktitle}{\emph{CLIFFORD: a Maple 11 Package for Clifford
-%   Algebra Computations, version 11}}.
-% \newblock
-% \urldef\tempurl%
-% \url{http://math.tntech.edu/rafal/cliff11/index.html}
-% \showURL{%
-% Retrieved February 28, 2008 from \tempurl} 
-% \end{verbatim}
-%
-% Manual bibliographies without these macros may slow down the
-% publication process, and thus are not recommended for ACM
-% submissions. 
 %
 %\subsection{Other notable packages and typographic remarks}
 %\label{sec:ug_other}
@@ -2128,6 +2221,8 @@
 % \bottomrule
 %     \endfoot
 %     ACMJCSS &  ACM Journal on Computing and Sustainable Societies \\
+%     ACMJDS &  ACM Journal of Data Science\\
+%     AILET & ACM AI Letters\\
 %     CIE & ACM Computers in Entertainment \\
 %     CSUR & ACM Computing Surveys\\
 %     DLT & Distributed Ledger Technologies: Research and Practice\\
@@ -2141,7 +2236,7 @@
 %     JACM &  Journal of the ACM \\
 %     JATS &  ACM Journal on Autonomous Transportation Systems \\
 %     JDIQ & ACM Journal of Data and Information Quality \\
-%     JDS & ACM/IMS Journal of Data Science \\
+%     JDS & ACM Journal of Data Science \\
 %     JEA & ACM Journal of Experimental Algorithmics \\
 %     JERIC & ACM Journal of Educational Resources in Computing\\
 %     JETC & ACM Journal on Emerging Technologies in Computing Systems \\
@@ -2158,12 +2253,14 @@
 %     TAAS & ACM Transactions on Autonomous and Adaptive Systems\\
 %     TACCESS & ACM Transactions on Accessible Computing\\
 %     TACO & ACM Transactions on Architecture and Code Optimization \\
+%     TAIS & ACM Transactions on AI for Science\\
+%     TAISAP & ACM Transactions on AI Security and Privacy\\
 %     TALG & ACM Transactions on Algorithms \\
 %     TALLIP & ACM Transactions on Asian and Low-Resource Language
 %     Information Processing\\
 %     TAP & ACM Transactions on Applied Perception \\
 %     TCPS & ACM Transactions on Cyber-Physical Systems\\
-%     TDS & ACM/IMS Transactions on Data Science\\
+%     TDS & ACM Transactions on Data Science\\
 %     TEAC & ACM Transactions on Economics and Computation\\
 %     TECS & ACM Transactions on Embedded Computing Systems \\
 %     TELO & ACM Transactions on Evolutionary Learning and Optimization\\
@@ -2223,32 +2320,34 @@
 %
 % Here is the list of the samples:
 % \begin{description}
-% \item[sample-manuscript:] A proceedings paper in the manuscript format.
-% \item[sample-acmsmall:] A journal paper in the |acmsmall| format.
-% \item[sample-acmsmall-biblatex:] A journal paper using experimental
+% \item[acmmanuscript:] A proceedings paper in the manuscript format.
+% \item[acmsmall:] A journal paper in the |acmsmall| format.
+% \item[acmsmall-biblatex:] A journal paper using experimental
 % \textsl{biblatex} bibliography processing.
-% \item[sample-acmlarge:] A journal paper in the |acmlarge| format.
-% \item[sample-acmtog:] A journal paper in the |acmtog| format.
-% \item[sample-sigconf:] A proceedings paper in the standard |sigconf|
+% \item[acmlarge:] A journal paper in the |acmlarge| format.
+% \item[acmtog:] A journal paper in the |acmtog| format.
+% \item[sigconf:] A proceedings paper in the standard |sigconf|
 % format.
-% \item[sample-sigconf-biblatex:] A proceedings paper in the |sigconf|
+% \item[sigconf-biblatex:] A proceedings paper in the |sigconf|
 % format using experimental \textsl{biblatex} bibliography
 % processing.
-% \item[sample-sigconf-authordraft:] A proceedings paper in the
+% \item[sigconf-authordraft:] A proceedings paper in the
 % |sigconf| format with the |authordraft| option selected.
-% \item[sample-sigconf-i13n:] A proceedings paper in the
+% \item[sigconf-i13n:] A proceedings paper in the
 % |sigconf| format with multilanguage titles and abstract.
-% \item[sample-sigconf-xelatex:] A proceedings paper in the
-% |sigconf| format, Xe\LaTeX\ version.
-% \item[sample-sigconf-lualatex:] A proceedings paper in the
+% \item[sigconf-lualatex:] A proceedings paper in the
 % |sigconf| format, Lua\LaTeX\ version.
-% \item[sample-sigplan:] A proceedings paper in the |sigplan| format.
-% \item[sample-acmsmall-conf:] A proceedings paper in the |acmsmall|
+% \item[sigplan:] A proceedings paper in the |sigplan| format.
+% \item[acmsmall-conf:] A proceedings paper in the |acmsmall|
 % format for the publication in a journal using this option.
-% \item[sample-acmtog-conf:] A proceedings paper in the |acmtog|
+% \item[acmtog-conf:] A proceedings paper in the |acmtog|
 % format for the publication in a journal using this option.
-% \item[sample-acmcp:] A sample of ACM Cover Page used by JDS.
-% \item[sample-acmengage:] A sample of ACM Engage publication.
+% \item[acmcp:] A sample of ACM Cover Page used by JDS.
+% \item[acmengage:] A sample of ACM Engage publication.
+% \item[acmsmall-tagged:] A journal paper in the |acmsmall| format
+% with the tagging code, see Section~\ref{sec:ug-tagging}.
+% \item[sigconf-tagged:] A proceedings paper in the standard |sigconf|
+% format with the tagging code, see Section~\ref{sec:ug-tagging}.
 % \end{description}
 %
 %
@@ -2292,24 +2391,6 @@
 % \item |figure*|: \cs{fulltextwidth}.
 % \end{enumerate}
 %
-%\subsection{Experiments with tagging}
-%\label{sec:ug_tagged}
-%
-% ACM is firmly committed to produce fully tagged PDFs compliant with
-% the accessibility standards.  We use the developmental version of
-% tagging code by \LaTeX3 team, see the details at
-% \url{https://www.latex-project.org/publications/indexbytopic/pdf/}
-% and \url{https://tug.org/twg/accessibility/overview.html}.
-%
-% At present this work is highly experimental.  You may try the
-% experiments by (1)~using the class |acmart-tagged| in the document
-% class line, and (2)~adding the command
-% \cs{DocumentMetadata}\oarg{options} in the preamble, see the file
-% \path{sample-acmsmall-tagged.tex}.  If you do this, please \emph{do
-% not ask ACM for support}.  On the other hand, bug reports at
-% \url{https://github.com/borisveytsman/acmart/issues} will be
-% appreciated.  
-% 
 %
 %
 % \StopEventually{
@@ -2336,7 +2417,7 @@
 %</gobble>
 %<class&!tagged>\ProvidesClass{acmart}
 %<tagged>\ProvidesClass{acmart-tagged}
-[2025/05/30 v2.14 Typesetting articles for the Association for Computing Machinery]
+[2026/06/27 v2.19 Typesetting articles for the Association for Computing Machinery]
 %    \end{macrocode}
 %
 % \changes{v1.00}{2016/04/14}{First released version}
@@ -2453,6 +2534,17 @@
 % \changes{v1.93}{2023/10/22}{Added PACMSE journal option}
 % \changes{v2.01}{2024/01/06}{Documentation update: POMACS uses acmsmall}
 % \changes{v2.03}{2024/02/04}{Added documentation about samples}
+% \changes{v2.17}{2025/11/01}{Rearranged documentation}
+% \changes{v2.17}{2025/11/01}{Added tagging documentation}
+% \changes{v2.18}{2026/05/23}{Merged tagged branch}
+% \changes{v2.18}{2026/05/23}{Keywords are now deprecated.  Deleted
+% them from the samples}
+% \changes{v2.18}{2026/05/23}{Revised documentation}
+% \changes{v2.18}{2026/05/31}{Moved note before url (suggested by
+% David F. Kotz)} 
+% \changes{v2.18}{2026/05/31}{Deleted IMS designation}
+% \changes{v2.19}{2026/06/27}{ACM cleared their position about
+% keywords. Re-added them} 
 % 
 % And the driver code:
 %    \begin{macrocode}
@@ -2473,8 +2565,7 @@
 \end{document}
 %</gobble>
 %<*class>
-%<!tagged>\def\@classname{acmart}
-%<tagged>\def\@classname{acmart-tagged}
+\def\@classname{acmart}
 %    \end{macrocode}
 %
 %
@@ -2489,6 +2580,22 @@
     I am loading acmart-preload-hook.tex. You are fully responsible
     for any problems from now on.}}{}
 %    \end{macrocode}
+%
+%
+%\subsection{Tagging and old kernels}
+%\label{sec:tagging}
+%
+% We want to use \cs{DocumentMetadata} command, but what with the old
+% kernels which some authors might use?  Here we just switch off the
+% tagging code if this is not defined
+% \begin{macro}{\IfDocumentMetadata}
+% \changes{v2.16}{2025/11/01}{Provided stubs for old kernels}
+%    \begin{macrocode}
+\providecommand{\IfDocumentMetadataTF}{\@secondoftwo}
+\providecommand{\IfDocumentMetadataT}{\@gobble}
+\providecommand{\IfDocumentMetadataF}{\@firstofone}
+%    \end{macrocode}
+% \end{macro}
 %
 % \subsection{Options}
 % \label{sec:options}
@@ -2934,9 +3041,9 @@
 % \changes{v1.38}{2017/05/13}{Increase default font size for SIGPLAN}
 % \changes{v1.87}{2022/08/27}{Set font sizes for |acmengage| and |acmcp|}
 %
-%<*tagged>
 % \changes{v2.09}{2022/08/25}{Saved the old definitions (Ulrike's
 % code}
+% \changes{v2.17}{2026/01/03}{Moved tagged code to the main class}
 % Before we load the base class we want to save the original
 % definitions of sectioning commands since |acmart| redefines them,
 % and we need the vanilla versions.
@@ -2968,7 +3075,6 @@
 %    \end{macrocode}
 % \end{macro}
 % 
-%</tagged>
 %
 %
 % At this point we either have \cs{ACM@fontsize} or use defaults
@@ -3363,112 +3469,19 @@
 %
 % \begin{macro}{\@startsection}
 % \changes{v1.31}{2017/03/04}{Added \cs{tochangmeasure}}
+% \changes{v2.17}{2025/01/03}{Moved tagging code to the main class}
 % Before we call |hyperref|, we redefine \cs{startsection} commands to
 % their \LaTeX\ defaults since the |amsart| ones are too AMS-specific.
 % We need to do this early since we want |hyperref| to have a chance
 % to redefine them again:
 %    \begin{macrocode}
-%</class>
-%<*tagged>
 \let\@startsection\@startsection@kernel
-\let\@sect\@sect@kernel
+\def\@sect#1#2#3#4#5#6[#7]#8{%
+  \ifnum #2>\c@secnumdepth \else
+    \@tochangmeasure{\csname the#1\endcsname}\fi
+  \@sect@kernel{#1}{#2}{#3}{#4}{#5}{#6}[#7]{#8}}
 \let\@ssect\@ssect@kernel
 \let\@xsect\@xsect@kernel
-%</tagged>
-%<*class&!tagged>
-\def\@startsection#1#2#3#4#5#6{%
-  \if@noskipsec \leavevmode \fi
-  \par
-  \@tempskipa #4\relax
-  \@afterindenttrue
-  \ifdim \@tempskipa <\z@
-    \@tempskipa -\@tempskipa \@afterindentfalse
-  \fi
-  \if@nobreak
-    \everypar{}%
-  \else
-    \addpenalty\@secpenalty\addvspace\@tempskipa
-  \fi
-  \@ifstar
-    {\@ssect{#3}{#4}{#5}{#6}}%
-    {\@dblarg{\@sect{#1}{#2}{#3}{#4}{#5}{#6}}}}
-\def\@sect#1#2#3#4#5#6[#7]#8{%
-  \edef\@toclevel{\ifnum#2=\@m 0\else\number#2\fi}%
-  \ifnum #2>\c@secnumdepth
-    \let\@svsec\@empty
-  \else
-    \refstepcounter{#1}%
-    \protected@edef\@svsec{\@seccntformat{#1}\relax}%
-  \fi
-  \@tempskipa #5\relax
-  \ifdim \@tempskipa>\z@
-    \begingroup
-      #6{%
-        \@hangfrom{\hskip #3\relax\@svsec}%
-          \interlinepenalty \@M #8\@@par}%
-    \endgroup
-    \csname #1mark\endcsname{#7}%
-    \ifnum #2>\c@secnumdepth \else
-        \@tochangmeasure{\csname the#1\endcsname}%
-    \fi
-    \addcontentsline{toc}{#1}{%
-      \ifnum #2>\c@secnumdepth \else
-        \protect\numberline{\csname the#1\endcsname}%
-      \fi
-      #7}%
-  \else
-    \def\@svsechd{%
-      #6{\hskip #3\relax
-      \@svsec #8}%
-      \csname #1mark\endcsname{#7}%
-      \ifnum #2>\c@secnumdepth \else
-        \@tochangmeasure{\csname the#1\endcsname\space}%
-      \fi
-      \addcontentsline{toc}{#1}{%
-        \ifnum #2>\c@secnumdepth \else
-          \protect\numberline{\csname the#1\endcsname}%
-        \fi
-        #7}}%
-  \fi
-  \@xsect{#5}}
-\def\@xsect#1{%
-  \@tempskipa #1\relax
-  \ifdim \@tempskipa>\z@
-    \par \nobreak
-    \vskip \@tempskipa
-    \@afterheading
-  \else
-    \@nobreakfalse
-    \global\@noskipsectrue
-    \everypar{%
-      \if@noskipsec
-        \global\@noskipsecfalse
-       {\setbox\z@\lastbox}%
-        \clubpenalty\@M
-        \begingroup \@svsechd \endgroup
-        \unskip
-        \@tempskipa #1\relax
-        \hskip -\@tempskipa
-      \else
-        \clubpenalty \@clubpenalty
-        \everypar{}%
-      \fi}%
-  \fi
-  \ignorespaces}
-\def\@ssect#1#2#3#4#5{%
-  \@tempskipa #3\relax
-  \ifdim \@tempskipa>\z@
-    \begingroup
-      #4{%
-        \@hangfrom{\hskip #1}%
-          \interlinepenalty \@M #5\@@par}%
-    \endgroup
-  \else
-    \def\@svsechd{#4{\hskip #1\relax #5}}%
-  \fi
-  \@xsect{#3}}
-%</class&!tagged>
-%<*class>
 \def\@seccntformat#1{\csname the#1\endcsname\quad}
 %    \end{macrocode}
 %
@@ -3485,9 +3498,7 @@
   \par\removelastskip\vskip\z@skip
   \@startsection{section}\@M\z@{\linespacing\@plus\linespacing}%
     {.5\linespacing}{\centering\contentsnamefont}{#2}%
-%<tagged>\@starttoc@cfgpoint@before{#1}%NEW<<<<<<<<<< (name will change)
   \@input{\jobname.#1}%
-%<tagged>\@starttoc@cfgpoint@after{#1}%NEW<<<<<<<<<<<<  (name will change)
   \if@filesw
     \@xp\newwrite\csname tf@#1\endcsname
     \immediate\@xp\openout\csname tf@#1\endcsname \jobname.#1\relax
@@ -4032,14 +4043,13 @@
 % We use Libertine throughout.
 % \changes{v2.12}{2024/12/29}{Use unicode-math and libertinus for Unicode engines}%
 % \changes{v2.13}{2025/01/11}{Added mathcal in unicode mode}%
+% \changes{v2.13}{2025/01/11}{Added mathcal in unicode mode}%
+% \changes{v2.15}{2025/08/21}{Added symbols in unicode mode}%
 % We use Libertine throughout.
 %    \begin{macrocode}
 \if@ACM@newfonts
-  % Note that the order in which packages are loaded matters,
-  % and the correct order depends on the LaTeX engine used.
-  % See https://github.com/borisveytsman/acmart/issues/402
-  % and https://github.com/borisveytsman/acmart/issues/410
   \ifxetex
+    \RequirePackage{amssymb}
     \RequirePackage{unicode-math}
     \setmathfont[Scale=MatchUppercase]{LibertinusMath-Regular.otf}
     \setmathfont{latinmodern-math.otf}[range={cal}]
@@ -4047,6 +4057,7 @@
     \setmonofont[StylisticSet=3]{inconsolata}
   \else
     \ifluatex
+      \RequirePackage{amssymb}
       \RequirePackage{unicode-math}
       \setmathfont[Scale=MatchUppercase]{LibertinusMath-Regular.otf}
       \setmathfont{latinmodern-math.otf}[range={cal}]
@@ -4082,7 +4093,10 @@
 \fi
 %    \end{macrocode}
 %
-%
+% \changes{v2.18}{2026/05/31}{Added pifont}
+%    \begin{macrocode}
+\RequirePackage{pifont}
+%    \end{macrocode}
 %
 %\subsection{Image descriptions}
 %\label{sec:description}
@@ -4115,7 +4129,9 @@
 %
 % The global warning
 % \changes{v2.13}{2025/01/11}{New warnings about lack of descriptions}
+% \changes{v2.18}{2026/03/03}{Switched off warning in tagged mode}
 %    \begin{macrocode}
+\IfDocumentMetadataF{%
 \AtEndDocument{\if@undescribed@images
   \ClassWarningNoLine{\@classname}{Some images may lack
     descriptions.\MessageBreak
@@ -4133,7 +4149,8 @@
   is also important to optimize color contrast for the visually
   impaired. Taking these important steps when creating your papers
   will ensure that the widest possible audience can ingest your
-  work.}\fi} 
+  work.}\fi}
+}
 %    \end{macrocode}
 %
 % Hooks for figures and tables.  We also patch |algorithm| and
@@ -4190,7 +4207,8 @@
 %
 % \changes{v1.55}{2018/10/20}{Table captions for SIGCHI now use the
 % same font size as figure captions (Luis Leiva)}
-% We use the |caption| package
+% \changes{v2.18}{2026/03/02}{Rewrote caption code for tagging}
+% We use |caption| package
 %    \begin{macrocode}
 \RequirePackage{caption, float}
 \captionsetup[table]{position=top}
@@ -4226,6 +4244,45 @@
   \or % acmcp
   \fi
 \fi
+%    \end{macrocode}
+%
+% \changes{v2.18}{2026/03/10}{New code for captions}
+% Unfortinately |caption| package so far is not tagging compatible.
+% So we need to recreate it if tagging is enabled.  This is from
+% https://github.com/latex3/tagging-project/issues/720
+%    \begin{macrocode}
+\ExplSyntaxOn
+\IfDocumentMetadataT{%
+  \RemoveFromHook{begindocument}[latex-lab-testphase-float]
+  \socket_new_plug:nnn{tagsupport/parbox/before}{caption}
+  {   
+    \tagpdfparaOn %restart para tagging
+    \tl_if_empty:NTF\@current@float@struct
+    {     
+      \tag_struct_begin:n{tag=Caption,firstkid}
+    }
+    {
+      \tag_struct_begin:n{tag=Caption,parent=\@current@float@struct,firstkid}
+    } 
+  }
+  \socket_new_plug:nnn{tagsupport/parbox/after}{caption}
+  {
+    \tag_struct_end:   
+  }
+  \l@addto@macro\caption@beginex@hook{%
+    \tagpdfparaOff %leavevmode in parbox should not start paragraph structure
+    \AssignSocketPlug{tagsupport/parbox/before}{caption}
+    \AssignSocketPlug{tagsupport/parbox/after}{caption}}
+}
+\ExplSyntaxOff
+%    \end{macrocode}
+%
+% \changes{v1.19}{2026-06-27}{Tagging code for tables}
+% By default the first row of a table contains headers
+%    \begin{macrocode}
+\IfDocumentMetadataT{%
+  \tagpdfsetup{table/header-rows={1}}
+}
 %    \end{macrocode}
 %
 % \begin{macro}{sidebar}
@@ -4499,12 +4556,18 @@
 % \changes{2.05}{2024/04/04}{New data for TELO}
 % \changes{2.06}{2024/04/13}{Added eISSN for a number of journals}
 % \changes{2.07}{2024/04/17}{Another change for TELO}
+% \changes{2.15}{2025/08/21}{Added AILET, TAIS, TAISAP, ACMJDS}
+% \changes{2.16}{2025/08/27}{Corrected handling of journals in the
+% options}
+% \changes{2.17}{2026/03/28}{Fixed bug with ACMJDS}
 %
 % We use the |xkeyval| interface to define journal titles and the relevant
 % information
 %    \begin{macrocode}
 \define@choicekey*+{ACM}{acmJournal}[\@journalCode\@journalCode@nr]{%
   ACMJCSS,%
+  ACMJDS,%
+  AILET,%
   CIE,%
   CSUR,%
   DGOV,%
@@ -4533,6 +4596,8 @@
   TAAS,%
   TACCESS,%
   TACO,%
+  TAIS,%
+  TAISAP,%
   TALG,%
   TALLIP,%
   TAP,%
@@ -4584,6 +4649,16 @@
   \def\@journalNameShort{ACM J. Comput. Sustain. Soc.}%
   \def\@permissionCodeOne{2834-5533}%
   \def\@permissionCodeTwo{2834-5533}%
+\or % ACMJDS
+  \def\@journalName{ACM Journal of Data Science}%
+  \def\@journalNameShort{ACM J. Data Sci.}%
+  \def\@permissionCodeOne{3069-3497}%
+  \def\@permissionCodeTwo{3069-3497}%
+\or % AILET
+  \def\@journalName{ACM AI Letters}%
+  \def\@journalNameShort{ACM AI Lett.}%
+  \def\@permissionCodeOne{3068-8590}%
+  \def\@permissionCodeTwo{3068-8590}%
 \or % CIE
   \def\@journalName{ACM Computers in Entertainment}%
   \def\@journalNameShort{ACM Comput. Entertain.}%
@@ -4647,8 +4722,8 @@
   \def\@permissionCodeOne{1936-1955}%
   \def\@permissionCodeTwo{1936-1963}%
 \or % JDS
-  \def\@journalName{ACM/IMS Journal of Data Science}%
-  \def\@journalNameShort{ACM/IMS J. Data Sci.}%
+  \def\@journalName{ACM Journal of Data Science}%
+  \def\@journalNameShort{ACM J. Data Sci.}%
   \def\@permissionCodeOne{2831-3194}%
   \def\@permissionCodeTwo{2831-3194}%
 \or % JEA
@@ -4735,6 +4810,16 @@
   \def\@journalNameShort{ACM Trans. Arch. Code Optim.}%
   \def\@permissionCodeOne{1544-3566}%
   \def\@permissionCodeTwo{1544-3973}%
+\or % TAIS
+  \def\@journalName{ACM Transactions on AI for Science}%
+  \def\@journalNameShort{ACM Trans. AI Sci.}%
+  \def\@permissionCodeOne{3066-4438}%
+  \def\@permissionCodeTwo{3066-4438}%
+\or % TAISAP
+  \def\@journalName{ACM Transactions on AI Security and Privacy}%
+  \def\@journalNameShort{ACM Trans. AI Secur. Priv.}%
+  \def\@permissionCodeOne{3068-3564}%
+  \def\@permissionCodeTwo{3068-3564}%
 \or % TALG
   \def\@journalName{ACM Transactions on Algorithms}%
   \def\@journalNameShort{ACM Trans. Algor.}%
@@ -4756,8 +4841,8 @@
   \def\@permissionCodeOne{2378-962X}%
   \def\@permissionCodeTwo{2378-9638}%
 \or % TDS
-  \def\@journalName{ACM/IMS Transactions on Data Science}%
-  \def\@journalNameShort{ACM/IMS Trans. Data Sci.}%
+  \def\@journalName{ACM Transactions on Data Science}%
+  \def\@journalNameShort{ACM Trans. Data Sci.}%
   \def\@permissionCodeOne{2577-3224}%
 \or % TEAC
   \def\@journalName{ACM Transactions on Economics and Computation}%
@@ -5350,6 +5435,26 @@
   \fi}
 %    \end{macrocode}
 %
+% \end{macro}
+%
+% \begin{macro}{\correspondingauthor}
+% \changes{v2.18}{2026/05/31}{Added macro}
+% Mark the author as corresponding author
+%    \begin{macrocode}
+\newcommand\correspondingauthor{%
+  \if@ACM@anonymous\else
+  \g@addto@macro\addresses{\@correspondingauthormark}%
+  \fi}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\@correspondingauthormark}
+% \changes{v2.18}{2026/05/31}{Added macro}
+% Print the envelope
+%    \begin{macrocode}
+\def\@correspondingauthormark{\g@addto@macro\@currentauthors{%
+    \advance\hfuzz by 5pt\relax\textsuperscript{\ding{41}}\relax}}
+%    \end{macrocode}
 % \end{macro}
 %
 % \begin{macro}{\authornotemark}
@@ -6971,20 +7076,13 @@
 % \begin{macro}{\@ACM@addtoaddress}
 % \changes{v1.15}{2016/07/03}{Added macro}
 % \changes{v1.33}{2017/03/28}{Added obeypunctuation code}
-%   This macro adds an item to the address using the following rules:
-%   \begin{enumerate}
-%   \item If we start a paragraph, add the item
-%   \item Otherwise, add a comma and the item
-%   \item However, the comma is deleted if it is at the end of a
-%   line.  We use the magic \cs{cleaders} trick for this.
-%   \end{enumerate}
+% \changes{v2.18}{2026/03/29}{Deleted the cleaders code}
 %    \begin{macrocode}
 \newbox\@ACM@commabox
 \def\@ACM@addtoaddress#1{%
   \ifvmode\else
     \if@ACM@affiliation@obeypunctuation\else
-    \setbox\@ACM@commabox=\hbox{, }%
-    \unskip\cleaders\copy\@ACM@commabox\hskip\wd\@ACM@commabox
+    \unskip,~%
   \fi\fi
   #1}
 %    \end{macrocode}
@@ -7357,6 +7455,7 @@
 % \changes{v1.36}{2017/05/12}{Added authorsperrow overrride}
 % \changes{v1.73}{2020/09/07}{Check the presence of required elements
 % for affiliations}
+% \changes{v2.18}{2026/05/29}{Email is now clickable}
 % \changes{v1.78}{2021/05/16}{Unboxing \cs{mktitle@bx}}
 %   The |sigconf| version.  Here we use a centered design with each
 %   author in a separate box.
@@ -7401,10 +7500,10 @@
   \gdef\and{}}%
   \def\email##1##2{\ifx\@currentaffiliation\@empty
     \gdef\@currentaffiliation{\bgroup
-      \mathchardef\UrlBreakPenalty=10000\nolinkurl{##2}\egroup}%
+      \mathchardef\UrlBreakPenalty=10000\href{mailto:##2}{##2}\egroup}%
   \else
     \g@addto@macro\@currentaffiliation{\par\bgroup
-      \mathchardef\UrlBreakPenalty=10000\nolinkurl{##2}\egroup}%
+      \mathchardef\UrlBreakPenalty=10000\href{mailto:##2}{##2}\egroup}%
   \fi}%
   \def\affiliation##1##2{\ifx\@currentaffiliation\@empty
     \gdef\@currentaffiliation{%
@@ -7437,6 +7536,7 @@
 % \changes{v1.36}{2017/05/12}{Added authorsperrow overrride}
 % \changes{v1.73}{2020/09/07}{Check the presence of required elements
 % for affiliations}
+% \changes{v2.18}{2026/05/29}{Email is now clickable}
 %   The |sigchi-a| version.  We put authors in the main text with
 %   no more than 2 authors per line, unless overriden.
 %    \begin{macrocode}
@@ -7473,9 +7573,9 @@
   \fi
   \gdef\and{}}%
   \def\email##1##2{\ifx\@currentaffiliation\@empty
-    \gdef\@currentaffiliation{\nolinkurl{##2}}%
+    \gdef\@currentaffiliation{\href{mailto:##2}{##2}}%
   \else
-    \g@addto@macro\@currentaffiliation{\par\nolinkurl{##2}}%
+    \g@addto@macro\@currentaffiliation{\par\href{mailto:##2}{##2}}%
   \fi}%
   \def\affiliation##1##2{\ifx\@currentaffiliation\@empty
     \gdef\@currentaffiliation{%
@@ -7507,6 +7607,7 @@
 % \changes{v1.77}{2021/04/16}{New separator of institutions}
 % \changes{v2.06}{2024/04/13}{\cs{streetaddress} and \cs{postcode} now
 % produce warnings}
+% \changes{v2.18}{2026/05/29}{Email is now clickable}
 % Typesetting authors' addresses in the footnote style
 %    \begin{macrocode}
 \def\@mkauthorsaddresses{%
@@ -7529,7 +7630,7 @@
   \def\country##1{\unskip, ##1}%
   \def\and{\unskip; \gdef\@ACM@institution@separator{, }}%
   \def\@author##1{##1}%
-  \def\email##1##2{\unskip, \nolinkurl{##2}}%
+  \def\email##1##2{\unskip, \href{mailto:##2}{##2}}%
   \addresses
   \egroup}
 %    \end{macrocode}
@@ -7554,19 +7655,25 @@
 %
 %
 % \begin{macro}{\@authornotemark}
+% \changes{v2.15}{2025/08/16}{Suppressed spurious overfull warning}
 % Adding a footnote mark to authors.  This version adds a ``normal''
-% footnote mark.
+% footnote mark.  Note that since we typeset the author in a box, we
+% get superflous box overfull; to protect against it we increase
+% |\hfuzz| 
 %    \begin{macrocode}
-\def\@authornotemark{\g@addto@macro\@currentauthors{\footnotemark\relax}}
+\def\@authornotemark{\g@addto@macro\@currentauthors{%
+    \advance\hfuzz by 5pt\relax\footnotemark\relax}}
 %    \end{macrocode}
 %
 % \end{macro}
 %
 % \begin{macro}{\@@authornotemark}
 % \changes{v1.39}{2017/05/14}{Added macro}
+% \changes{v2.15}{2025/08/16}{Suppressed spurious overfull warning}
 % Adding a footnote mark to authors with a given number
 %    \begin{macrocode}
-\def\@@authornotemark#1{\g@addto@macro\@currentauthors{\footnotemark[#1]}}
+\def\@@authornotemark#1{\g@addto@macro\@currentauthors{%
+    \advance\hfuzz by 5pt\relax\footnotemark[#1]}}
 %    \end{macrocode}
 %
 % \end{macro}
@@ -7729,17 +7836,6 @@
 % 
 % \end{macro}
 %
-%<*tagged>
-% We stop tagging inside maketitle for now.  Ulrike's code again.
-%    \begin{macrocode}
-\ExplSyntaxOn
-\AddToHook{cmd/maketitle/before}
- {\tagstructbegin{tag=Title}\tagmcbegin{} \tag_stop:}
-\AddToHook{cmd/maketitle/after}
- {\tag_start:\tagmcend\tagstructend }
-\ExplSyntaxOff
-%    \end{macrocode}
-%</tagged>
 %
 %\subsection{Headers and Footers}
 %\label{sec:head_foot}
