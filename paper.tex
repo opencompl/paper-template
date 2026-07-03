@@ -58,6 +58,14 @@
 \usepackage{hyphenat}
 \usepackage[shortcuts]{extdash}
 
+% TeX Live 2025+ leaves a conjecture counter defined before acmart creates its
+% default theorem environments. Clear it so acmart can define conjecture itself.
+\makeatletter
+\@ifundefined{conjecture}{%
+  \expandafter\let\csname c@conjecture\endcsname\@undefined
+}{}
+\makeatother
+
 \input{tex/setup.tex}
 \input{tex/acm.tex}
 
