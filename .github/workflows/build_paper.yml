@@ -47,6 +47,19 @@ jobs:
         files: |
           paper.pdf
           submission.pdf
+
+    - name: Set up Python for HotCRP response validation
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.x"
+
+    - name: Upload to HotCRP
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      env:
+        HOTCRP_TOKEN: ${{ secrets.HOTCRP_TOKEN }}
+      run: bash ./tools/upload-to-hotcrp.sh .github/hotcrp.env
+
   build-texlive-2024:
     runs-on: ubuntu-latest
 

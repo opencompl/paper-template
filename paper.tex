@@ -52,11 +52,15 @@
 \usepackage{etoolbox}
 \usepackage[acronym,shortcuts]{glossaries}
 \usepackage{amsmath}
-\usepackage{thmtools} % required for autoref to lemmas
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
 \usepackage{hyphenat}
 \usepackage[shortcuts]{extdash}
+
+% Load thmtools after acmart has created its built-in theorem environments.
+% Newer thmtools aliases shared counters before \newtheorem, which collides
+% with acmart's default conjecture/proposition/lemma definitions otherwise.
+\AtEndPreamble{\usepackage{thmtools}}
 
 \input{tex/setup.tex}
 \input{tex/acm.tex}
