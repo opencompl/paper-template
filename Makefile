@@ -35,7 +35,7 @@ refcheck: paper
 ${PDF_PAPER}: ${TEX_MAIN_PAPER} ${IMAGES} .latexminted_config
 	latexmk ${TEX_MAIN_PAPER}
 
-${PDF_SUBMISSION}: ${TEX_MAIN_SUBMISSION} ${IMAGES} .latexminted_config
+${PDF_SUBMISSION}: ${TEX_MAIN_SUBMISSION} ${TEX_MAIN_PAPER} ${IMAGES} .latexminted_config
 	latexmk ${TEX_MAIN_SUBMISSION}
 
 abstract: ${TEX_MAIN_PAPER}
